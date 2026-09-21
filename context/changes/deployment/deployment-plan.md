@@ -93,7 +93,11 @@ Zgodnie z aktualnym kodem (`src/lib/supabase.ts`, `.env.example`) aplikacja ocze
 - `src/lib/supabase.ts`, `.env.example` — źródło prawdy co do nazw sekretów (`SUPABASE_URL`, `SUPABASE_KEY`).
 
 ## Weryfikacja końcowa
-1. `git log` / dashboard Cloudflare pokazuje udany build z commita na `main`.
-2. Aplikacja odpowiada pod `*.workers.dev` (strona główna ładuje się, formularz logowania/rejestracji widoczny).
-3. `npx wrangler tail` podczas próby logowania nie pokazuje błędów braku `SUPABASE_URL`/`SUPABASE_KEY` (sekrety faktycznie widoczne w runtime).
-4. `npx wrangler deployments list` pokazuje deployment odpowiadający najnowszemu commitowi na `main`.
+1. ✅ `git log` / dashboard Cloudflare pokazuje udany build z commita na `main`.
+2. ✅ Aplikacja odpowiada pod `https://car-service-history.przemekoz.workers.dev/` (strona główna ładuje się, formularz logowania/rejestracji widoczny).
+3. ✅ Sekrety `SUPABASE_URL`/`SUPABASE_KEY` widoczne w runtime (`wrangler secret list`, brak banera „Supabase nie jest skonfigurowany”).
+4. ✅ `npx wrangler deployments list` pokazuje deployment odpowiadający najnowszemu commitowi na `main`.
+5. ✅ Automatyczne testy end-to-end (`curl` na `/api/auth/signup`) potwierdziły realną łączność z Supabase Auth API.
+6. ✅ Użytkownik ręcznie przetestował logowanie w przeglądarce na produkcji — działa.
+
+**Pierwsze wdrożenie: zakończone i zweryfikowane w pełni (automatycznie i ręcznie).**
