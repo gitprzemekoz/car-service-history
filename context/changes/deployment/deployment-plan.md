@@ -47,7 +47,7 @@ Obecnie w repo istnieje tylko konfiguracja **lokalnego** stacku Supabase (`supab
 ### 2. Zanotuj (i opcjonalnie napraw) rozjazd branchy w `ci.yml`
 `.github/workflows/ci.yml` triggeruje się na `branches: [master]`, ale bieżący branch repo to `main` — istniejący CI (lint/build/smoke) obecnie **nigdy się nie uruchamia** na pushach/PR-ach do `main`. To nie blokuje deployu przez Cloudflare Workers Builds (osobny mechanizm), ale warto to odnotować jako zastany defekt i zaproponować użytkownikowi szybką poprawkę (`master` → `main`) jako osobny, jednozdaniowy fix — nie wykonuj bez wyraźnej zgody, bo dotyczy pliku spoza zakresu deploya.
 
-**Status:** ⏳ Odnotowano, czeka na decyzję użytkownika czy naprawić.
+**Status:** ✅ Naprawiono — `branches: [master]` → `branches: [main]` w obu triggerach (`push`, `pull_request`) w `.github/workflows/ci.yml`.
 
 ### 3. Podłącz repo GitHub do Cloudflare Workers Builds (wymaga działania użytkownika w dashboardzie)
 Nie da się tego zrobić z CLI/agenta — poprowadź użytkownika krok po kroku:
