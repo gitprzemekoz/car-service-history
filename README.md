@@ -153,6 +153,16 @@ Route protection is handled in `src/middleware.ts`. Add paths to the `PROTECTED_
 
 This project deploys to [Cloudflare Workers](https://workers.cloudflare.com/).
 
+### Automatic deploys (primary)
+
+The Cloudflare Workers Builds Git integration is connected to this repository: every push to `main` triggers an automatic build (`npm run build`) and deploy — no GitHub Actions involved. Connect it once in **Cloudflare Dashboard → Workers & Pages → Create → Import a repository**, selecting the `main` branch; Workers Builds detects `wrangler.jsonc` and runs `wrangler deploy` for you.
+
+Set `SUPABASE_URL` and `SUPABASE_KEY` as Worker Secrets before the first deploy — either in **Cloudflare Dashboard → Worker → Settings → Variables and Secrets**, or via `npx wrangler secret put SUPABASE_URL` / `npx wrangler secret put SUPABASE_KEY`.
+
+See `context/changes/deployment/deployment-plan.md` for the full first-deployment plan and prerequisites.
+
+### Manual deploy (fallback)
+
 1. Build the project:
 
 ```bash
@@ -164,8 +174,6 @@ npm run build
 ```bash
 npx wrangler deploy
 ```
-
-Set `SUPABASE_URL` and `SUPABASE_KEY` as secrets in your Cloudflare dashboard or via `npx wrangler secret put`.
 
 ## Smoke test
 
