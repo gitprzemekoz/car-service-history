@@ -153,12 +153,12 @@ Foundations below assume these are present and do NOT re-scaffold them.
 
 | Roadmap ID | Change ID                             | Suggested issue title                                        | Ready for `/10x-plan` | Notes                                   |
 | ---------- | --------------------------------------- | --------------------------------------------------------------- | ---------------------- | ------------------------------------------ |
-| F-01       | roles-and-domain-schema-foundation      | Add mechanic/client roles and domain schema with RLS            | yes                    | Run `/10x-plan roles-and-domain-schema-foundation` |
-| S-01       | first-service-entry-visible-to-client   | Mechanic adds client+vehicle+entry; client sees it              | no                     | Blocked on F-01                            |
-| S-02       | mechanic-edits-service-entry            | Mechanic can edit their own service entry                       | no                     | Blocked on S-01                            |
-| S-03       | shareable-vehicle-history-link          | Client generates a 24h read-only share link                     | no                     | Blocked on S-01                            |
-| S-04       | client-flags-incorrect-entry            | Client can flag an incorrect service entry                      | no                     | Blocked on S-01                            |
-| S-05       | next-service-email-reminder             | Client gets an email reminder for the next service               | no                     | Blocked on S-01                            |
+| F-01       | roles-and-domain-schema-foundation      | Add mechanic/client roles and domain schema with RLS            | yes                    | → [#1](https://github.com/gitprzemekoz/car-service-history/issues/1) |
+| S-01       | first-service-entry-visible-to-client   | Mechanic adds client+vehicle+entry; client sees it              | no                     | → [#2](https://github.com/gitprzemekoz/car-service-history/issues/2) |
+| S-02       | mechanic-edits-service-entry            | Mechanic can edit their own service entry                       | no                     | → [#3](https://github.com/gitprzemekoz/car-service-history/issues/3) |
+| S-03       | shareable-vehicle-history-link          | Client generates a 24h read-only share link                     | no                     | → [#4](https://github.com/gitprzemekoz/car-service-history/issues/4) |
+| S-04       | client-flags-incorrect-entry            | Client can flag an incorrect service entry                      | no                     | → [#5](https://github.com/gitprzemekoz/car-service-history/issues/5) |
+| S-05       | next-service-email-reminder             | Client gets an email reminder for the next service               | no                     | → [#6](https://github.com/gitprzemekoz/car-service-history/issues/6) |
 
 ## Open Roadmap Questions
 
