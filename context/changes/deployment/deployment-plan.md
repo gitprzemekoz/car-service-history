@@ -58,14 +58,24 @@ Nie da się tego zrobić z CLI/agenta — poprowadź użytkownika krok po kroku:
 5. Root directory: `/` (repo root).
 
 ### 4. Skonfiguruj sekrety produkcyjne
-Zgodnie z aktualnym kodem (`src/lib/supabase.ts`, `.env.example`) aplikacja oczekuje `SUPABASE_URL` i `SUPABASE_KEY` (anon key) — **nie** `SUPABASE_SERVICE_ROLE_KEY`, mimo że `infrastructure.md` o nim wspomina (rozbieżność już odnotowana w tym planie, celowo pomijamy service role key w tym wdrożeniu).
+Zgodnie z aktualnym kodem (`src/lib/supabase.ts`, `.env.example`) aplikacja oczekuje `SUPABASE_URL` i `SUPABASE_KEY` (anon/publishable key) — **nie** `SUPABASE_SERVICE_ROLE_KEY`, mimo że `infrastructure.md` o nim wspomina (rozbieżność już odnotowana w tym planie, celowo pomijamy service role key w tym wdrożeniu).
 - Ustaw jako Worker Secrets: `npx wrangler secret put SUPABASE_URL` i `npx wrangler secret put SUPABASE_KEY` (albo równoważnie w Dashboard → Worker → Settings → Variables and Secrets).
 - To krok wymagający zatwierdzenia przez człowieka (produkcyjne sekrety) — wykonaj tylko po jawnej zgodzie użytkownika w kolejnej sesji, nie automatycznie.
+
+**Status:** ✅ Wykonano ręcznie w Dashboard (Variables and Secrets). Po drodze wystąpiła literówka w nazwie zmiennej (`SUPABAE_URL` zamiast `SUPABASE_URL`, widoczna w deployment logu z 13:37) — skorygowana w kolejnym zapisie; end-to-end test w kroku 5 potwierdza, że finalna nazwa/wartość jest poprawna.
 
 ### 5. Pierwszy deploy i weryfikacja
 - Push do `main` (lub „Retry deployment” w dashboardzie) uruchomi automatyczny build+deploy przez Workers Builds.
 - Sprawdź: status builda w dashboardzie, `npx wrangler deployments list`, otwarcie wygenerowanego `*.workers.dev` URL, `npx wrangler tail` pod kątem błędów SSR/Supabase przy pierwszych requestach.
 - Zwróć uwagę na ryzyko z `infrastructure.md`: limit 10ms CPU-time/invocation na darmowym planie może zostać przekroczony przez SSR + zapytania do Supabase — jeśli wystąpią błędy 5xx/timeouty, rekomendacja to upgrade do planu Standard ($5/mo), nie zmiana architektury.
+
+**Status:** ✅ Zweryfikowano.
+- Worker `car-service-history` zbudowany i wdrożony przez Workers Builds z commita `3901bfd` na `main` (deployment `13:35:07 UTC`, wersja `825cb706`).
+- Ważny fakt operacyjny: Git integration w tym projekcie utworzył Worker pod subdomeną kontowego loginu `przemekoz` (konto Cloudflare zalogowane jako `przemekoz@o2.pl`), tj. **`https://car-service-history.przemekoz.workers.dev/`** — nie pod nazwą użytkownika systemu Windows widoczną gdzie indziej (`pkozinski`). To jest właściwy adres produkcyjny do zapamiętania/użycia w konfiguracji Supabase Auth URL (krok B.4 warunków wstępnych).
+- Strona główna zwraca HTTP 200 i renderuje właściwy SSR HTML (nie placeholder „Hello World”, nie 404 jak przy błędnym imporcie jako Pages).
+- Brak banera „Supabase nie jest skonfigurowany” na stronie głównej — `SUPABASE_URL`/`SUPABASE_KEY` widoczne w runtime.
+- End-to-end test `/api/auth/signup` (z poprawnym `Origin` header, by przejść ochronę CSRF Astro) faktycznie dotarł do Supabase Auth API — odpowiedź `Email address is invalid` dla testowego adresu `@example.com` to realna walidacja Supabase, plus poprawne cookies auth z project ref `khuxupqlivgmikebcubq`. Potwierdza to pełną łączność SSR ↔ Supabase w produkcji.
+- Pozostaje do zrobienia po stronie użytkownika: ustawić `Site URL`/`Redirect URLs` w Supabase Auth na `https://car-service-history.przemekoz.workers.dev` (patrz warunek wstępny B.4) — bez tego linki potwierdzające e-mail po realnej rejestracji będą wskazywać na zły host.
 
 ### 6. Zaktualizuj README
 - Zaktualizuj sekcję „Deployment” w `README.md`, żeby odzwierciedlała mechanizm Cloudflare Workers Builds (auto-deploy na push do `main`) jako główną ścieżkę, z ręcznym `npx wrangler deploy` jako fallbackiem.
