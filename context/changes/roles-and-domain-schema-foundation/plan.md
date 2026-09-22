@@ -224,15 +224,15 @@ This is a purely additive migration against an empty schema — no existing data
 
 #### Automated
 
-- [x] 1.1 Migration applies cleanly on a fresh local stack: `npx supabase db reset` exits 0
-- [x] 1.2 Existing test suite still passes: `npm run test`
-- [x] 1.3 Lint passes: `npm run lint`
+- [x] 1.1 Migration applies cleanly on a fresh local stack: `npx supabase db reset` exits 0 — 78c3b4b
+- [x] 1.2 Existing test suite still passes: `npm run test` — 78c3b4b
+- [x] 1.3 Lint passes: `npm run lint` — 78c3b4b
 
 #### Manual
 
-- [x] 1.4 All four tables exist with RLS enabled in Supabase Studio after reset
-- [x] 1.5 Seeded mechanic's session sees only their own workshop's clients/vehicles/entries
-- [x] 1.6 Seeded client's session sees only their own vehicle/entry, and nothing from another workshop
+- [x] 1.4 All four tables exist with RLS enabled in Supabase Studio after reset — 78c3b4b
+- [x] 1.5 Seeded mechanic's session sees only their own workshop's clients/vehicles/entries — 78c3b4b
+- [x] 1.6 Seeded client's session sees only their own vehicle/entry, and nothing from another workshop — 78c3b4b
 
 ### Phase 2: Role plumbing in middleware and shared types
 
