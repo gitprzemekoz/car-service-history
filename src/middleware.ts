@@ -1,5 +1,6 @@
 import { defineMiddleware } from "astro:middleware";
 import { createClient } from "@/lib/supabase";
+import type { Role } from "@/lib/types";
 
 const PROTECTED_ROUTES = ["/dashboard"];
 
@@ -11,8 +12,16 @@ export const onRequest = defineMiddleware(async (context, next) => {
       data: { user },
     } = await supabase.auth.getUser();
     context.locals.user = user ?? null;
+
+    if (user) {
+      const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).single();
+      context.locals.profile = profile ? { role: profile.role as Role } : null;
+    } else {
+      context.locals.profile = null;
+    }
   } else {
     context.locals.user = null;
+    context.locals.profile = null;
   }
 
   if (PROTECTED_ROUTES.some((route) => context.url.pathname.startsWith(route))) {

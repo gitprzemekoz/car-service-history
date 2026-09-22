@@ -238,13 +238,13 @@ This is a purely additive migration against an empty schema — no existing data
 
 #### Automated
 
-- [ ] 2.1 Type checking passes: `npx astro check`
-- [ ] 2.2 Existing test suite still passes: `npm run test`
-- [ ] 2.3 Lint passes: `npm run lint`
+- [x] 2.1 Type checking passes: `npx astro check`
+- [x] 2.2 Existing test suite still passes: `npm run test`
+- [x] 2.3 Lint passes: `npm run lint`
 
 #### Manual
 
-- [ ] 2.4 Each seeded session resolves the correct role via `Astro.locals.profile?.role`
+- [x] 2.4 Each seeded session resolves the correct role via `Astro.locals.profile?.role`
 
 ### Phase 3: Role-gated dashboard routes
 
