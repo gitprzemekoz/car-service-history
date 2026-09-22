@@ -58,5 +58,5 @@ Brakuje: realnie uzupełnionego `.env`/`.dev.vars` oraz uruchomionego lokalnego 
 
 ## Uwagi
 
-- Projekt nie wymaga żadnych migracji ani własnych tabel — korzysta wyłącznie z wbudowanej tabeli `auth.users` Supabase Auth.
+- `supabase/migrations/` zawiera schemat ról i domeny (`profiles`, `clients`, `vehicles`, `service_entries` z RLS) — `npx supabase start`/`db reset` stosuje go automatycznie na lokalnym stacku.
 - Ten proces nie modyfikuje `README.md` ani innych plików repozytorium — jest to wyłącznie dokument do przeglądu przed wykonaniem kroków.
