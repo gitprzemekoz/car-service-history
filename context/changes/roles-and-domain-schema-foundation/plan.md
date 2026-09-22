@@ -238,24 +238,24 @@ This is a purely additive migration against an empty schema — no existing data
 
 #### Automated
 
-- [x] 2.1 Type checking passes: `npx astro check`
-- [x] 2.2 Existing test suite still passes: `npm run test`
-- [x] 2.3 Lint passes: `npm run lint`
+- [x] 2.1 Type checking passes: `npx astro check` — 9d80b44
+- [x] 2.2 Existing test suite still passes: `npm run test` — 9d80b44
+- [x] 2.3 Lint passes: `npm run lint` — 9d80b44
 
 #### Manual
 
-- [x] 2.4 Each seeded session resolves the correct role via `Astro.locals.profile?.role`
+- [x] 2.4 Each seeded session resolves the correct role via `Astro.locals.profile?.role` — 9d80b44
 
 ### Phase 3: Role-gated dashboard routes
 
 #### Automated
 
-- [ ] 3.1 Type checking passes: `npx astro check`
-- [ ] 3.2 Existing test suite still passes: `npm run test`
-- [ ] 3.3 Lint passes: `npm run lint`
+- [x] 3.1 Type checking passes: `npx astro check`
+- [x] 3.2 Existing test suite still passes: `npm run test`
+- [x] 3.3 Lint passes: `npm run lint`
 
 #### Manual
 
-- [ ] 3.4 Mechanic session visiting `/dashboard` redirects to `/dashboard/mechanic`
-- [ ] 3.5 Client session loads `/dashboard` directly and is redirected back from `/dashboard/mechanic`
-- [ ] 3.6 Signed-out visitor is still redirected to `/auth/signin` from either route
+- [x] 3.4 Mechanic session visiting `/dashboard` redirects to `/dashboard/mechanic`
+- [x] 3.5 Client session loads `/dashboard` directly and is redirected back from `/dashboard/mechanic`
+- [x] 3.6 Signed-out visitor is still redirected to `/auth/signin` from either route

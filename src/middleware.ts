@@ -2,7 +2,7 @@ import { defineMiddleware } from "astro:middleware";
 import { createClient } from "@/lib/supabase";
 import type { Role } from "@/lib/types";
 
-const PROTECTED_ROUTES = ["/dashboard"];
+const PROTECTED_ROUTES = ["/dashboard", "/dashboard/mechanic"];
 
 export const onRequest = defineMiddleware(async (context, next) => {
   const supabase = createClient(context.request.headers, context.cookies);
@@ -28,6 +28,14 @@ export const onRequest = defineMiddleware(async (context, next) => {
     if (!context.locals.user) {
       return context.redirect("/auth/signin");
     }
+  }
+
+  if (context.locals.profile?.role === "mechanic" && context.url.pathname === "/dashboard") {
+    return context.redirect("/dashboard/mechanic");
+  }
+
+  if (context.locals.profile?.role === "client" && context.url.pathname === "/dashboard/mechanic") {
+    return context.redirect("/dashboard");
   }
 
   return next();
