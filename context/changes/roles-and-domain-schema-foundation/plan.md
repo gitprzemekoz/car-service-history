@@ -250,12 +250,12 @@ This is a purely additive migration against an empty schema — no existing data
 
 #### Automated
 
-- [x] 3.1 Type checking passes: `npx astro check`
-- [x] 3.2 Existing test suite still passes: `npm run test`
-- [x] 3.3 Lint passes: `npm run lint`
+- [x] 3.1 Type checking passes: `npx astro check` — 69c8480
+- [x] 3.2 Existing test suite still passes: `npm run test` — 69c8480
+- [x] 3.3 Lint passes: `npm run lint` — 69c8480
 
 #### Manual
 
-- [x] 3.4 Mechanic session visiting `/dashboard` redirects to `/dashboard/mechanic`
-- [x] 3.5 Client session loads `/dashboard` directly and is redirected back from `/dashboard/mechanic`
-- [x] 3.6 Signed-out visitor is still redirected to `/auth/signin` from either route
+- [x] 3.4 Mechanic session visiting `/dashboard` redirects to `/dashboard/mechanic` — 69c8480
+- [x] 3.5 Client session loads `/dashboard` directly and is redirected back from `/dashboard/mechanic` — 69c8480
+- [x] 3.6 Signed-out visitor is still redirected to `/auth/signin` from either route — 69c8480
