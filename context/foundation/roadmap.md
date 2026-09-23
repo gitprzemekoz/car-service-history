@@ -3,7 +3,7 @@ project: "car-service-history"
 version: 1
 status: draft
 created: 2026-09-21
-updated: 2026-09-22
+updated: 2026-09-23
 prd_version: 1
 main_goal: speed
 top_blocker: time
@@ -41,7 +41,7 @@ The vehicle's service history today lives only in a paper booklet: clients lose 
 
 | ID   | Change ID                             | Outcome (user can …)                                                  | Prerequisites | PRD refs                          | Status   |
 | ---- | -------------------------------------- | ----------------------------------------------------------------------- | -------------- | ---------------------------------- | -------- |
-| F-01 | roles-and-domain-schema-foundation     | (foundation) mechanic/client roles + domain schema + RLS in place       | —              | Access Control, NFR (privacy)      | in-progress |
+| F-01 | roles-and-domain-schema-foundation     | (foundation) mechanic/client roles + domain schema + RLS in place       | —              | Access Control, NFR (privacy)      | done     |
 | S-01 | first-service-entry-visible-to-client  | Mechanic adds client+vehicle+entry; client sees it in their history    | F-01           | FR-001, FR-002, FR-003, FR-004, US-01 | proposed |
 | S-02 | mechanic-edits-service-entry           | Mechanic corrects a mistake in a service entry they created            | S-01           | FR-006                            | proposed |
 | S-03 | shareable-vehicle-history-link         | Client generates a 24h read-only share link (no cost shown) for a buyer | S-01           | FR-005                            | proposed |
@@ -85,7 +85,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Unknowns:**
   - Is mechanic-side client visibility (FR-003) scoped per individual mechanic account, or per a separate "workshop/service" entity that could later hold multiple mechanics? PRD's FR-003 and Non-Goals both say "workshop/service" but Access Control never defines a workshop entity distinct from the mechanic account. — Owner: team (resolve during `/10x-plan` for F-01). Block: no — MVP scale (solo dev, `target_scale.users: small`) supports a safe default of one mechanic = one workshop; this only refines the RLS design, it doesn't stop planning.
 - **Risk:** Gets the mechanic/client RLS boundary right before any domain CRUD exists, since a mistake here would violate the privacy guardrail across every downstream slice — worth sequencing first even though it ships nothing user-visible by itself.
-- **Status:** in-progress
+- **Status:** done
 
 ## Slices
 
@@ -178,4 +178,4 @@ Foundations below assume these are present and do NOT re-scaffold them.
 
 ## Done
 
-(Empty — no slice has been archived yet.)
+- **F-01: (foundation) a `role` distinction (mechanic/client) exists on registered users, a minimal domain schema (clients, vehicles, service_entries) exists with RLS enforcing "a mechanic sees only clients assigned to their own workshop" and "a client sees only their own vehicle," and the two dashboard routes are gated by role. No domain CRUD UI/API is built here — that's S-01's job.** — Archived 2026-09-23 → `context/archive/2026-09-22-roles-and-domain-schema-foundation/`. Lesson: —.
