@@ -330,13 +330,13 @@ Purely additive against local/seed data only. The new `not null` columns have no
 
 #### Automated
 
-- [x] 4.1 Type checking passes: `npx astro check`
-- [x] 4.2 Unit tests pass: `npm run test`
-- [x] 4.3 Lint passes: `npm run lint`
-- [x] 4.4 Production build succeeds: `npm run build`
+- [x] 4.1 Type checking passes: `npx astro check` — 0342886
+- [x] 4.2 Unit tests pass: `npm run test` — 0342886
+- [x] 4.3 Lint passes: `npm run lint` — 0342886
+- [x] 4.4 Production build succeeds: `npm run build` — 0342886
 
 #### Manual
 
-- [x] 4.5 End-to-end US-01: new client signs up and sees vehicle and entry on `/dashboard`
-- [x] 4.6 Seeded client sees only their own vehicle and entry
-- [x] 4.7 A client with no entries sees the empty-state message
+- [x] 4.5 End-to-end US-01: new client signs up and sees vehicle and entry on `/dashboard` — 0342886
+- [x] 4.6 Seeded client sees only their own vehicle and entry — 0342886
+- [x] 4.7 A client with no entries sees the empty-state message — 0342886
