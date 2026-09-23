@@ -291,23 +291,23 @@ Purely additive against local/seed data only. The new `not null` columns have no
 
 #### Automated
 
-- [x] 1.1 Migrations and seed apply cleanly on a fresh local stack: `npx supabase db reset`
-- [x] 1.2 Existing test suite still passes: `npm run test`
-- [x] 1.3 Lint passes: `npm run lint`
+- [x] 1.1 Migrations and seed apply cleanly on a fresh local stack: `npx supabase db reset` — c50ed0c
+- [x] 1.2 Existing test suite still passes: `npm run test` — c50ed0c
+- [x] 1.3 Lint passes: `npm run lint` — c50ed0c
 
 #### Manual
 
-- [x] 1.4 Seeded client inserting a `clients` row with their own id as `mechanic_id` is rejected by RLS
-- [x] 1.5 Mechanic RPC creates both rows; same email in different case fails with no orphan row
-- [x] 1.6 Signup with case-different email links the pending client and creates a `client` profile
+- [x] 1.4 Seeded client inserting a `clients` row with their own id as `mechanic_id` is rejected by RLS — c50ed0c
+- [x] 1.5 Mechanic RPC creates both rows; same email in different case fails with no orphan row — c50ed0c
+- [x] 1.6 Signup with case-different email links the pending client and creates a `client` profile — c50ed0c
 
 ### Phase 2: Domain types and form validators
 
 #### Automated
 
-- [ ] 2.1 Unit tests pass: `npm run test`
-- [ ] 2.2 Type checking passes: `npx astro check`
-- [ ] 2.3 Lint passes: `npm run lint`
+- [x] 2.1 Unit tests pass: `npm run test`
+- [x] 2.2 Type checking passes: `npx astro check`
+- [x] 2.3 Lint passes: `npm run lint`
 
 ### Phase 3: Mechanic side — add client, add entry, view history
 
