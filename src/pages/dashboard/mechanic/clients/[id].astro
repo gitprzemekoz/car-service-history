@@ -1,0 +1,106 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import AddServiceEntryForm from "@/components/mechanic/AddServiceEntryForm";
+import ServiceHistory from "@/components/ServiceHistory.astro";
+import { createClient } from "@/lib/supabase";
+import type { Client, ServiceEntry, Vehicle } from "@/lib/types";
+import { toLocalIsoDate } from "@/lib/validation";
+
+type VehicleWithEntries = Pick<Vehicle, "id" | "make" | "model" | "registration_number"> & {
+  service_entries: ServiceEntry[] | null;
+};
+
+// Without a unique *constraint* PostgREST may embed the one-per-client vehicle as an array.
+type ClientRow = Pick<Client, "id" | "name" | "email" | "user_id"> & {
+  vehicles: VehicleWithEntries[] | VehicleWithEntries | null;
+};
+
+const id = Astro.params.id ?? "";
+const error = Astro.url.searchParams.get("error");
+
+const supabase = createClient(Astro.request.headers, Astro.cookies);
+
+// RLS-scoped: another mechanic's client (or a malformed id) yields no row.
+const { data } = supabase
+  ? await supabase
+      .from("clients")
+      .select("id, name, email, user_id, vehicles(id, make, model, registration_number, service_entries(*))")
+      .eq("id", id)
+      .maybeSingle()
+  : { data: null };
+
+// Set the status instead of returning a Response: a top-level `return` in frontmatter
+// crashes typescript-eslint's no-misused-promises rule on .astro files.
+if (!data) {
+  Astro.response.status = 404;
+}
+
+const client = data as ClientRow | null;
+const vehicle = Array.isArray(client?.vehicles) ? (client.vehicles[0] ?? null) : (client?.vehicles ?? null);
+const entries = vehicle?.service_entries ?? [];
+---
+
+{!client && (
+  <Layout title="Client not found">
+    <div class="bg-cosmic flex min-h-screen items-center justify-center p-4">
+      <div class="rounded-2xl border border-white/10 bg-white/10 p-8 text-center text-white backdrop-blur-xl">
+        <h1 class="mb-4 text-2xl font-bold">Client not found</h1>
+        <a href="/dashboard/mechanic" class="text-sm text-purple-300 hover:underline">
+          &larr; Back to clients
+        </a>
+      </div>
+    </div>
+  </Layout>
+)}
+{client && (
+  <Layout title={`${client.name} — Mechanic Dashboard`}>
+    <div class="bg-cosmic min-h-screen p-4">
+      <div class="mx-auto max-w-3xl space-y-6 py-8 text-white">
+        <a href="/dashboard/mechanic" class="text-sm text-purple-300 hover:underline">
+          &larr; Back to clients
+        </a>
+
+        <section class="rounded-2xl border border-white/10 bg-white/10 p-6 backdrop-blur-xl">
+          <h1 class="bg-gradient-to-r from-blue-200 to-purple-200 bg-clip-text text-3xl font-bold text-transparent">
+            {client.name}
+          </h1>
+          <p class="mt-1 text-sm text-blue-100/80">{client.email}</p>
+          <p class="mt-1 text-xs">
+            {client.user_id ? (
+              <span class="text-green-300">Linked</span>
+            ) : (
+              <span class="text-amber-300">Waiting for signup — ask the client to sign up with {client.email}</span>
+            )}
+          </p>
+          {vehicle ? (
+            <p class="mt-4 text-blue-100/90">
+              <span class="font-semibold text-white">
+                {vehicle.make} {vehicle.model}
+              </span>{" "}
+              · {vehicle.registration_number}
+            </p>
+          ) : (
+            <p class="mt-4 text-sm text-blue-100/60">No vehicle yet.</p>
+          )}
+        </section>
+
+        <section class="rounded-2xl border border-white/10 bg-white/10 p-6 backdrop-blur-xl">
+          <h2 class="mb-4 text-xl font-semibold">Service history</h2>
+          <ServiceHistory entries={entries} />
+        </section>
+
+        {vehicle && (
+          <section class="rounded-2xl border border-white/10 bg-white/10 p-6 backdrop-blur-xl">
+            <h2 class="mb-4 text-xl font-semibold">Add service entry</h2>
+            <AddServiceEntryForm
+              clientId={client.id}
+              defaultServiceDate={toLocalIsoDate(new Date())}
+              serverError={error}
+              client:load
+            />
+          </section>
+        )}
+      </div>
+    </div>
+  </Layout>
+)}

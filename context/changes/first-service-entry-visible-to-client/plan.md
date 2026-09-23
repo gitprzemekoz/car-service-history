@@ -305,26 +305,26 @@ Purely additive against local/seed data only. The new `not null` columns have no
 
 #### Automated
 
-- [x] 2.1 Unit tests pass: `npm run test`
-- [x] 2.2 Type checking passes: `npx astro check`
-- [x] 2.3 Lint passes: `npm run lint`
+- [x] 2.1 Unit tests pass: `npm run test` — a1814bd
+- [x] 2.2 Type checking passes: `npx astro check` — a1814bd
+- [x] 2.3 Lint passes: `npm run lint` — a1814bd
 
 ### Phase 3: Mechanic side — add client, add entry, view history
 
 #### Automated
 
-- [ ] 3.1 Type checking passes: `npx astro check`
-- [ ] 3.2 Unit tests pass: `npm run test`
-- [ ] 3.3 Lint passes: `npm run lint`
-- [ ] 3.4 Production build succeeds: `npm run build`
+- [x] 3.1 Type checking passes: `npx astro check`
+- [x] 3.2 Unit tests pass: `npm run test`
+- [x] 3.3 Lint passes: `npm run lint`
+- [x] 3.4 Production build succeeds: `npm run build`
 
 #### Manual
 
-- [ ] 3.5 Adding a client with vehicle redirects to its page and lists it as "Waiting for signup"
-- [ ] 3.6 Duplicate email (different case) shows the error and creates nothing
-- [ ] 3.7 New entry appears at top of history; invalid input shows the error and inserts nothing
-- [ ] 3.8 A second mechanic sees an empty list and gets 404 on the seeded client's page
-- [ ] 3.9 Posting to `/api/clients` as the seeded client is rejected and creates nothing
+- [x] 3.5 Adding a client with vehicle redirects to its page and lists it as "Waiting for signup"
+- [x] 3.6 Duplicate email (different case) shows the error and creates nothing
+- [x] 3.7 New entry appears at top of history; invalid input shows the error and inserts nothing
+- [x] 3.8 A second mechanic sees an empty list and gets 404 on the seeded client's page
+- [x] 3.9 Posting to `/api/clients` as the seeded client is rejected and creates nothing
 
 ### Phase 4: Client side — vehicle and service history
 
