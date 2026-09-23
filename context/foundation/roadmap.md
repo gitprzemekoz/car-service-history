@@ -42,7 +42,7 @@ The vehicle's service history today lives only in a paper booklet: clients lose 
 | ID   | Change ID                             | Outcome (user can …)                                                  | Prerequisites | PRD refs                          | Status   |
 | ---- | -------------------------------------- | ----------------------------------------------------------------------- | -------------- | ---------------------------------- | -------- |
 | F-01 | roles-and-domain-schema-foundation     | (foundation) mechanic/client roles + domain schema + RLS in place       | —              | Access Control, NFR (privacy)      | done     |
-| S-01 | first-service-entry-visible-to-client  | Mechanic adds client+vehicle+entry; client sees it in their history    | F-01           | FR-001, FR-002, FR-003, FR-004, US-01 | in-progress |
+| S-01 | first-service-entry-visible-to-client  | Mechanic adds client+vehicle+entry; client sees it in their history    | F-01           | FR-001, FR-002, FR-003, FR-004, US-01 | done |
 | S-02 | mechanic-edits-service-entry           | Mechanic corrects a mistake in a service entry they created            | S-01           | FR-006                            | proposed |
 | S-03 | shareable-vehicle-history-link         | Client generates a 24h read-only share link (no cost shown) for a buyer | S-01           | FR-005                            | proposed |
 | S-04 | client-flags-incorrect-entry           | Client flags a service entry as incorrect, visible to the mechanic     | S-01           | FR-007                            | proposed |
@@ -99,7 +99,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Bundles the PRD's single Primary Success Criterion (add client+vehicle, add entry, mechanic-scoped list, client view) into one slice on purpose — splitting it further would mean shipping a "create" with no "view" to demo, defeating the point of a north star. If it proves too broad for one `/10x-plan` pass, split at the mechanic-side/client-side boundary.
-- **Status:** in-progress
+- **Status:** done
 
 ### S-02: Mechanic edits service entry
 
@@ -179,3 +179,4 @@ Foundations below assume these are present and do NOT re-scaffold them.
 ## Done
 
 - **F-01: (foundation) a `role` distinction (mechanic/client) exists on registered users, a minimal domain schema (clients, vehicles, service_entries) exists with RLS enforcing "a mechanic sees only clients assigned to their own workshop" and "a client sees only their own vehicle," and the two dashboard routes are gated by role. No domain CRUD UI/API is built here — that's S-01's job.** — Archived 2026-09-23 → `context/archive/2026-09-22-roles-and-domain-schema-foundation/`. Lesson: —.
+- **S-01: A mechanic can add a client with their vehicle, log in, add a first service entry to it, and the client can log in and see that vehicle and entry in their history.** — Archived 2026-09-23 → `context/archive/2026-09-23-first-service-entry-visible-to-client/`. Lesson: —.

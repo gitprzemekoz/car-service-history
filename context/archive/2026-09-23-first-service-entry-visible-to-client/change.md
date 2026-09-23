@@ -1,10 +1,10 @@
 ---
 change_id: first-service-entry-visible-to-client
 title: First service entry visible to client
-status: implemented
+status: archived
 created: 2026-09-23
 updated: 2026-09-23
-archived_at: null
+archived_at: 2026-09-23T20:36:22Z
 ---
 
 ## Notes
