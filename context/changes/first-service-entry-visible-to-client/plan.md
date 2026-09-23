@@ -313,30 +313,30 @@ Purely additive against local/seed data only. The new `not null` columns have no
 
 #### Automated
 
-- [x] 3.1 Type checking passes: `npx astro check`
-- [x] 3.2 Unit tests pass: `npm run test`
-- [x] 3.3 Lint passes: `npm run lint`
-- [x] 3.4 Production build succeeds: `npm run build`
+- [x] 3.1 Type checking passes: `npx astro check` — 12c9228
+- [x] 3.2 Unit tests pass: `npm run test` — 12c9228
+- [x] 3.3 Lint passes: `npm run lint` — 12c9228
+- [x] 3.4 Production build succeeds: `npm run build` — 12c9228
 
 #### Manual
 
-- [x] 3.5 Adding a client with vehicle redirects to its page and lists it as "Waiting for signup"
-- [x] 3.6 Duplicate email (different case) shows the error and creates nothing
-- [x] 3.7 New entry appears at top of history; invalid input shows the error and inserts nothing
-- [x] 3.8 A second mechanic sees an empty list and gets 404 on the seeded client's page
-- [x] 3.9 Posting to `/api/clients` as the seeded client is rejected and creates nothing
+- [x] 3.5 Adding a client with vehicle redirects to its page and lists it as "Waiting for signup" — 12c9228
+- [x] 3.6 Duplicate email (different case) shows the error and creates nothing — 12c9228
+- [x] 3.7 New entry appears at top of history; invalid input shows the error and inserts nothing — 12c9228
+- [x] 3.8 A second mechanic sees an empty list and gets 404 on the seeded client's page — 12c9228
+- [x] 3.9 Posting to `/api/clients` as the seeded client is rejected and creates nothing — 12c9228
 
 ### Phase 4: Client side — vehicle and service history
 
 #### Automated
 
-- [ ] 4.1 Type checking passes: `npx astro check`
-- [ ] 4.2 Unit tests pass: `npm run test`
-- [ ] 4.3 Lint passes: `npm run lint`
-- [ ] 4.4 Production build succeeds: `npm run build`
+- [x] 4.1 Type checking passes: `npx astro check`
+- [x] 4.2 Unit tests pass: `npm run test`
+- [x] 4.3 Lint passes: `npm run lint`
+- [x] 4.4 Production build succeeds: `npm run build`
 
 #### Manual
 
-- [ ] 4.5 End-to-end US-01: new client signs up and sees vehicle and entry on `/dashboard`
-- [ ] 4.6 Seeded client sees only their own vehicle and entry
-- [ ] 4.7 A client with no entries sees the empty-state message
+- [x] 4.5 End-to-end US-01: new client signs up and sees vehicle and entry on `/dashboard`
+- [x] 4.6 Seeded client sees only their own vehicle and entry
+- [x] 4.7 A client with no entries sees the empty-state message
