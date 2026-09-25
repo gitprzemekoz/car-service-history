@@ -279,34 +279,34 @@ Apply the same translation to the landing page, the client and mechanic dashboar
 
 #### Automated
 
-- [x] 1.1 `git diff --name-only` lists exactly `components.json`, `package.json`, `package-lock.json`, `src/styles/global.css`
-- [x] 1.2 `grep -n '"style": "new-york"' components.json` and `grep -n '"baseColor": "olive"' components.json` both match
-- [x] 1.3 Lint passes: `npm run lint`
-- [x] 1.4 Unit tests pass: `npm test`
-- [x] 1.5 Production build succeeds: `npm run build`
+- [x] 1.1 `git diff --name-only` lists exactly `components.json`, `package.json`, `package-lock.json`, `src/styles/global.css` — 7c6141b
+- [x] 1.2 `grep -n '"style": "new-york"' components.json` and `grep -n '"baseColor": "olive"' components.json` both match — 7c6141b
+- [x] 1.3 Lint passes: `npm run lint` — 7c6141b
+- [x] 1.4 Unit tests pass: `npm test` — 7c6141b
+- [x] 1.5 Production build succeeds: `npm run build` — 7c6141b
 
 #### Manual
 
-- [x] 1.6 `npm run dev`: text on every page renders in Manrope (check DevTools computed `font-family`)
-- [x] 1.7 The default shadcn button variants are unaffected except for colour. Pages still render (the cosmic look is expected until phase 3).
+- [x] 1.6 `npm run dev`: text on every page renders in Manrope (check DevTools computed `font-family`) — 7c6141b
+- [x] 1.7 The default shadcn button variants are unaffected except for colour. Pages still render (the cosmic look is expected until phase 3). — 7c6141b
 
 ### Phase 2: Migrate the auth flow
 
 #### Automated
 
-- [ ] 2.1 `grep -nE '(bg-cosmic|(bg|text|border|ring|from|via|to|placeholder)-(white|blue|purple|indigo|pink))' src/pages/auth src/components/auth` returns nothing
-- [ ] 2.2 `grep -nE '#(dbeafe|1e3a8a|3b82f6|fee2e2|7f1d1d|dc2626)' src/components/Banner.astro` returns nothing
-- [ ] 2.3 Lint passes: `npm run lint`
-- [ ] 2.4 Unit tests pass: `npm test`
-- [ ] 2.5 Production build succeeds: `npm run build`
+- [x] 2.1 `grep -nE '(bg-cosmic|(bg|text|border|ring|from|via|to|placeholder)-(white|blue|purple|indigo|pink))' src/pages/auth src/components/auth` returns nothing
+- [x] 2.2 `grep -nE '#(dbeafe|1e3a8a|3b82f6|fee2e2|7f1d1d|dc2626)' src/components/Banner.astro` returns nothing
+- [x] 2.3 Lint passes: `npm run lint`
+- [x] 2.4 Unit tests pass: `npm test`
+- [x] 2.5 Production build succeeds: `npm run build`
 
 #### Manual
 
-- [ ] 2.6 `/auth/signin` and `/auth/signup` render as a white card on the light olive background. The heading is dark olive, links are olive (primary) and the submit button is dark olive with light text.
-- [ ] 2.7 Submit with invalid data: the field error border and message and the server error alert are red (destructive) and readable.
-- [ ] 2.8 The pending state shows the spinner visible on the button.
-- [ ] 2.9 `/auth/confirm-email` matches the same look.
-- [ ] 2.10 Temporarily unset a Supabase env var so `Layout.astro` shows the error Banner, and confirm it uses the destructive colour.
+- [x] 2.6 `/auth/signin` and `/auth/signup` render as a white card on the light olive background. The heading is dark olive, links are olive (primary) and the submit button is dark olive with light text.
+- [x] 2.7 Submit with invalid data: the field error border and message and the server error alert are red (destructive) and readable.
+- [x] 2.8 The pending state shows the spinner visible on the button.
+- [x] 2.9 `/auth/confirm-email` matches the same look.
+- [x] 2.10 Temporarily unset a Supabase env var so `Layout.astro` shows the error Banner, and confirm it uses the destructive colour.
 
 ### Phase 3: Migrate the landing page and dashboards, remove `bg-cosmic`
 
