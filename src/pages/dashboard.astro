@@ -33,21 +33,19 @@ const entries = vehicle?.service_entries ?? [];
 ---
 
 <Layout title="Dashboard">
-  <div class="bg-cosmic min-h-screen p-4">
-    <div class="mx-auto max-w-3xl space-y-6 py-8 text-white">
+  <div class="bg-background min-h-screen p-4">
+    <div class="mx-auto max-w-3xl space-y-6 py-8 text-foreground">
       <div class="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 class="bg-gradient-to-r from-blue-200 to-purple-200 bg-clip-text text-3xl font-bold text-transparent">
-            My vehicle
-          </h1>
-          <p class="mt-1 text-sm text-blue-100/80">
-            Signed in as <span class="font-semibold text-white">{user?.email}</span>
+          <h1 class="text-3xl font-bold text-foreground">My vehicle</h1>
+          <p class="mt-1 text-sm text-foreground">
+            Signed in as <span class="font-semibold text-foreground">{user?.email}</span>
           </p>
         </div>
         <form method="POST" action="/api/auth/signout">
           <button
             type="submit"
-            class="rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-sm transition-colors hover:bg-white/20"
+            class="rounded-lg border border-border px-4 py-2 text-sm text-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
           >
             Sign out
           </button>
@@ -56,21 +54,21 @@ const entries = vehicle?.service_entries ?? [];
 
       {vehicle ? (
         <>
-          <section class="rounded-2xl border border-white/10 bg-white/10 p-6 backdrop-blur-xl">
+          <section class="rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-sm">
             <h2 class="mb-2 text-xl font-semibold">
               {vehicle.make} {vehicle.model}
             </h2>
-            <p class="text-blue-100/90">{vehicle.registration_number}</p>
+            <p class="text-foreground">{vehicle.registration_number}</p>
           </section>
 
-          <section class="rounded-2xl border border-white/10 bg-white/10 p-6 backdrop-blur-xl">
+          <section class="rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-sm">
             <h2 class="mb-4 text-xl font-semibold">Service history</h2>
             <ServiceHistory entries={entries} />
           </section>
         </>
       ) : (
-        <section class="rounded-2xl border border-white/10 bg-white/10 p-6 backdrop-blur-xl">
-          <p class="text-sm text-blue-100/60">No vehicle yet.</p>
+        <section class="rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-sm">
+          <p class="text-sm text-muted-foreground">No vehicle yet.</p>
         </section>
       )}
     </div>

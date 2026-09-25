@@ -18,26 +18,26 @@ function formatCost(cost: number | null): string {
 ---
 
 {sorted.length === 0 ? (
-  <p class="text-sm text-blue-100/60">No service entries yet.</p>
+  <p class="text-sm text-muted-foreground">No service entries yet.</p>
 ) : (
   <ul class="space-y-3">
     {sorted.map((entry) => (
-      <li class="rounded-lg border border-white/10 bg-white/5 p-4">
+      <li class="rounded-lg border border-border bg-muted/50 p-4">
         <div class="flex flex-wrap items-baseline justify-between gap-2">
-          <span class="font-semibold text-white">{entry.service_type}</span>
-          <span class="text-sm text-blue-100/60">{entry.service_date}</span>
+          <span class="font-semibold text-foreground">{entry.service_type}</span>
+          <span class="text-sm text-muted-foreground">{entry.service_date}</span>
         </div>
         <dl class="mt-2 grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
-          <dt class="text-blue-100/50">Mileage</dt>
-          <dd class="text-blue-100/90">{entry.mileage} km</dd>
-          <dt class="text-blue-100/50">Cost</dt>
-          <dd class="text-blue-100/90">{formatCost(entry.cost)}</dd>
-          <dt class="text-blue-100/50">Next due mileage</dt>
-          <dd class="text-blue-100/90">{entry.next_due_mileage === null ? "—" : `${entry.next_due_mileage} km`}</dd>
-          <dt class="text-blue-100/50">Next due date</dt>
-          <dd class="text-blue-100/90">{entry.next_due_date ?? "—"}</dd>
+          <dt class="text-muted-foreground">Mileage</dt>
+          <dd class="text-foreground">{entry.mileage} km</dd>
+          <dt class="text-muted-foreground">Cost</dt>
+          <dd class="text-foreground">{formatCost(entry.cost)}</dd>
+          <dt class="text-muted-foreground">Next due mileage</dt>
+          <dd class="text-foreground">{entry.next_due_mileage === null ? "—" : `${entry.next_due_mileage} km`}</dd>
+          <dt class="text-muted-foreground">Next due date</dt>
+          <dd class="text-foreground">{entry.next_due_date ?? "—"}</dd>
         </dl>
-        {entry.notes && <p class="mt-2 text-sm whitespace-pre-line text-blue-100/80">{entry.notes}</p>}
+        {entry.notes && <p class="mt-2 text-sm whitespace-pre-line text-foreground">{entry.notes}</p>}
       </li>
     ))}
   </ul>

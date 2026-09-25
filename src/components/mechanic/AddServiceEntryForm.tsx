@@ -116,7 +116,7 @@ export default function AddServiceEntryForm({ clientId, defaultServiceDate, serv
       />
 
       <div>
-        <label htmlFor={SERVICE_ENTRY_FIELDS.notes} className="mb-1 block text-sm text-blue-100/80">
+        <label htmlFor={SERVICE_ENTRY_FIELDS.notes} className="text-foreground mb-1 block text-sm">
           Notes (optional)
         </label>
         <textarea
@@ -127,7 +127,7 @@ export default function AddServiceEntryForm({ clientId, defaultServiceDate, serv
           onChange={(e) => {
             update("notes", e.target.value);
           }}
-          className="w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2 text-white placeholder-white/40 transition-colors focus:ring-2 focus:ring-purple-400 focus:outline-none"
+          className="border-input bg-background text-foreground placeholder:text-muted-foreground focus:ring-ring w-full rounded-lg border px-3 py-2 transition-colors focus:ring-2 focus:outline-none"
         />
       </div>
 

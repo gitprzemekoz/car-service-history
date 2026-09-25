@@ -31,53 +31,51 @@ const clients = ((data ?? []) as ClientRow[]).map((row) => ({
 ---
 
 <Layout title="Mechanic Dashboard">
-  <div class="bg-cosmic min-h-screen p-4">
-    <div class="mx-auto max-w-3xl space-y-6 py-8 text-white">
+  <div class="bg-background min-h-screen p-4">
+    <div class="mx-auto max-w-3xl space-y-6 py-8 text-foreground">
       <div class="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 class="bg-gradient-to-r from-blue-200 to-purple-200 bg-clip-text text-3xl font-bold text-transparent">
-            Mechanic Dashboard
-          </h1>
-          <p class="mt-1 text-sm text-blue-100/80">
-            Signed in as <span class="font-semibold text-white">{user?.email}</span>
+          <h1 class="text-3xl font-bold text-foreground">Mechanic Dashboard</h1>
+          <p class="mt-1 text-sm text-foreground">
+            Signed in as <span class="font-semibold text-foreground">{user?.email}</span>
           </p>
         </div>
         <form method="POST" action="/api/auth/signout">
           <button
             type="submit"
-            class="rounded-lg border border-white/20 bg-white/10 px-4 py-2 text-sm transition-colors hover:bg-white/20"
+            class="rounded-lg border border-border px-4 py-2 text-sm text-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
           >
             Sign out
           </button>
         </form>
       </div>
 
-      <section class="rounded-2xl border border-white/10 bg-white/10 p-6 backdrop-blur-xl">
+      <section class="rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-sm">
         <h2 class="mb-4 text-xl font-semibold">Clients</h2>
         {clients.length === 0 ? (
-          <p class="text-sm text-blue-100/60">No clients yet. Add your first client below.</p>
+          <p class="text-sm text-muted-foreground">No clients yet. Add your first client below.</p>
         ) : (
           <ul class="space-y-3">
             {clients.map((client) => (
               <li>
                 <a
                   href={`/dashboard/mechanic/clients/${client.id}`}
-                  class="block rounded-lg border border-white/10 bg-white/5 p-4 transition-colors hover:bg-white/10"
+                  class="block rounded-lg border border-border bg-muted/50 p-4 transition-colors hover:bg-accent"
                 >
                   <div class="flex flex-wrap items-baseline justify-between gap-2">
-                    <span class="font-semibold text-white">{client.name}</span>
-                    <span class="text-sm text-blue-100/60">{client.email}</span>
+                    <span class="font-semibold text-foreground">{client.name}</span>
+                    <span class="text-sm text-muted-foreground">{client.email}</span>
                   </div>
                   {client.vehicle && (
-                    <p class="mt-1 text-sm text-blue-100/80">
+                    <p class="mt-1 text-sm text-foreground">
                       {client.vehicle.make} {client.vehicle.model} · {client.vehicle.registration_number}
                     </p>
                   )}
                   <p class="mt-1 text-xs">
                     {client.user_id ? (
-                      <span class="text-green-300">Linked</span>
+                      <span class="text-green-700">Linked</span>
                     ) : (
-                      <span class="text-amber-300">
+                      <span class="text-amber-700">
                         Waiting for signup — ask the client to sign up with {client.email}
                       </span>
                     )}
@@ -89,7 +87,7 @@ const clients = ((data ?? []) as ClientRow[]).map((row) => ({
         )}
       </section>
 
-      <section class="rounded-2xl border border-white/10 bg-white/10 p-6 backdrop-blur-xl">
+      <section class="rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-sm">
         <h2 class="mb-4 text-xl font-semibold">Add client</h2>
         <AddClientForm serverError={error} client:load />
       </section>

@@ -294,35 +294,35 @@ Apply the same translation to the landing page, the client and mechanic dashboar
 
 #### Automated
 
-- [x] 2.1 `grep -nE '(bg-cosmic|(bg|text|border|ring|from|via|to|placeholder)-(white|blue|purple|indigo|pink))' src/pages/auth src/components/auth` returns nothing
-- [x] 2.2 `grep -nE '#(dbeafe|1e3a8a|3b82f6|fee2e2|7f1d1d|dc2626)' src/components/Banner.astro` returns nothing
-- [x] 2.3 Lint passes: `npm run lint`
-- [x] 2.4 Unit tests pass: `npm test`
-- [x] 2.5 Production build succeeds: `npm run build`
+- [x] 2.1 `grep -nE '(bg-cosmic|(bg|text|border|ring|from|via|to|placeholder)-(white|blue|purple|indigo|pink))' src/pages/auth src/components/auth` returns nothing — 2d532df
+- [x] 2.2 `grep -nE '#(dbeafe|1e3a8a|3b82f6|fee2e2|7f1d1d|dc2626)' src/components/Banner.astro` returns nothing — 2d532df
+- [x] 2.3 Lint passes: `npm run lint` — 2d532df
+- [x] 2.4 Unit tests pass: `npm test` — 2d532df
+- [x] 2.5 Production build succeeds: `npm run build` — 2d532df
 
 #### Manual
 
-- [x] 2.6 `/auth/signin` and `/auth/signup` render as a white card on the light olive background. The heading is dark olive, links are olive (primary) and the submit button is dark olive with light text.
-- [x] 2.7 Submit with invalid data: the field error border and message and the server error alert are red (destructive) and readable.
-- [x] 2.8 The pending state shows the spinner visible on the button.
-- [x] 2.9 `/auth/confirm-email` matches the same look.
-- [x] 2.10 Temporarily unset a Supabase env var so `Layout.astro` shows the error Banner, and confirm it uses the destructive colour.
+- [x] 2.6 `/auth/signin` and `/auth/signup` render as a white card on the light olive background. The heading is dark olive, links are olive (primary) and the submit button is dark olive with light text. — 2d532df
+- [x] 2.7 Submit with invalid data: the field error border and message and the server error alert are red (destructive) and readable. — 2d532df
+- [x] 2.8 The pending state shows the spinner visible on the button. — 2d532df
+- [x] 2.9 `/auth/confirm-email` matches the same look. — 2d532df
+- [x] 2.10 Temporarily unset a Supabase env var so `Layout.astro` shows the error Banner, and confirm it uses the destructive colour. — 2d532df
 
 ### Phase 3: Migrate the landing page and dashboards, remove `bg-cosmic`
 
 #### Automated
 
-- [ ] 3.1 `grep -rnE '(bg|text|border|ring|from|via|to|placeholder|fill|stroke)-(white|black|blue|purple|indigo|pink)' src --include=*.astro --include=*.tsx | grep -v 'src/components/ui/button.tsx'` returns nothing (shadcn's own `button.tsx` keeps its generated `text-white` on the destructive variant)
-- [ ] 3.2 `grep -rn 'bg-cosmic' src` returns nothing
-- [ ] 3.3 Lint passes: `npm run lint`
-- [ ] 3.4 Unit tests pass: `npm test`
-- [ ] 3.5 Production build succeeds: `npm run build`
-- [ ] 3.6 Smoke test passes against dev server: `BASE_URL=http://localhost:4321 npm run smoke`
+- [x] 3.1 `grep -rnE '(bg|text|border|ring|from|via|to|placeholder|fill|stroke)-(white|black|blue|purple|indigo|pink)' src --include=*.astro --include=*.tsx | grep -v 'src/components/ui/button.tsx'` returns nothing (shadcn's own `button.tsx` keeps its generated `text-white` on the destructive variant)
+- [x] 3.2 `grep -rn 'bg-cosmic' src` returns nothing
+- [x] 3.3 Lint passes: `npm run lint`
+- [x] 3.4 Unit tests pass: `npm test`
+- [x] 3.5 Production build succeeds: `npm run build`
+- [x] 3.6 Smoke test passes against dev server: `BASE_URL=http://localhost:4321 npm run smoke`
 
 #### Manual
 
-- [ ] 3.7 The landing page `/` is light olive: readable hero heading, olive primary CTA, feature cards with visible borders, and no leftover purple glow.
-- [ ] 3.8 The client `/dashboard` and mechanic `/dashboard/mechanic` pages show white cards on the olive-light background, readable muted text, and a sign-out button that looks like an outline button.
-- [ ] 3.9 On a client detail page, the "linked" (green) and "waiting" (amber) labels are readable on the light card, and the service history entries are distinguishable from the card.
-- [ ] 3.10 Add a service entry: the form input focus ring is olive.
-- [ ] 3.11 Click through all pages: no page shows the dark gradient or white-on-white text.
+- [x] 3.7 The landing page `/` is light olive: readable hero heading, olive primary CTA, feature cards with visible borders, and no leftover purple glow.
+- [x] 3.8 The client `/dashboard` and mechanic `/dashboard/mechanic` pages show white cards on the olive-light background, readable muted text, and a sign-out button that looks like an outline button.
+- [x] 3.9 On a client detail page, the "linked" (green) and "waiting" (amber) labels are readable on the light card, and the service history entries are distinguishable from the card.
+- [x] 3.10 Add a service entry: the form input focus ring is olive.
+- [x] 3.11 Click through all pages: no page shows the dark gradient or white-on-white text.
