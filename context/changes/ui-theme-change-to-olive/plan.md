@@ -312,17 +312,17 @@ Apply the same translation to the landing page, the client and mechanic dashboar
 
 #### Automated
 
-- [x] 3.1 `grep -rnE '(bg|text|border|ring|from|via|to|placeholder|fill|stroke)-(white|black|blue|purple|indigo|pink)' src --include=*.astro --include=*.tsx | grep -v 'src/components/ui/button.tsx'` returns nothing (shadcn's own `button.tsx` keeps its generated `text-white` on the destructive variant)
-- [x] 3.2 `grep -rn 'bg-cosmic' src` returns nothing
-- [x] 3.3 Lint passes: `npm run lint`
-- [x] 3.4 Unit tests pass: `npm test`
-- [x] 3.5 Production build succeeds: `npm run build`
-- [x] 3.6 Smoke test passes against dev server: `BASE_URL=http://localhost:4321 npm run smoke`
+- [x] 3.1 `grep -rnE '(bg|text|border|ring|from|via|to|placeholder|fill|stroke)-(white|black|blue|purple|indigo|pink)' src --include=*.astro --include=*.tsx | grep -v 'src/components/ui/button.tsx'` returns nothing (shadcn's own `button.tsx` keeps its generated `text-white` on the destructive variant) — 2e3a664
+- [x] 3.2 `grep -rn 'bg-cosmic' src` returns nothing — 2e3a664
+- [x] 3.3 Lint passes: `npm run lint` — 2e3a664
+- [x] 3.4 Unit tests pass: `npm test` — 2e3a664
+- [x] 3.5 Production build succeeds: `npm run build` — 2e3a664
+- [x] 3.6 Smoke test passes against dev server: `BASE_URL=http://localhost:4321 npm run smoke` — 2e3a664
 
 #### Manual
 
-- [x] 3.7 The landing page `/` is light olive: readable hero heading, olive primary CTA, feature cards with visible borders, and no leftover purple glow.
-- [x] 3.8 The client `/dashboard` and mechanic `/dashboard/mechanic` pages show white cards on the olive-light background, readable muted text, and a sign-out button that looks like an outline button.
-- [x] 3.9 On a client detail page, the "linked" (green) and "waiting" (amber) labels are readable on the light card, and the service history entries are distinguishable from the card.
-- [x] 3.10 Add a service entry: the form input focus ring is olive.
-- [x] 3.11 Click through all pages: no page shows the dark gradient or white-on-white text.
+- [x] 3.7 The landing page `/` is light olive: readable hero heading, olive primary CTA, feature cards with visible borders, and no leftover purple glow. — 2e3a664
+- [x] 3.8 The client `/dashboard` and mechanic `/dashboard/mechanic` pages show white cards on the olive-light background, readable muted text, and a sign-out button that looks like an outline button. — 2e3a664
+- [x] 3.9 On a client detail page, the "linked" (green) and "waiting" (amber) labels are readable on the light card, and the service history entries are distinguishable from the card. — 2e3a664
+- [x] 3.10 Add a service entry: the form input focus ring is olive. — 2e3a664
+- [x] 3.11 Click through all pages: no page shows the dark gradient or white-on-white text. — 2e3a664
