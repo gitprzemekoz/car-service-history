@@ -1,7 +1,7 @@
 ---
 change_id: ui-theme-change-to-olive
 title: Ui theme change to olive
-status: implemented
+status: impl_reviewed
 created: 2026-09-25
 updated: 2026-09-25
 archived_at: null
