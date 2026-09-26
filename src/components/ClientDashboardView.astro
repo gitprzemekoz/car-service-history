@@ -1,0 +1,61 @@
+---
+import ServiceHistory from "@/components/ServiceHistory.astro";
+import type { ServiceEntry, Vehicle } from "@/lib/types";
+
+interface Props {
+  email: string | undefined;
+  vehicle: Pick<Vehicle, "make" | "model" | "registration_number"> | null;
+  entries: ServiceEntry[];
+  // Accepted now so callers can pass it; renders the same fallback as "no vehicle" until the error state lands.
+  loadError: boolean;
+  // Dev kitchen sink only: headless screenshots cannot press Tab, so focus is shown via autofocus.
+  autofocusSignOut?: boolean;
+}
+
+const { email, vehicle, entries, autofocusSignOut = false } = Astro.props;
+
+// Spread so the real page never carries the attribute; only the kitchen sink sets it.
+const focusAttrs = autofocusSignOut ? { autofocus: true } : {};
+---
+
+<div class="bg-background min-h-screen p-4">
+  <div class="mx-auto max-w-3xl space-y-6 py-8 text-foreground">
+    <div class="flex flex-wrap items-center justify-between gap-4">
+      <div>
+        <h1 class="text-3xl font-bold text-foreground">My vehicle</h1>
+        <p class="mt-1 text-sm text-foreground">
+          Signed in as <span class="font-semibold text-foreground">{email}</span>
+        </p>
+      </div>
+      <form method="POST" action="/api/auth/signout">
+        <button
+          type="submit"
+          {...focusAttrs}
+          class="rounded-lg border border-border px-4 py-2 text-sm text-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+        >
+          Sign out
+        </button>
+      </form>
+    </div>
+
+    {vehicle ? (
+      <>
+        <section class="rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-sm">
+          <h2 class="mb-2 text-xl font-semibold">
+            {vehicle.make} {vehicle.model}
+          </h2>
+          <p class="text-foreground">{vehicle.registration_number}</p>
+        </section>
+
+        <section class="rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-sm">
+          <h2 class="mb-4 text-xl font-semibold">Service history</h2>
+          <ServiceHistory entries={entries} />
+        </section>
+      </>
+    ) : (
+      <section class="rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-sm">
+        <p class="text-sm text-muted-foreground">No vehicle yet.</p>
+      </section>
+    )}
+  </div>
+</div>
