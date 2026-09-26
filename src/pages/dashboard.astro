@@ -18,20 +18,21 @@ const { user } = Astro.locals;
 const supabase = createClient(Astro.request.headers, Astro.cookies);
 
 // RLS-scoped (clients_select_own): only the signed-in client's own linked row is visible.
-const { data } =
+const { data, error } =
   supabase && user
     ? await supabase
         .from("clients")
         .select("id, vehicles(id, make, model, registration_number, service_entries(*))")
         .eq("user_id", user.id)
         .maybeSingle()
-    : { data: null };
+    : { data: null, error: null };
 
+const loadError = Boolean(error);
 const client = data as ClientRow | null;
 const vehicle = Array.isArray(client?.vehicles) ? (client.vehicles[0] ?? null) : (client?.vehicles ?? null);
 const entries = vehicle?.service_entries ?? [];
 ---
 
 <Layout title="Dashboard">
-  <ClientDashboardView email={user?.email} vehicle={vehicle} entries={entries} loadError={false} />
+  <ClientDashboardView email={user?.email} vehicle={vehicle} entries={entries} loadError={loadError} />
 </Layout>

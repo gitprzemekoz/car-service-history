@@ -364,30 +364,30 @@ None. The formatters are created per render on a handful of entries, and the que
 
 #### Automated
 
-- [x] 3.1 Unit tests pass: `npm test` (including `src/lib/service-history.test.ts`)
-- [x] 3.2 Lint passes: `npm run lint`
-- [x] 3.3 Build passes: `npm run build`
-- [x] 3.4 No card class-string copies remain in the view: `grep -c "rounded-2xl border border-border bg-card" src/components/ClientDashboardView.astro src/pages/dashboard.astro` returns 0 for both
+- [x] 3.1 Unit tests pass: `npm test` (including `src/lib/service-history.test.ts`) — 4cc775f
+- [x] 3.2 Lint passes: `npm run lint` — 4cc775f
+- [x] 3.3 Build passes: `npm run build` — 4cc775f
+- [x] 3.4 No card class-string copies remain in the view: `grep -c "rounded-2xl border border-border bg-card" src/components/ClientDashboardView.astro src/pages/dashboard.astro` returns 0 for both — 4cc775f
 
 #### Manual
 
-- [x] 3.5 `/dev/dashboard-states` at 1280px and 375px: the hierarchy reads heading → vehicle + Next service → history, and nothing wraps badly at 375px
-- [x] 3.6 The mechanic view `/dashboard/mechanic/clients/<seeded id>` shows the new formats and still looks right
-- [x] 3.7 The real `/dashboard` as `client@example.test` shows `85 000 km`, `150,00 zł` and a Next service line of `23 wrz 2027 · 100 000 km`
+- [x] 3.5 `/dev/dashboard-states` at 1280px and 375px: the hierarchy reads heading → vehicle + Next service → history, and nothing wraps badly at 375px — 4cc775f
+- [x] 3.6 The mechanic view `/dashboard/mechanic/clients/<seeded id>` shows the new formats and still looks right — 4cc775f
+- [x] 3.7 The real `/dashboard` as `client@example.test` shows `85 000 km`, `150,00 zł` and a Next service line of `23 wrz 2027 · 100 000 km` — 4cc775f
 
 ### Phase 4: States and final gate
 
 #### Automated
 
-- [ ] 4.1 Unit tests pass: `npm test`
-- [ ] 4.2 Lint passes: `npm run lint`
-- [ ] 4.3 Build passes: `npm run build`
-- [ ] 4.4 `/dev/dashboard-states` returns 404 from the built app: `npm run preview` + `curl -o /dev/null -w "%{http_code}" http://localhost:4321/dev/dashboard-states` prints `404`
-- [ ] 4.5 After screenshots exist: `screenshots/after/desktop-1280.png` and `mobile-375.png`
+- [x] 4.1 Unit tests pass: `npm test`
+- [x] 4.2 Lint passes: `npm run lint`
+- [x] 4.3 Build passes: `npm run build`
+- [x] 4.4 `/dev/dashboard-states` returns 404 from the built app: `npm run preview` + `curl -o /dev/null -w "%{http_code}" http://localhost:4321/dev/dashboard-states` prints `404`
+- [x] 4.5 After screenshots exist: `screenshots/after/desktop-1280.png` and `mobile-375.png`
 
 #### Manual
 
-- [ ] 4.6 The kitchen sink shows error, no-vehicle, 0-entries and entries as visibly different states, each with actionable copy
-- [ ] 4.7 Keyboard: Tab on `/dashboard` reaches sign-out with a visible ring, and in the error state it also reaches "Try again". Both controls have accessible names
-- [ ] 4.8 The before/after comparison is written up in `charges.md`, and every visual difference is explained
-- [ ] 4.9 The `ui-quality-checklist` (`.claude/skills/10x-ui/references/ui-quality-checklist.md`) is walked through, and any unchecked item is recorded as deferred with a reason
+- [x] 4.6 The kitchen sink shows error, no-vehicle, 0-entries and entries as visibly different states, each with actionable copy
+- [x] 4.7 Keyboard: Tab on `/dashboard` reaches sign-out with a visible ring, and in the error state it also reaches "Try again". Both controls have accessible names
+- [x] 4.8 The before/after comparison is written up in `charges.md`, and every visual difference is explained
+- [x] 4.9 The `ui-quality-checklist` (`.claude/skills/10x-ui/references/ui-quality-checklist.md`) is walked through, and any unchecked item is recorded as deferred with a reason

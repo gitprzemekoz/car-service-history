@@ -12,7 +12,7 @@ const sorted = sortNewestFirst(entries);
 ---
 
 {sorted.length === 0 ? (
-  <p class="text-sm text-muted-foreground">No service entries yet.</p>
+  <p class="text-sm text-muted-foreground">No service entries yet — entries appear here after each service visit.</p>
 ) : (
   <ul class="space-y-3">
     {sorted.map((entry) => (

@@ -60,7 +60,10 @@ const states = [
     props: { vehicle, entries },
   },
   { label: "(b) Vehicle with 0 entries", props: { vehicle, entries: [] } },
-  { label: "(c) Load error", props: { vehicle: null, entries: [], loadError: true } },
+  {
+    label: "(c) Load error (vehicle and entries passed: error takes precedence)",
+    props: { vehicle, entries, loadError: true },
+  },
   { label: "(d) No vehicle", props: { vehicle: null, entries: [] } },
   { label: "(e) Focus: sign-out button focused", props: { vehicle, entries, autofocusSignOut: true } },
 ];

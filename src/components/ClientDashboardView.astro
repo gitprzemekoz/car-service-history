@@ -9,13 +9,13 @@ interface Props {
   email: string | undefined;
   vehicle: Pick<Vehicle, "make" | "model" | "registration_number"> | null;
   entries: ServiceEntry[];
-  // Accepted now so callers can pass it; renders the same fallback as "no vehicle" until the error state lands.
+  // True when the clients query failed; takes precedence over every other state, even if a vehicle is passed.
   loadError: boolean;
   // Dev kitchen sink only: headless screenshots cannot press Tab, so focus is shown via autofocus.
   autofocusSignOut?: boolean;
 }
 
-const { email, vehicle, entries, autofocusSignOut = false } = Astro.props;
+const { email, vehicle, entries, loadError, autofocusSignOut = false } = Astro.props;
 
 // Spread so the real page never carries the attribute; only the kitchen sink sets it.
 const focusAttrs = autofocusSignOut ? { autofocus: true } : {};
@@ -47,7 +47,18 @@ const nextServiceText = next
       </form>
     </div>
 
-    {vehicle ? (
+    {loadError ? (
+      <Card>
+        <CardContent className="space-y-4">
+          <p role="alert" class="text-sm text-foreground">
+            Your service history couldn't be loaded. Please try again in a moment.
+          </p>
+          <a href="/dashboard" class:list={[buttonVariants({ variant: "outline" })]}>
+            Try again
+          </a>
+        </CardContent>
+      </Card>
+    ) : vehicle ? (
       <>
         <Card>
           <CardHeader>
@@ -81,7 +92,9 @@ const nextServiceText = next
     ) : (
       <Card>
         <CardContent>
-          <p class="text-sm text-muted-foreground">No vehicle yet.</p>
+          <p class="text-sm text-muted-foreground">
+            No vehicle is linked to this account yet. Contact your mechanic to have your vehicle added.
+          </p>
         </CardContent>
       </Card>
     )}
