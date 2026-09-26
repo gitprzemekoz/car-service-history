@@ -336,29 +336,29 @@ None. The formatters are created per render on a handful of entries, and the que
 
 #### Automated
 
-- [x] 1.1 Lint passes: `npm run lint`
-- [x] 1.2 Unit tests pass: `npm test`
-- [x] 1.3 Build passes: `npm run build`
-- [x] 1.4 Baseline screenshots exist: `context/changes/client-dashboard-ui-audit/screenshots/before/desktop-1280.png` and `mobile-375.png`
+- [x] 1.1 Lint passes: `npm run lint` — 52e0f4f
+- [x] 1.2 Unit tests pass: `npm test` — 52e0f4f
+- [x] 1.3 Build passes: `npm run build` — 52e0f4f
+- [x] 1.4 Baseline screenshots exist: `context/changes/client-dashboard-ui-audit/screenshots/before/desktop-1280.png` and `mobile-375.png` — 52e0f4f
 
 #### Manual
 
-- [x] 1.5 `/dashboard` as `client@example.test` looks identical to before the extraction
-- [x] 1.6 `/dev/dashboard-states` shows all five labelled sections in `npm run dev`
+- [x] 1.5 `/dashboard` as `client@example.test` looks identical to before the extraction — 52e0f4f
+- [x] 1.6 `/dev/dashboard-states` shows all five labelled sections in `npm run dev` — 52e0f4f
 
 ### Phase 2: Contract — token fixes and shadcn Card
 
 #### Automated
 
-- [ ] 2.1 Lint passes: `npm run lint`
-- [ ] 2.2 Build passes: `npm run build`
-- [ ] 2.3 `src/components/ui/card.tsx` exists and `global.css` no longer contains `outline-ring/50`
-- [ ] 2.4 `tokens.md` lists `--muted-foreground` and `--ring` with contrast ≥ 4.5:1 for muted-foreground on both background and muted, and ≥ 3:1 for ring
+- [x] 2.1 Lint passes: `npm run lint`
+- [x] 2.2 Build passes: `npm run build`
+- [x] 2.3 `src/components/ui/card.tsx` exists and `global.css` no longer contains `outline-ring/50`
+- [x] 2.4 `tokens.md` lists `--muted-foreground` and `--ring` with contrast ≥ 4.5:1 for muted-foreground on both background and muted, and ≥ 3:1 for ring
 
 #### Manual
 
-- [ ] 2.5 Secondary text is visibly darker on `/dev/dashboard-states`, the auth pages and the mechanic dashboard, and nothing looks broken
-- [ ] 2.6 Tabbing through `/auth/signin` shows a clearly visible focus outline
+- [x] 2.5 Secondary text is visibly darker on `/dev/dashboard-states`, the auth pages and the mechanic dashboard, and nothing looks broken
+- [x] 2.6 Tabbing through `/auth/signin` shows a clearly visible focus outline
 
 ### Phase 3: The one view — Card, Button, roles, formatting, Next service
 
