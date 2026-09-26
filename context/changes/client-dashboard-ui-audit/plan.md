@@ -350,30 +350,30 @@ None. The formatters are created per render on a handful of entries, and the que
 
 #### Automated
 
-- [x] 2.1 Lint passes: `npm run lint`
-- [x] 2.2 Build passes: `npm run build`
-- [x] 2.3 `src/components/ui/card.tsx` exists and `global.css` no longer contains `outline-ring/50`
-- [x] 2.4 `tokens.md` lists `--muted-foreground` and `--ring` with contrast ≥ 4.5:1 for muted-foreground on both background and muted, and ≥ 3:1 for ring
+- [x] 2.1 Lint passes: `npm run lint` — aa5e221
+- [x] 2.2 Build passes: `npm run build` — aa5e221
+- [x] 2.3 `src/components/ui/card.tsx` exists and `global.css` no longer contains `outline-ring/50` — aa5e221
+- [x] 2.4 `tokens.md` lists `--muted-foreground` and `--ring` with contrast ≥ 4.5:1 for muted-foreground on both background and muted, and ≥ 3:1 for ring — aa5e221
 
 #### Manual
 
-- [x] 2.5 Secondary text is visibly darker on `/dev/dashboard-states`, the auth pages and the mechanic dashboard, and nothing looks broken
-- [x] 2.6 Tabbing through `/auth/signin` shows a clearly visible focus outline
+- [x] 2.5 Secondary text is visibly darker on `/dev/dashboard-states`, the auth pages and the mechanic dashboard, and nothing looks broken — aa5e221
+- [x] 2.6 Tabbing through `/auth/signin` shows a clearly visible focus outline — aa5e221
 
 ### Phase 3: The one view — Card, Button, roles, formatting, Next service
 
 #### Automated
 
-- [ ] 3.1 Unit tests pass: `npm test` (including `src/lib/service-history.test.ts`)
-- [ ] 3.2 Lint passes: `npm run lint`
-- [ ] 3.3 Build passes: `npm run build`
-- [ ] 3.4 No card class-string copies remain in the view: `grep -c "rounded-2xl border border-border bg-card" src/components/ClientDashboardView.astro src/pages/dashboard.astro` returns 0 for both
+- [x] 3.1 Unit tests pass: `npm test` (including `src/lib/service-history.test.ts`)
+- [x] 3.2 Lint passes: `npm run lint`
+- [x] 3.3 Build passes: `npm run build`
+- [x] 3.4 No card class-string copies remain in the view: `grep -c "rounded-2xl border border-border bg-card" src/components/ClientDashboardView.astro src/pages/dashboard.astro` returns 0 for both
 
 #### Manual
 
-- [ ] 3.5 `/dev/dashboard-states` at 1280px and 375px: the hierarchy reads heading → vehicle + Next service → history, and nothing wraps badly at 375px
-- [ ] 3.6 The mechanic view `/dashboard/mechanic/clients/<seeded id>` shows the new formats and still looks right
-- [ ] 3.7 The real `/dashboard` as `client@example.test` shows `85 000 km`, `150,00 zł` and a Next service line of `23 wrz 2027 · 100 000 km`
+- [x] 3.5 `/dev/dashboard-states` at 1280px and 375px: the hierarchy reads heading → vehicle + Next service → history, and nothing wraps badly at 375px
+- [x] 3.6 The mechanic view `/dashboard/mechanic/clients/<seeded id>` shows the new formats and still looks right
+- [x] 3.7 The real `/dashboard` as `client@example.test` shows `85 000 km`, `150,00 zł` and a Next service line of `23 wrz 2027 · 100 000 km`
 
 ### Phase 4: States and final gate
 

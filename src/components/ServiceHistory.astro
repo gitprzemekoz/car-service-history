@@ -1,4 +1,5 @@
 ---
+import { formatCost, formatMileage, formatServiceDate, sortNewestFirst } from "@/lib/service-history";
 import type { ServiceEntry } from "@/lib/types";
 
 interface Props {
@@ -7,14 +8,7 @@ interface Props {
 
 const { entries } = Astro.props;
 
-// Newest first: service_date desc, then created_at desc for entries on the same day.
-const sorted = [...entries].sort(
-  (a, b) => b.service_date.localeCompare(a.service_date) || b.created_at.localeCompare(a.created_at),
-);
-
-function formatCost(cost: number | null): string {
-  return cost === null ? "—" : cost.toFixed(2);
-}
+const sorted = sortNewestFirst(entries);
 ---
 
 {sorted.length === 0 ? (
@@ -25,17 +19,19 @@ function formatCost(cost: number | null): string {
       <li class="rounded-lg border border-border bg-muted/50 p-4">
         <div class="flex flex-wrap items-baseline justify-between gap-2">
           <span class="font-semibold text-foreground">{entry.service_type}</span>
-          <span class="text-sm text-muted-foreground">{entry.service_date}</span>
+          <span class="text-sm text-muted-foreground">{formatServiceDate(entry.service_date)}</span>
         </div>
         <dl class="mt-2 grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
           <dt class="text-muted-foreground">Mileage</dt>
-          <dd class="text-foreground">{entry.mileage} km</dd>
+          <dd class="text-foreground">{formatMileage(entry.mileage)}</dd>
           <dt class="text-muted-foreground">Cost</dt>
           <dd class="text-foreground">{formatCost(entry.cost)}</dd>
           <dt class="text-muted-foreground">Next due mileage</dt>
-          <dd class="text-foreground">{entry.next_due_mileage === null ? "—" : `${entry.next_due_mileage} km`}</dd>
+          <dd class="text-foreground">
+            {entry.next_due_mileage === null ? "—" : formatMileage(entry.next_due_mileage)}
+          </dd>
           <dt class="text-muted-foreground">Next due date</dt>
-          <dd class="text-foreground">{entry.next_due_date ?? "—"}</dd>
+          <dd class="text-foreground">{entry.next_due_date === null ? "—" : formatServiceDate(entry.next_due_date)}</dd>
         </dl>
         {entry.notes && <p class="mt-2 text-sm whitespace-pre-line text-foreground">{entry.notes}</p>}
       </li>
