@@ -379,15 +379,15 @@ None. The formatters are created per render on a handful of entries, and the que
 
 #### Automated
 
-- [x] 4.1 Unit tests pass: `npm test`
-- [x] 4.2 Lint passes: `npm run lint`
-- [x] 4.3 Build passes: `npm run build`
-- [x] 4.4 `/dev/dashboard-states` returns 404 from the built app: `npm run preview` + `curl -o /dev/null -w "%{http_code}" http://localhost:4321/dev/dashboard-states` prints `404`
-- [x] 4.5 After screenshots exist: `screenshots/after/desktop-1280.png` and `mobile-375.png`
+- [x] 4.1 Unit tests pass: `npm test` — 2eab598
+- [x] 4.2 Lint passes: `npm run lint` — 2eab598
+- [x] 4.3 Build passes: `npm run build` — 2eab598
+- [x] 4.4 `/dev/dashboard-states` returns 404 from the built app: `npm run preview` + `curl -o /dev/null -w "%{http_code}" http://localhost:4321/dev/dashboard-states` prints `404` — 2eab598
+- [x] 4.5 After screenshots exist: `screenshots/after/desktop-1280.png` and `mobile-375.png` — 2eab598
 
 #### Manual
 
-- [x] 4.6 The kitchen sink shows error, no-vehicle, 0-entries and entries as visibly different states, each with actionable copy
-- [x] 4.7 Keyboard: Tab on `/dashboard` reaches sign-out with a visible ring, and in the error state it also reaches "Try again". Both controls have accessible names
-- [x] 4.8 The before/after comparison is written up in `charges.md`, and every visual difference is explained
-- [x] 4.9 The `ui-quality-checklist` (`.claude/skills/10x-ui/references/ui-quality-checklist.md`) is walked through, and any unchecked item is recorded as deferred with a reason
+- [x] 4.6 The kitchen sink shows error, no-vehicle, 0-entries and entries as visibly different states, each with actionable copy — 2eab598
+- [x] 4.7 Keyboard: Tab on `/dashboard` reaches sign-out with a visible ring, and in the error state it also reaches "Try again". Both controls have accessible names — 2eab598
+- [x] 4.8 The before/after comparison is written up in `charges.md`, and every visual difference is explained — 2eab598
+- [x] 4.9 The `ui-quality-checklist` (`.claude/skills/10x-ui/references/ui-quality-checklist.md`) is walked through, and any unchecked item is recorded as deferred with a reason — 2eab598
