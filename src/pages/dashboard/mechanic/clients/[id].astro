@@ -1,6 +1,6 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import AddServiceEntryForm from "@/components/mechanic/AddServiceEntryForm";
+import ServiceEntryForm from "@/components/mechanic/ServiceEntryForm";
 import ServiceHistory from "@/components/ServiceHistory.astro";
 import { createClient } from "@/lib/supabase";
 import type { Client, ServiceEntry, Vehicle } from "@/lib/types";
@@ -38,6 +38,8 @@ if (!data) {
 const client = data as ClientRow | null;
 const vehicle = Array.isArray(client?.vehicles) ? (client.vehicles[0] ?? null) : (client?.vehicles ?? null);
 const entries = vehicle?.service_entries ?? [];
+const editHref = (entry: ServiceEntry) =>
+  `/dashboard/mechanic/clients/${encodeURIComponent(id)}/entries/${encodeURIComponent(entry.id)}/edit`;
 ---
 
 {!client && (
@@ -84,15 +86,25 @@ const entries = vehicle?.service_entries ?? [];
 
         <section class="rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-sm">
           <h2 class="mb-4 text-xl font-semibold">Service history</h2>
-          <ServiceHistory entries={entries} />
+          <ServiceHistory entries={entries} editHref={editHref} />
         </section>
 
         {vehicle && (
           <section class="rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-sm">
             <h2 class="mb-4 text-xl font-semibold">Add service entry</h2>
-            <AddServiceEntryForm
-              clientId={client.id}
-              defaultServiceDate={toLocalIsoDate(new Date())}
+            <ServiceEntryForm
+              action={`/api/clients/${encodeURIComponent(client.id)}/entries`}
+              initialValues={{
+                serviceType: "",
+                serviceDate: toLocalIsoDate(new Date()),
+                mileage: "",
+                cost: "",
+                notes: "",
+                nextDueMileage: "",
+                nextDueDate: "",
+              }}
+              submitLabel="Add service entry"
+              pendingText="Adding entry..."
               serverError={error}
               client:load
             />

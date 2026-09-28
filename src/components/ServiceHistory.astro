@@ -4,9 +4,11 @@ import type { ServiceEntry } from "@/lib/types";
 
 interface Props {
   entries: ServiceEntry[];
+  // Set only by the mechanic page; the client view renders no edit links.
+  editHref?: (entry: ServiceEntry) => string;
 }
 
-const { entries } = Astro.props;
+const { entries, editHref } = Astro.props;
 
 const sorted = sortNewestFirst(entries);
 ---
@@ -19,7 +21,14 @@ const sorted = sortNewestFirst(entries);
       <li class="rounded-lg border border-border bg-muted/50 p-4">
         <div class="flex flex-wrap items-baseline justify-between gap-2">
           <span class="font-semibold text-foreground">{entry.service_type}</span>
-          <span class="text-sm text-muted-foreground">{formatServiceDate(entry.service_date)}</span>
+          <span class="flex items-baseline gap-3">
+            <span class="text-sm text-muted-foreground">{formatServiceDate(entry.service_date)}</span>
+            {editHref && (
+              <a href={editHref(entry)} class="text-sm text-primary underline-offset-4 hover:underline">
+                Edit
+              </a>
+            )}
+          </span>
         </div>
         <dl class="mt-2 grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
           <dt class="text-muted-foreground">Mileage</dt>

@@ -246,31 +246,31 @@ The migration only adds a nullable column, a new table and a trigger, so it is s
 
 #### Automated
 
-- [x] 1.1 Migrations and seed apply cleanly on a fresh local stack: `npx supabase db reset`
-- [x] 1.2 Production build succeeds: `npm run build`
-- [x] 1.3 Lint passes: `npm run lint`
-- [x] 1.4 Unit tests pass: `npm test`
+- [x] 1.1 Migrations and seed apply cleanly on a fresh local stack: `npx supabase db reset` — eb694ef
+- [x] 1.2 Production build succeeds: `npm run build` — eb694ef
+- [x] 1.3 Lint passes: `npm run lint` — eb694ef
+- [x] 1.4 Unit tests pass: `npm test` — eb694ef
 
 #### Manual
 
-- [x] 1.5 Updating the seeded entry's notes creates one revision row and sets updated_at; a same-value update creates none
-- [x] 1.6 Updating the seeded entry's vehicle_id or mechanic_id raises an error
+- [x] 1.5 Updating the seeded entry's notes creates one revision row and sets updated_at; a same-value update creates none — eb694ef
+- [x] 1.6 Updating the seeded entry's vehicle_id or mechanic_id raises an error — eb694ef
 
 ### Phase 2: Edit flow
 
 #### Automated
 
-- [ ] 2.1 Production build succeeds: `npm run build`
-- [ ] 2.2 Lint passes: `npm run lint`
-- [ ] 2.3 Unit tests pass: `npm test`
+- [x] 2.1 Production build succeeds: `npm run build`
+- [x] 2.2 Lint passes: `npm run lint`
+- [x] 2.3 Unit tests pass: `npm test`
 
 #### Manual
 
-- [ ] 2.4 Mechanic edits the seeded entry via a prefilled form and sees the new values
-- [ ] 2.5 Invalid edit returns to the edit page with the server error and the entry unchanged
-- [ ] 2.6 Adding a new entry still works exactly as before
-- [ ] 2.7 A second mechanic gets "Entry not found" and cannot change the entry via POST
-- [ ] 2.8 The client sees updated values and no "Edit" link
+- [x] 2.4 Mechanic edits the seeded entry via a prefilled form and sees the new values
+- [x] 2.5 Invalid edit returns to the edit page with the server error and the entry unchanged
+- [x] 2.6 Adding a new entry still works exactly as before
+- [x] 2.7 A second mechanic gets "Entry not found" and cannot change the entry via POST
+- [x] 2.8 The client sees updated values and no "Edit" link
 
 ### Phase 3: "Edited" marker
 
