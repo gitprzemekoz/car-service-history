@@ -1,7 +1,7 @@
 ---
 change_id: mechanic-edits-service-entry
 title: Mechanic edits service entry
-status: implemented
+status: impl_reviewed
 created: 2026-09-28
 updated: 2026-09-28
 archived_at: null
