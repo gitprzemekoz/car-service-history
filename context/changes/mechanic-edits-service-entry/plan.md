@@ -276,11 +276,11 @@ The migration only adds a nullable column, a new table and a trigger, so it is s
 
 #### Automated
 
-- [x] 3.1 Unit tests pass, including the new `formatEditedDate` cases: `npm test`
-- [x] 3.2 Production build succeeds: `npm run build`
-- [x] 3.3 Lint passes: `npm run lint`
+- [x] 3.1 Unit tests pass, including the new `formatEditedDate` cases: `npm test` — 91612f6
+- [x] 3.2 Production build succeeds: `npm run build` — 91612f6
+- [x] 3.3 Lint passes: `npm run lint` — 91612f6
 
 #### Manual
 
-- [x] 3.4 Edited entry shows "Edited <today>" for mechanic and client; never-edited entries show no marker
-- [x] 3.5 `/dev/dashboard-states` shows the marker at 1280px and 375px without layout breakage
+- [x] 3.4 Edited entry shows "Edited <today>" for mechanic and client; never-edited entries show no marker — 91612f6
+- [x] 3.5 `/dev/dashboard-states` shows the marker at 1280px and 375px without layout breakage — 91612f6
