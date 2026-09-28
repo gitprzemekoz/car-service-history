@@ -1,10 +1,10 @@
 ---
 change_id: client-dashboard-ui-audit
 title: Audit and improve the client dashboard view
-status: impl_reviewed
+status: archived
 created: 2026-09-26
-updated: 2026-09-26
-archived_at: null
+updated: 2026-09-28
+archived_at: 2026-09-28T08:55:01Z
 ---
 
 ## Notes
