@@ -375,14 +375,14 @@ The migration is additive (new table and functions), so no existing data changes
 
 #### Automated
 
-- [x] 3.1 Unit tests pass: `npm test`
-- [x] 3.2 Lint passes: `npm run lint`
-- [x] 3.3 Build passes: `npm run build`
-- [x] 3.4 Smoke passes including the share step: `npm run smoke`
+- [x] 3.1 Unit tests pass: `npm test` — 020d54e
+- [x] 3.2 Lint passes: `npm run lint` — 020d54e
+- [x] 3.3 Build passes: `npm run build` — 020d54e
+- [x] 3.4 Smoke passes including the share step: `npm run smoke` — 020d54e
 
 #### Manual
 
-- [x] 3.5 Private window shows type, date, mileage; no cost or notes in page source
-- [x] 3.6 Revoked, expired and mangled tokens show the identical 404 page
-- [x] 3.7 Share page response carries X-Robots-Tag, Referrer-Policy and Cache-Control headers
-- [x] 3.8 share-states screenshots at 1280 and 375 px show all three states
+- [x] 3.5 Private window shows type, date, mileage; no cost or notes in page source — 020d54e
+- [x] 3.6 Revoked, expired and mangled tokens show the identical 404 page — 020d54e
+- [x] 3.7 Share page response carries X-Robots-Tag, Referrer-Policy and Cache-Control headers — 020d54e
+- [x] 3.8 share-states screenshots at 1280 and 375 px show all three states — 020d54e
