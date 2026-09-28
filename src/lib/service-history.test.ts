@@ -18,6 +18,7 @@ function entry(overrides: Partial<ServiceEntry>): ServiceEntry {
     next_due_mileage: null,
     next_due_date: null,
     created_at: "2026-09-23T10:00:00Z",
+    updated_at: null,
     ...overrides,
   };
 }
