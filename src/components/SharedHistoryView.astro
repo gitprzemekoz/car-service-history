@@ -1,0 +1,66 @@
+---
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { formatMileage, formatServiceDate } from "@/lib/service-history";
+import type { SharedVehicleHistory } from "@/lib/types";
+
+interface Props {
+  // null = unknown, malformed, expired or revoked token; all render the same invalid state.
+  history: SharedVehicleHistory | null;
+}
+
+const { history } = Astro.props;
+---
+
+<div class="bg-background min-h-screen p-4">
+  <div class="mx-auto max-w-3xl space-y-6 py-8 text-foreground">
+    {history ? (
+      <>
+        <h1 class="text-3xl font-bold text-foreground">Service history</h1>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>
+              <h2 class="text-xl">
+                {history.vehicle.make} {history.vehicle.model}
+              </h2>
+            </CardTitle>
+            <p class="text-muted-foreground">{history.vehicle.registration_number}</p>
+          </CardHeader>
+          <CardContent>
+            {/* Order comes from get_shared_vehicle_history() (newest first); not re-sorted here. */}
+            {history.entries.length === 0 ? (
+              <p class="text-sm text-muted-foreground">No service entries have been recorded for this vehicle yet.</p>
+            ) : (
+              <ul class="space-y-3">
+                {history.entries.map((entry) => (
+                  <li class="rounded-lg border border-border bg-muted/50 p-4">
+                    <div class="flex flex-wrap items-baseline justify-between gap-2">
+                      <span class="font-semibold text-foreground">{entry.service_type}</span>
+                      <span class="text-sm text-muted-foreground">{formatServiceDate(entry.service_date)}</span>
+                    </div>
+                    <dl class="mt-2 grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
+                      <dt class="text-muted-foreground">Mileage</dt>
+                      <dd class="text-foreground">{formatMileage(entry.mileage)}</dd>
+                    </dl>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </CardContent>
+        </Card>
+
+        <p class="text-sm text-muted-foreground">
+          Shared by the vehicle's owner. This link is time-limited and will stop working when it expires.
+        </p>
+      </>
+    ) : (
+      <Card>
+        <CardContent>
+          <p role="alert" class="text-sm text-foreground">
+            This link is invalid or has expired.
+          </p>
+        </CardContent>
+      </Card>
+    )}
+  </div>
+</div>

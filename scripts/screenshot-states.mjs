@@ -1,5 +1,5 @@
-// Screenshots the dev-only dashboard kitchen sink at desktop and mobile widths with headless Edge.
-// Zero dependencies on purpose. Run against a dev server: BASE_URL=http://localhost:4321 node scripts/screenshot-states.mjs <out-dir>
+// Screenshots a dev-only kitchen sink page (default: the dashboard) at desktop and mobile widths with headless Edge.
+// Zero dependencies on purpose. Run against a dev server: BASE_URL=http://localhost:4321 node scripts/screenshot-states.mjs <out-dir> [page-path]
 //
 // Why DevTools protocol instead of `--screenshot --window-size`: headless Edge clamps the window to ~500px wide,
 // so a 375px viewport is impossible from the CLI flags alone. Emulation sets the exact CSS width, and
@@ -14,7 +14,6 @@ import { setTimeout as delay } from "node:timers/promises";
 
 const BASE_URL = process.env.BASE_URL ?? "http://localhost:4321";
 const EDGE_PATH = process.env.EDGE_PATH ?? "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe";
-const url = `${BASE_URL}/dev/dashboard-states`;
 
 const shots = [
   { name: "desktop-1280.png", width: 1280, height: 800, mobile: false },
@@ -23,9 +22,11 @@ const shots = [
 
 const outArg = process.argv[2];
 if (!outArg) {
-  console.error("Usage: node scripts/screenshot-states.mjs <out-dir>");
+  console.error("Usage: node scripts/screenshot-states.mjs <out-dir> [page-path, default /dev/dashboard-states]");
   process.exit(1);
 }
+const pagePath = process.argv[3] ?? "/dev/dashboard-states";
+const url = `${BASE_URL}${pagePath}`;
 const outDir = path.resolve(outArg);
 await mkdir(outDir, { recursive: true });
 

@@ -360,29 +360,29 @@ The migration is additive (new table and functions), so no existing data changes
 
 #### Automated
 
-- [x] 2.1 Unit tests pass: `npm test`
-- [x] 2.2 Lint passes: `npm run lint`
-- [x] 2.3 Build passes: `npm run build`
+- [x] 2.1 Unit tests pass: `npm test` — 2786f27
+- [x] 2.2 Lint passes: `npm run lint` — 2786f27
+- [x] 2.3 Build passes: `npm run build` — 2786f27
 
 #### Manual
 
-- [x] 2.4 Create share link shows URL, Warsaw-time expiry ~24h ahead, and Copy works
-- [x] 2.5 Create new link changes the URL; Revoke returns to the create state
-- [x] 2.6 No-vehicle and load-error states show no share card
-- [x] 2.7 Kitchen-sink states (f)–(i) render at desktop and mobile widths
+- [x] 2.4 Create share link shows URL, Warsaw-time expiry ~24h ahead, and Copy works — 2786f27
+- [x] 2.5 Create new link changes the URL; Revoke returns to the create state — 2786f27
+- [x] 2.6 No-vehicle and load-error states show no share card — 2786f27
+- [x] 2.7 Kitchen-sink states (f)–(i) render at desktop and mobile widths — 2786f27
 
 ### Phase 3: Public share page and gates
 
 #### Automated
 
-- [ ] 3.1 Unit tests pass: `npm test`
-- [ ] 3.2 Lint passes: `npm run lint`
-- [ ] 3.3 Build passes: `npm run build`
-- [ ] 3.4 Smoke passes including the share step: `npm run smoke`
+- [x] 3.1 Unit tests pass: `npm test`
+- [x] 3.2 Lint passes: `npm run lint`
+- [x] 3.3 Build passes: `npm run build`
+- [x] 3.4 Smoke passes including the share step: `npm run smoke`
 
 #### Manual
 
-- [ ] 3.5 Private window shows type, date, mileage; no cost or notes in page source
-- [ ] 3.6 Revoked, expired and mangled tokens show the identical 404 page
-- [ ] 3.7 Share page response carries X-Robots-Tag, Referrer-Policy and Cache-Control headers
-- [ ] 3.8 share-states screenshots at 1280 and 375 px show all three states
+- [x] 3.5 Private window shows type, date, mileage; no cost or notes in page source
+- [x] 3.6 Revoked, expired and mangled tokens show the identical 404 page
+- [x] 3.7 Share page response carries X-Robots-Tag, Referrer-Policy and Cache-Control headers
+- [x] 3.8 share-states screenshots at 1280 and 375 px show all three states
