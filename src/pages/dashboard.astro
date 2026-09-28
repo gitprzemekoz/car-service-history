@@ -2,7 +2,7 @@
 import Layout from "@/layouts/Layout.astro";
 import ClientDashboardView from "@/components/ClientDashboardView.astro";
 import { createClient } from "@/lib/supabase";
-import type { Client, ServiceEntry, Vehicle } from "@/lib/types";
+import type { Client, ServiceEntry, ShareLink, Vehicle } from "@/lib/types";
 
 type VehicleWithEntries = Pick<Vehicle, "id" | "make" | "model" | "registration_number"> & {
   service_entries: ServiceEntry[] | null;
@@ -31,8 +31,24 @@ const loadError = Boolean(error);
 const client = data as ClientRow | null;
 const vehicle = Array.isArray(client?.vehicles) ? (client.vehicles[0] ?? null) : (client?.vehicles ?? null);
 const entries = vehicle?.service_entries ?? [];
+
+// RLS-scoped (share_links_select_client): at most one row per vehicle. Expiry is decided by the card.
+const { data: shareLinkRow } =
+  supabase && vehicle
+    ? await supabase.from("share_links").select("token, expires_at").eq("vehicle_id", vehicle.id).maybeSingle()
+    : { data: null };
+const shareLink: Pick<ShareLink, "token" | "expires_at"> | null = shareLinkRow;
+const shareError = Astro.url.searchParams.get("error") ?? undefined;
 ---
 
 <Layout title="Dashboard">
-  <ClientDashboardView email={user?.email} vehicle={vehicle} entries={entries} loadError={loadError} />
+  <ClientDashboardView
+    email={user?.email}
+    vehicle={vehicle}
+    entries={entries}
+    loadError={loadError}
+    shareLink={shareLink}
+    origin={Astro.url.origin}
+    shareError={shareError}
+  />
 </Layout>

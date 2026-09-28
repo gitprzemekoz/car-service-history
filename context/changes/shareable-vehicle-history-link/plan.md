@@ -345,31 +345,31 @@ The migration is additive (new table and functions), so no existing data changes
 
 #### Automated
 
-- [x] 1.1 Migration applies on a clean local database: `npx supabase db reset`
-- [x] 1.2 Lint passes: `npm run lint`
-- [x] 1.3 Build passes: `npm run build`
+- [x] 1.1 Migration applies on a clean local database: `npx supabase db reset` — 0c6a9a6
+- [x] 1.2 Lint passes: `npm run lint` — 0c6a9a6
+- [x] 1.3 Build passes: `npm run build` — 0c6a9a6
 
 #### Manual
 
-- [x] 1.4 create_share_link returns a 43-char token expiring in ~24h; a second call replaces the first
-- [x] 1.5 get_shared_vehicle_history as anon returns no cost, notes, next_due_*, id or created_at keys
-- [x] 1.6 Expired or revoked token returns null
-- [x] 1.7 Anon cannot execute create_share_link; mechanic raises and sees no share_links rows
+- [x] 1.4 create_share_link returns a 43-char token expiring in ~24h; a second call replaces the first — 0c6a9a6
+- [x] 1.5 get_shared_vehicle_history as anon returns no cost, notes, next_due_*, id or created_at keys — 0c6a9a6
+- [x] 1.6 Expired or revoked token returns null — 0c6a9a6
+- [x] 1.7 Anon cannot execute create_share_link; mechanic raises and sees no share_links rows — 0c6a9a6
 
 ### Phase 2: Client generates and revokes the link
 
 #### Automated
 
-- [ ] 2.1 Unit tests pass: `npm test`
-- [ ] 2.2 Lint passes: `npm run lint`
-- [ ] 2.3 Build passes: `npm run build`
+- [x] 2.1 Unit tests pass: `npm test`
+- [x] 2.2 Lint passes: `npm run lint`
+- [x] 2.3 Build passes: `npm run build`
 
 #### Manual
 
-- [ ] 2.4 Create share link shows URL, Warsaw-time expiry ~24h ahead, and Copy works
-- [ ] 2.5 Create new link changes the URL; Revoke returns to the create state
-- [ ] 2.6 No-vehicle and load-error states show no share card
-- [ ] 2.7 Kitchen-sink states (f)–(i) render at desktop and mobile widths
+- [x] 2.4 Create share link shows URL, Warsaw-time expiry ~24h ahead, and Copy works
+- [x] 2.5 Create new link changes the URL; Revoke returns to the create state
+- [x] 2.6 No-vehicle and load-error states show no share card
+- [x] 2.7 Kitchen-sink states (f)–(i) render at desktop and mobile widths
 
 ### Phase 3: Public share page and gates
 
