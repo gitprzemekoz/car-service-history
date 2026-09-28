@@ -7,6 +7,13 @@ const dateFormat = new Intl.DateTimeFormat("pl-PL", {
   month: "short",
   year: "numeric",
 });
+// Edit timestamps are timestamptz; the workshop's calendar day is the one in Warsaw.
+const editedFormat = new Intl.DateTimeFormat("pl-PL", {
+  timeZone: "Europe/Warsaw",
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+});
 const numberFormat = new Intl.NumberFormat("pl-PL");
 const costFormat = new Intl.NumberFormat("pl-PL", { style: "currency", currency: "PLN" });
 
@@ -25,6 +32,10 @@ export function sortNewestFirst(entries: ServiceEntry[]): ServiceEntry[] {
 export function formatServiceDate(date: string): string {
   const [year, month, day] = date.split("-").map(Number);
   return dateFormat.format(new Date(Date.UTC(year, month - 1, day)));
+}
+
+export function formatEditedDate(timestamp: string): string {
+  return editedFormat.format(new Date(timestamp));
 }
 
 export function formatMileage(mileage: number): string {

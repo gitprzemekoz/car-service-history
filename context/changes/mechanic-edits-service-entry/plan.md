@@ -260,27 +260,27 @@ The migration only adds a nullable column, a new table and a trigger, so it is s
 
 #### Automated
 
-- [x] 2.1 Production build succeeds: `npm run build`
-- [x] 2.2 Lint passes: `npm run lint`
-- [x] 2.3 Unit tests pass: `npm test`
+- [x] 2.1 Production build succeeds: `npm run build` — f94578f
+- [x] 2.2 Lint passes: `npm run lint` — f94578f
+- [x] 2.3 Unit tests pass: `npm test` — f94578f
 
 #### Manual
 
-- [x] 2.4 Mechanic edits the seeded entry via a prefilled form and sees the new values
-- [x] 2.5 Invalid edit returns to the edit page with the server error and the entry unchanged
-- [x] 2.6 Adding a new entry still works exactly as before
-- [x] 2.7 A second mechanic gets "Entry not found" and cannot change the entry via POST
-- [x] 2.8 The client sees updated values and no "Edit" link
+- [x] 2.4 Mechanic edits the seeded entry via a prefilled form and sees the new values — f94578f
+- [x] 2.5 Invalid edit returns to the edit page with the server error and the entry unchanged — f94578f
+- [x] 2.6 Adding a new entry still works exactly as before — f94578f
+- [x] 2.7 A second mechanic gets "Entry not found" and cannot change the entry via POST — f94578f
+- [x] 2.8 The client sees updated values and no "Edit" link — f94578f
 
 ### Phase 3: "Edited" marker
 
 #### Automated
 
-- [ ] 3.1 Unit tests pass, including the new `formatEditedDate` cases: `npm test`
-- [ ] 3.2 Production build succeeds: `npm run build`
-- [ ] 3.3 Lint passes: `npm run lint`
+- [x] 3.1 Unit tests pass, including the new `formatEditedDate` cases: `npm test`
+- [x] 3.2 Production build succeeds: `npm run build`
+- [x] 3.3 Lint passes: `npm run lint`
 
 #### Manual
 
-- [ ] 3.4 Edited entry shows "Edited <today>" for mechanic and client; never-edited entries show no marker
-- [ ] 3.5 `/dev/dashboard-states` shows the marker at 1280px and 375px without layout breakage
+- [x] 3.4 Edited entry shows "Edited <today>" for mechanic and client; never-edited entries show no marker
+- [x] 3.5 `/dev/dashboard-states` shows the marker at 1280px and 375px without layout breakage

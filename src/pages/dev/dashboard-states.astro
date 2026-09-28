@@ -40,7 +40,7 @@ const entries: ServiceEntry[] = [
     next_due_mileage: null,
     next_due_date: null,
     created_at: "2026-03-14T09:00:00Z",
-    updated_at: null,
+    updated_at: "2026-09-27T22:30:00Z",
   },
   {
     ...base,
@@ -59,7 +59,8 @@ const entries: ServiceEntry[] = [
 
 const states = [
   {
-    label: "(a) Vehicle with 3 entries (same-day tie-break: Oil change above Brake inspection)",
+    label:
+      "(a) Vehicle with 3 entries (same-day tie-break: Oil change above Brake inspection; Tyre rotation shows the Edited marker)",
     props: { vehicle, entries },
   },
   { label: "(b) Vehicle with 0 entries", props: { vehicle, entries: [] } },

@@ -1,5 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { formatCost, formatMileage, formatServiceDate, nextService, sortNewestFirst } from "./service-history";
+import {
+  formatCost,
+  formatEditedDate,
+  formatMileage,
+  formatServiceDate,
+  nextService,
+  sortNewestFirst,
+} from "./service-history";
 import type { ServiceEntry } from "./types";
 
 // Intl uses non-breaking spaces (U+00A0 / U+202F) for grouping and the currency suffix.
@@ -50,6 +57,16 @@ describe("formatServiceDate", () => {
 
   it("keeps the day at a month and year boundary", () => {
     expect(formatServiceDate("2026-01-01")).toBe("1 sty 2026");
+  });
+});
+
+describe("formatEditedDate", () => {
+  it("formats a timestamp as pl-PL day, short month, year", () => {
+    expect(formatEditedDate("2026-09-23T10:00:00Z")).toBe("23 wrz 2026");
+  });
+
+  it("uses the Warsaw calendar day, not the UTC one", () => {
+    expect(formatEditedDate("2026-09-27T22:30:00Z")).toBe("28 wrz 2026");
   });
 });
 

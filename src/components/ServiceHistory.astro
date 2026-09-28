@@ -1,5 +1,5 @@
 ---
-import { formatCost, formatMileage, formatServiceDate, sortNewestFirst } from "@/lib/service-history";
+import { formatCost, formatEditedDate, formatMileage, formatServiceDate, sortNewestFirst } from "@/lib/service-history";
 import type { ServiceEntry } from "@/lib/types";
 
 interface Props {
@@ -43,6 +43,9 @@ const sorted = sortNewestFirst(entries);
           <dd class="text-foreground">{entry.next_due_date === null ? "—" : formatServiceDate(entry.next_due_date)}</dd>
         </dl>
         {entry.notes && <p class="mt-2 text-sm whitespace-pre-line text-foreground">{entry.notes}</p>}
+        {entry.updated_at !== null && (
+          <p class="mt-2 text-xs text-muted-foreground">Edited {formatEditedDate(entry.updated_at)}</p>
+        )}
       </li>
     ))}
   </ul>
