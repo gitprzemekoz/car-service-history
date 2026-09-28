@@ -3,7 +3,7 @@ project: "car-service-history"
 version: 1
 status: draft
 created: 2026-09-21
-updated: 2026-09-23
+updated: 2026-09-28
 prd_version: 1
 main_goal: speed
 top_blocker: time
@@ -43,7 +43,7 @@ The vehicle's service history today lives only in a paper booklet: clients lose 
 | ---- | -------------------------------------- | ----------------------------------------------------------------------- | -------------- | ---------------------------------- | -------- |
 | F-01 | roles-and-domain-schema-foundation     | (foundation) mechanic/client roles + domain schema + RLS in place       | —              | Access Control, NFR (privacy)      | done     |
 | S-01 | first-service-entry-visible-to-client  | Mechanic adds client+vehicle+entry; client sees it in their history    | F-01           | FR-001, FR-002, FR-003, FR-004, US-01 | done |
-| S-02 | mechanic-edits-service-entry           | Mechanic corrects a mistake in a service entry they created            | S-01           | FR-006                            | proposed |
+| S-02 | mechanic-edits-service-entry           | Mechanic corrects a mistake in a service entry they created            | S-01           | FR-006                            | in-progress |
 | S-03 | shareable-vehicle-history-link         | Client generates a 24h read-only share link (no cost shown) for a buyer | S-01           | FR-005                            | proposed |
 | S-04 | client-flags-incorrect-entry           | Client flags a service entry as incorrect, visible to the mechanic     | S-01           | FR-007                            | proposed |
 | S-05 | next-service-email-reminder            | Client receives an email reminder as the next service point approaches | S-01           | FR-008                            | proposed |
@@ -111,7 +111,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Low risk; must respect the same RLS boundary as S-01 so a mechanic can't edit entries outside their own workshop's clients.
-- **Status:** proposed
+- **Status:** in-progress
 
 ### S-03: Shareable vehicle history link
 
