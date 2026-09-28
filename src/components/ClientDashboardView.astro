@@ -1,0 +1,109 @@
+---
+import ServiceHistory from "@/components/ServiceHistory.astro";
+import ShareLinkCard from "@/components/ShareLinkCard.astro";
+import { buttonVariants } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { formatMileage, formatServiceDate, nextService } from "@/lib/service-history";
+import type { ServiceEntry, ShareLink, Vehicle } from "@/lib/types";
+
+interface Props {
+  email: string | undefined;
+  vehicle: Pick<Vehicle, "make" | "model" | "registration_number"> | null;
+  entries: ServiceEntry[];
+  // True when the clients query failed; takes precedence over every other state, even if a vehicle is passed.
+  loadError: boolean;
+  shareLink: Pick<ShareLink, "token" | "expires_at"> | null;
+  // Absolute origin the share URL is built on (Astro.url.origin on the real page).
+  origin: string;
+  shareError?: string;
+  // Dev kitchen sink only: headless screenshots cannot press Tab, so focus is shown via autofocus.
+  autofocusSignOut?: boolean;
+}
+
+const { email, vehicle, entries, loadError, shareLink, origin, shareError, autofocusSignOut = false } = Astro.props;
+
+// Spread so the real page never carries the attribute; only the kitchen sink sets it.
+const focusAttrs = autofocusSignOut ? { autofocus: true } : {};
+
+const next = nextService(entries);
+const nextServiceText = next
+  ? [
+      next.date === null ? null : formatServiceDate(next.date),
+      next.mileage === null ? null : formatMileage(next.mileage),
+    ]
+      .filter((part) => part !== null)
+      .join(" · ")
+  : null;
+---
+
+<div class="bg-background min-h-screen p-4">
+  <div class="mx-auto max-w-3xl space-y-6 py-8 text-foreground">
+    <div class="flex flex-wrap items-center justify-between gap-4">
+      <div>
+        <h1 class="text-3xl font-bold text-foreground">My vehicle</h1>
+        <p class="mt-1 text-sm text-muted-foreground">
+          Signed in as <span class="font-semibold text-foreground">{email}</span>
+        </p>
+      </div>
+      <form method="POST" action="/api/auth/signout">
+        <button type="submit" {...focusAttrs} class:list={[buttonVariants({ variant: "outline" })]}>
+          Sign out
+        </button>
+      </form>
+    </div>
+
+    {loadError ? (
+      <Card>
+        <CardContent className="space-y-4">
+          <p role="alert" class="text-sm text-foreground">
+            Your service history couldn't be loaded. Please try again in a moment.
+          </p>
+          <a href="/dashboard" class:list={[buttonVariants({ variant: "outline" })]}>
+            Try again
+          </a>
+        </CardContent>
+      </Card>
+    ) : vehicle ? (
+      <>
+        <Card>
+          <CardHeader>
+            <CardTitle>
+              <h2 class="text-xl">
+                {vehicle.make} {vehicle.model}
+              </h2>
+            </CardTitle>
+            <p class="text-muted-foreground">{vehicle.registration_number}</p>
+          </CardHeader>
+          {nextServiceText && (
+            <CardContent>
+              <p class="text-sm text-foreground">
+                <span class="text-muted-foreground">Next service:</span> {nextServiceText}
+              </p>
+            </CardContent>
+          )}
+        </Card>
+
+        <ShareLinkCard shareLink={shareLink} origin={origin} shareError={shareError} />
+
+        <Card>
+          <CardHeader>
+            <CardTitle>
+              <h2 class="text-xl">Service history</h2>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ServiceHistory entries={entries} />
+          </CardContent>
+        </Card>
+      </>
+    ) : (
+      <Card>
+        <CardContent>
+          <p class="text-sm text-muted-foreground">
+            No vehicle is linked to this account yet. Contact your mechanic to have your vehicle added.
+          </p>
+        </CardContent>
+      </Card>
+    )}
+  </div>
+</div>

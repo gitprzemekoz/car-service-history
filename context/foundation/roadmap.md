@@ -3,7 +3,7 @@ project: "car-service-history"
 version: 1
 status: draft
 created: 2026-09-21
-updated: 2026-09-21
+updated: 2026-09-28
 prd_version: 1
 main_goal: speed
 top_blocker: time
@@ -41,10 +41,10 @@ The vehicle's service history today lives only in a paper booklet: clients lose 
 
 | ID   | Change ID                             | Outcome (user can …)                                                  | Prerequisites | PRD refs                          | Status   |
 | ---- | -------------------------------------- | ----------------------------------------------------------------------- | -------------- | ---------------------------------- | -------- |
-| F-01 | roles-and-domain-schema-foundation     | (foundation) mechanic/client roles + domain schema + RLS in place       | —              | Access Control, NFR (privacy)      | ready    |
-| S-01 | first-service-entry-visible-to-client  | Mechanic adds client+vehicle+entry; client sees it in their history    | F-01           | FR-001, FR-002, FR-003, FR-004, US-01 | proposed |
+| F-01 | roles-and-domain-schema-foundation     | (foundation) mechanic/client roles + domain schema + RLS in place       | —              | Access Control, NFR (privacy)      | done     |
+| S-01 | first-service-entry-visible-to-client  | Mechanic adds client+vehicle+entry; client sees it in their history    | F-01           | FR-001, FR-002, FR-003, FR-004, US-01 | done |
 | S-02 | mechanic-edits-service-entry           | Mechanic corrects a mistake in a service entry they created            | S-01           | FR-006                            | proposed |
-| S-03 | shareable-vehicle-history-link         | Client generates a 24h read-only share link (no cost shown) for a buyer | S-01           | FR-005                            | proposed |
+| S-03 | shareable-vehicle-history-link         | Client generates a 24h read-only share link (no cost shown) for a buyer | S-01           | FR-005                            | in-progress |
 | S-04 | client-flags-incorrect-entry           | Client flags a service entry as incorrect, visible to the mechanic     | S-01           | FR-007                            | proposed |
 | S-05 | next-service-email-reminder            | Client receives an email reminder as the next service point approaches | S-01           | FR-008                            | proposed |
 
@@ -85,7 +85,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Unknowns:**
   - Is mechanic-side client visibility (FR-003) scoped per individual mechanic account, or per a separate "workshop/service" entity that could later hold multiple mechanics? PRD's FR-003 and Non-Goals both say "workshop/service" but Access Control never defines a workshop entity distinct from the mechanic account. — Owner: team (resolve during `/10x-plan` for F-01). Block: no — MVP scale (solo dev, `target_scale.users: small`) supports a safe default of one mechanic = one workshop; this only refines the RLS design, it doesn't stop planning.
 - **Risk:** Gets the mechanic/client RLS boundary right before any domain CRUD exists, since a mistake here would violate the privacy guardrail across every downstream slice — worth sequencing first even though it ships nothing user-visible by itself.
-- **Status:** ready
+- **Status:** done
 
 ## Slices
 
@@ -99,7 +99,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Bundles the PRD's single Primary Success Criterion (add client+vehicle, add entry, mechanic-scoped list, client view) into one slice on purpose — splitting it further would mean shipping a "create" with no "view" to demo, defeating the point of a north star. If it proves too broad for one `/10x-plan` pass, split at the mechanic-side/client-side boundary.
-- **Status:** proposed
+- **Status:** done
 
 ### S-02: Mechanic edits service entry
 
@@ -123,7 +123,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Nice-to-have; the 24h-expiry rule and the cost-hiding redaction (FR-005) are easy to get wrong, so the redacted-view contract needs its own explicit acceptance check.
-- **Status:** proposed
+- **Status:** in-progress
 
 ### S-04: Client flags incorrect entry
 
@@ -153,12 +153,12 @@ Foundations below assume these are present and do NOT re-scaffold them.
 
 | Roadmap ID | Change ID                             | Suggested issue title                                        | Ready for `/10x-plan` | Notes                                   |
 | ---------- | --------------------------------------- | --------------------------------------------------------------- | ---------------------- | ------------------------------------------ |
-| F-01       | roles-and-domain-schema-foundation      | Add mechanic/client roles and domain schema with RLS            | yes                    | Run `/10x-plan roles-and-domain-schema-foundation` |
-| S-01       | first-service-entry-visible-to-client   | Mechanic adds client+vehicle+entry; client sees it              | no                     | Blocked on F-01                            |
-| S-02       | mechanic-edits-service-entry            | Mechanic can edit their own service entry                       | no                     | Blocked on S-01                            |
-| S-03       | shareable-vehicle-history-link          | Client generates a 24h read-only share link                     | no                     | Blocked on S-01                            |
-| S-04       | client-flags-incorrect-entry            | Client can flag an incorrect service entry                      | no                     | Blocked on S-01                            |
-| S-05       | next-service-email-reminder             | Client gets an email reminder for the next service               | no                     | Blocked on S-01                            |
+| F-01       | roles-and-domain-schema-foundation      | Add mechanic/client roles and domain schema with RLS            | yes                    | → [#1](https://github.com/gitprzemekoz/car-service-history/issues/1) |
+| S-01       | first-service-entry-visible-to-client   | Mechanic adds client+vehicle+entry; client sees it              | no                     | → [#2](https://github.com/gitprzemekoz/car-service-history/issues/2) |
+| S-02       | mechanic-edits-service-entry            | Mechanic can edit their own service entry                       | no                     | → [#3](https://github.com/gitprzemekoz/car-service-history/issues/3) |
+| S-03       | shareable-vehicle-history-link          | Client generates a 24h read-only share link                     | no                     | → [#4](https://github.com/gitprzemekoz/car-service-history/issues/4) |
+| S-04       | client-flags-incorrect-entry            | Client can flag an incorrect service entry                      | no                     | → [#5](https://github.com/gitprzemekoz/car-service-history/issues/5) |
+| S-05       | next-service-email-reminder             | Client gets an email reminder for the next service               | no                     | → [#6](https://github.com/gitprzemekoz/car-service-history/issues/6) |
 
 ## Open Roadmap Questions
 
@@ -178,4 +178,5 @@ Foundations below assume these are present and do NOT re-scaffold them.
 
 ## Done
 
-(Empty — no slice has been archived yet.)
+- **F-01: (foundation) a `role` distinction (mechanic/client) exists on registered users, a minimal domain schema (clients, vehicles, service_entries) exists with RLS enforcing "a mechanic sees only clients assigned to their own workshop" and "a client sees only their own vehicle," and the two dashboard routes are gated by role. No domain CRUD UI/API is built here — that's S-01's job.** — Archived 2026-09-23 → `context/archive/2026-09-22-roles-and-domain-schema-foundation/`. Lesson: —.
+- **S-01: A mechanic can add a client with their vehicle, log in, add a first service entry to it, and the client can log in and see that vehicle and entry in their history.** — Archived 2026-09-23 → `context/archive/2026-09-23-first-service-entry-visible-to-client/`. Lesson: —.

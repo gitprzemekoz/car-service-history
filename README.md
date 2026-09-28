@@ -112,7 +112,7 @@ npx supabase stop
 
 The local Studio UI is available at `http://localhost:54323`.
 
-No database tables or migrations are required — this project uses Supabase Auth's built-in `auth.users` table only.
+`supabase/migrations/` contains the roles/domain schema (`profiles`, `clients`, `vehicles`, `service_entries` with RLS) and a follow-up migration that adds registration number and mileage, mechanic-only write policies, lowercase unique client emails, and the `create_client_with_vehicle` RPC. `supabase start` applies it automatically to the local stack; pushing it to a remote/hosted project requires a manual `supabase db push`.
 
 ### Using a cloud Supabase project instead
 

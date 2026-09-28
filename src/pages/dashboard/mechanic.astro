@@ -1,0 +1,96 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import AddClientForm from "@/components/mechanic/AddClientForm";
+import { createClient } from "@/lib/supabase";
+import type { Client, Vehicle } from "@/lib/types";
+
+type VehicleSummary = Pick<Vehicle, "make" | "model" | "registration_number">;
+
+// Without a unique *constraint* PostgREST may embed the one-per-client vehicle as an array.
+type ClientRow = Pick<Client, "id" | "name" | "email" | "user_id"> & {
+  vehicles: VehicleSummary[] | VehicleSummary | null;
+};
+
+const { user } = Astro.locals;
+const error = Astro.url.searchParams.get("error");
+
+const supabase = createClient(Astro.request.headers, Astro.cookies);
+
+// RLS scopes this to the signed-in mechanic's clients.
+const { data } = supabase
+  ? await supabase
+      .from("clients")
+      .select("id, name, email, user_id, vehicles(make, model, registration_number)")
+      .order("name")
+  : { data: null };
+
+const clients = ((data ?? []) as ClientRow[]).map((row) => ({
+  ...row,
+  vehicle: Array.isArray(row.vehicles) ? (row.vehicles[0] ?? null) : row.vehicles,
+}));
+---
+
+<Layout title="Mechanic Dashboard">
+  <div class="bg-background min-h-screen p-4">
+    <div class="mx-auto max-w-3xl space-y-6 py-8 text-foreground">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <h1 class="text-3xl font-bold text-foreground">Mechanic Dashboard</h1>
+          <p class="mt-1 text-sm text-foreground">
+            Signed in as <span class="font-semibold text-foreground">{user?.email}</span>
+          </p>
+        </div>
+        <form method="POST" action="/api/auth/signout">
+          <button
+            type="submit"
+            class="rounded-lg border border-border px-4 py-2 text-sm text-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+          >
+            Sign out
+          </button>
+        </form>
+      </div>
+
+      <section class="rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-sm">
+        <h2 class="mb-4 text-xl font-semibold">Clients</h2>
+        {clients.length === 0 ? (
+          <p class="text-sm text-muted-foreground">No clients yet. Add your first client below.</p>
+        ) : (
+          <ul class="space-y-3">
+            {clients.map((client) => (
+              <li>
+                <a
+                  href={`/dashboard/mechanic/clients/${client.id}`}
+                  class="block rounded-lg border border-border bg-muted/50 p-4 transition-colors hover:bg-accent"
+                >
+                  <div class="flex flex-wrap items-baseline justify-between gap-2">
+                    <span class="font-semibold text-foreground">{client.name}</span>
+                    <span class="text-sm text-muted-foreground">{client.email}</span>
+                  </div>
+                  {client.vehicle && (
+                    <p class="mt-1 text-sm text-foreground">
+                      {client.vehicle.make} {client.vehicle.model} · {client.vehicle.registration_number}
+                    </p>
+                  )}
+                  <p class="mt-1 text-xs">
+                    {client.user_id ? (
+                      <span class="text-green-700">Linked</span>
+                    ) : (
+                      <span class="text-amber-700">
+                        Waiting for signup — ask the client to sign up with {client.email}
+                      </span>
+                    )}
+                  </p>
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+
+      <section class="rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-sm">
+        <h2 class="mb-4 text-xl font-semibold">Add client</h2>
+        <AddClientForm serverError={error} client:load />
+      </section>
+    </div>
+  </div>
+</Layout>

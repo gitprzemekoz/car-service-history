@@ -1,0 +1,105 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import ClientDashboardView from "@/components/ClientDashboardView.astro";
+import type { ServiceEntry } from "@/lib/types";
+
+// Dev-only kitchen sink: every client dashboard state from inline fixtures, for screenshot gating.
+// The rule crashes on a top-level frontmatter `return` ("Expected node to have a parent"), so it is off here.
+/* eslint @typescript-eslint/no-misused-promises: "off" */
+if (!import.meta.env.DEV) {
+  return new Response(null, { status: 404 });
+}
+
+const email = "client@example.com";
+const origin = Astro.url.origin;
+const vehicle = { make: "Toyota", model: "Corolla", registration_number: "KR 12345" };
+
+const base = { vehicle_id: "v-1", mechanic_id: "m-1" };
+
+const entries: ServiceEntry[] = [
+  {
+    ...base,
+    id: "e-1",
+    service_type: "Oil change",
+    service_date: "2026-09-23",
+    mileage: 85000,
+    cost: 150,
+    notes: "Replaced oil filter.\nTop up coolant at next visit.",
+    next_due_mileage: 95000,
+    next_due_date: "2027-09-23",
+    created_at: "2026-09-23T10:00:00Z",
+  },
+  {
+    ...base,
+    id: "e-2",
+    service_type: "Tyre rotation",
+    service_date: "2026-03-14",
+    mileage: 8500,
+    cost: null,
+    notes: null,
+    next_due_mileage: null,
+    next_due_date: null,
+    created_at: "2026-03-14T09:00:00Z",
+  },
+  {
+    ...base,
+    id: "e-3",
+    service_type: "Brake inspection",
+    service_date: "2026-09-23",
+    mileage: 85000,
+    cost: 80.5,
+    notes: null,
+    next_due_mileage: 100000,
+    next_due_date: null,
+    created_at: "2026-09-23T08:00:00Z",
+  },
+];
+
+const HOUR_MS = 60 * 60 * 1000;
+const token = "Xq3v9LmZ0aB7cD2eF5gH8iJ1kL4mN6oP9qR2sT5uV-_";
+const activeLink = { token, expires_at: new Date(Date.now() + 24 * HOUR_MS).toISOString() };
+const expiredLink = { token, expires_at: new Date(Date.now() - HOUR_MS).toISOString() };
+
+const states = [
+  {
+    label: "(a) Vehicle with 3 entries (same-day tie-break: Oil change above Brake inspection)",
+    props: { vehicle, entries },
+  },
+  { label: "(b) Vehicle with 0 entries", props: { vehicle, entries: [] } },
+  {
+    label: "(c) Load error (vehicle and entries passed: error takes precedence)",
+    props: { vehicle, entries, loadError: true },
+  },
+  { label: "(d) No vehicle", props: { vehicle: null, entries: [] } },
+  { label: "(e) Focus: sign-out button focused", props: { vehicle, entries, autofocusSignOut: true } },
+  { label: "(f) Share: no link", props: { vehicle, entries } },
+  { label: "(g) Share: active link", props: { vehicle, entries, shareLink: activeLink } },
+  { label: "(h) Share: expired link (renders as no link)", props: { vehicle, entries, shareLink: expiredLink } },
+  {
+    label: "(i) Share: error",
+    props: { vehicle, entries, shareError: "No vehicle found for the current user" },
+  },
+];
+---
+
+<Layout title="Dashboard states (dev)">
+  <main class="bg-background">
+    {states.map((state) => (
+      <section class="state-frame border-b-4 border-dashed border-border">
+        <p class="bg-muted px-4 py-1 font-mono text-xs text-muted-foreground">{state.label}</p>
+        <ClientDashboardView email={email} loadError={false} shareLink={null} origin={origin} {...state.props} />
+      </section>
+    ))}
+  </main>
+</Layout>
+
+<style is:global>
+  /* Each state is stacked; the view's full-viewport min height would make every frame one screen tall. */
+  .state-frame .min-h-screen {
+    min-height: 0;
+  }
+  /* The dev toolbar is not part of the view and would land in every screenshot. */
+  astro-dev-toolbar {
+    display: none !important;
+  }
+</style>

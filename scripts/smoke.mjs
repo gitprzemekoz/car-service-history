@@ -37,6 +37,8 @@ async function request(path, { method = "GET", form } = {}) {
 
 const steps = [
   ["home renders", () => request("/"), { status: 200 }],
+  // Well-formed but unknown token, sent while the jar is empty: must reach the RPC and fail closed.
+  ["share page rejects unknown token", () => request(`/share/${"A".repeat(43)}`), { status: 404 }],
   ["dashboard redirects anonymous user", () => request("/dashboard"), { status: 302, location: "/auth/signin" }],
   [
     "signup creates account",
@@ -53,7 +55,13 @@ const steps = [
     () => request("/api/auth/signin", { method: "POST", form: { email, password } }),
     { status: 302, location: "/" },
   ],
-  ["dashboard renders for signed-in user", () => request("/dashboard"), { status: 200 }],
+  // A fresh signup with no pending clients row becomes a mechanic (handle_new_user), so /dashboard forwards it.
+  [
+    "dashboard routes signed-in mechanic",
+    () => request("/dashboard"),
+    { status: 302, location: "/dashboard/mechanic" },
+  ],
+  ["mechanic dashboard renders for signed-in user", () => request("/dashboard/mechanic"), { status: 200 }],
   ["signout clears session", () => request("/api/auth/signout", { method: "POST" }), { status: 302, location: "/" }],
   ["dashboard redirects after signout", () => request("/dashboard"), { status: 302, location: "/auth/signin" }],
 ];
