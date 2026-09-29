@@ -353,23 +353,23 @@ Make both suites required CI checks, and record the shipped pattern in the test 
 
 #### Automated
 
-- [x] 2.1 `npm run test:db` passes with all 30 exact-set cells and all foreign-id checks green
-- [x] 2.2 `npm run lint` passes
-- [x] 2.3 `npx astro check` passes
+- [x] 2.1 `npm run test:db` passes with all 30 exact-set cells and all foreign-id checks green — c98fcef
+- [x] 2.2 `npm run lint` passes — c98fcef
+- [x] 2.3 `npx astro check` passes — c98fcef
 
 #### Manual
 
-- [x] 2.4 Mutation check: an exposing policy turns the suite red
-- [x] 2.5 Mutation check: a hiding policy turns the suite red
+- [x] 2.4 Mutation check: an exposing policy turns the suite red — c98fcef
+- [x] 2.5 Mutation check: a hiding policy turns the suite red — c98fcef
 
 ### Phase 3: CI gate and test-plan update
 
 #### Automated
 
-- [ ] 3.1 `npm run lint` passes
-- [ ] 3.2 `npm test` passes
-- [ ] 3.3 `npm run test:db` passes against local Supabase
-- [ ] 3.4 `.github/workflows/ci.yml` contains `npm test` in job `ci` and `npm run test:db` in job `smoke`
+- [x] 3.1 `npm run lint` passes
+- [x] 3.2 `npm test` passes
+- [x] 3.3 `npm run test:db` passes against local Supabase
+- [x] 3.4 `.github/workflows/ci.yml` contains `npm test` in job `ci` and `npm run test:db` in job `smoke`
 
 #### Manual
 

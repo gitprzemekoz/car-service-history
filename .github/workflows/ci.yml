@@ -19,6 +19,7 @@ jobs:
       - run: npx astro sync
       - run: npm run lint
       - run: npx astro check
+      - run: npm test
       - run: npm run build
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
@@ -45,6 +46,8 @@ jobs:
           source supabase.env
           printf 'SUPABASE_URL=%s\nSUPABASE_KEY=%s\n' "$API_URL" "$ANON_KEY" > .env
           cp .env .dev.vars
+      - name: RLS visibility matrix (DB integration)
+        run: npm run test:db -- --reporter=verbose
       - run: npm run build
       - name: Run smoke test against production preview
         run: |
