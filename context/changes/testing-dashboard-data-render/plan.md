@@ -527,31 +527,31 @@ None. No schema or data changes. The fixture `Actor.email` addition is additive 
 
 #### Automated
 
-- [x] 2.1 Unit tests pass
-- [x] 2.2 Lint passes
-- [x] 2.3 Type check passes
-- [x] 2.4 Build succeeds
-- [x] 2.5 The markers exist in the source
+- [x] 2.1 Unit tests pass — 46221cb
+- [x] 2.2 Lint passes — 46221cb
+- [x] 2.3 Type check passes — 46221cb
+- [x] 2.4 Build succeeds — 46221cb
+- [x] 2.5 The markers exist in the source — 46221cb
 
 #### Manual
 
-- [x] 2.6 Client and mechanic dashboards look visually unchanged
-- [x] 2.7 Failed mechanic clients query shows the alert card, not the empty state
+- [x] 2.6 Client and mechanic dashboards look visually unchanged — 46221cb
+- [x] 2.7 Failed mechanic clients query shows the alert card, not the empty state — 46221cb
 
 ### Phase 3: HTTP integration suite
 
 #### Automated
 
-- [ ] 3.1 Phase 1 DB suite still passes after the fixture changes
-- [ ] 3.2 HTTP suite passes against a local preview
-- [ ] 3.3 Unit tests still pass and do not pick up tests/http
-- [ ] 3.4 Lint passes
-- [ ] 3.5 Type check passes
+- [x] 3.1 Phase 1 DB suite still passes after the fixture changes
+- [x] 3.2 HTTP suite passes against a local preview
+- [x] 3.3 Unit tests still pass and do not pick up tests/http
+- [x] 3.4 Lint passes
+- [x] 3.5 Type check passes
 
 #### Manual
 
-- [ ] 3.6 Injected ServiceHistory throw makes dashboard-render fail with a 500 status
-- [ ] 3.7 test:http with preview stopped fails fast with the health-check message
+- [x] 3.6 Injected ServiceHistory throw makes dashboard-render fail with a 500 status
+- [x] 3.7 test:http with preview stopped fails fast with the health-check message
 
 ### Phase 4: CI gate and test-plan update
 

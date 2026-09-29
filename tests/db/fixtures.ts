@@ -3,6 +3,7 @@ import { newClient, type DbClient } from "./clients";
 export interface Actor {
   client: DbClient;
   userId: string;
+  email: string;
 }
 
 export interface WorkshopPair {
@@ -14,7 +15,8 @@ export interface WorkshopPair {
   shareLinkId: string;
 }
 
-const PASSWORD = "Rls-Test-Passw0rd!";
+// Shared by every fixture user; exported so the HTTP suite can sign in through the app.
+export const PASSWORD = "Rls-Test-Passw0rd!";
 
 // Unique per process, so repeated runs on the same local DB never collide on emails.
 export const RUN_ID = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
@@ -28,7 +30,7 @@ async function signUp(email: string): Promise<Actor> {
   const { data, error } = await client.auth.signUp({ email, password: PASSWORD });
   if (error) fail(`sign up ${email}`, error);
   if (!data.user || !data.session) fail(`sign up ${email}`, { message: "no user or session returned" });
-  return { client, userId: data.user.id };
+  return { client, userId: data.user.id, email };
 }
 
 // Builds one mechanic + client pair entirely through the anon key under RLS.
