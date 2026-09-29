@@ -13,7 +13,8 @@
     "smoke": "node scripts/smoke.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "test:db": "vitest run --config vitest.db.config.ts"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",
