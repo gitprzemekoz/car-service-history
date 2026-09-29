@@ -1,9 +1,10 @@
 ---
 import ServiceHistory from "@/components/ServiceHistory.astro";
+import ShareLinkCard from "@/components/ShareLinkCard.astro";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatMileage, formatServiceDate, nextService } from "@/lib/service-history";
-import type { ServiceEntry, Vehicle } from "@/lib/types";
+import type { ServiceEntry, ShareLink, Vehicle } from "@/lib/types";
 
 interface Props {
   email: string | undefined;
@@ -11,11 +12,15 @@ interface Props {
   entries: ServiceEntry[];
   // True when the clients query failed; takes precedence over every other state, even if a vehicle is passed.
   loadError: boolean;
+  shareLink: Pick<ShareLink, "token" | "expires_at"> | null;
+  // Absolute origin the share URL is built on (Astro.url.origin on the real page).
+  origin: string;
+  shareError?: string;
   // Dev kitchen sink only: headless screenshots cannot press Tab, so focus is shown via autofocus.
   autofocusSignOut?: boolean;
 }
 
-const { email, vehicle, entries, loadError, autofocusSignOut = false } = Astro.props;
+const { email, vehicle, entries, loadError, shareLink, origin, shareError, autofocusSignOut = false } = Astro.props;
 
 // Spread so the real page never carries the attribute; only the kitchen sink sets it.
 const focusAttrs = autofocusSignOut ? { autofocus: true } : {};
@@ -77,6 +82,8 @@ const nextServiceText = next
             </CardContent>
           )}
         </Card>
+
+        <ShareLinkCard shareLink={shareLink} origin={origin} shareError={shareError} />
 
         <Card>
           <CardHeader>
