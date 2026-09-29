@@ -1,7 +1,7 @@
 ---
 change_id: testing-rls-visibility-matrix
 title: RLS visibility matrix and CI test gate (test-plan Phase 1)
-status: implemented
+status: impl_reviewed
 created: 2026-09-29
 updated: 2026-09-29
 archived_at: null
