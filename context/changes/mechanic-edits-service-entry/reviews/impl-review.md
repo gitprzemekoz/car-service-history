@@ -28,7 +28,7 @@ Success Criteria note: `npm test` (36/36), `npm run build` and `npm run lint` we
 - **Severity**: ⚠️ WARNING
 - **Impact**: 🔎 MEDIUM — real tradeoff; pause to reason through it
 - **Dimension**: Safety & Quality
-- **Location**: supabase/migrations/20260928120000_service_entry_edits.sql:53-61
+- **Location**: supabase/migrations/20260929120000_service_entry_edits.sql:53-61
 - **Detail**: The no-op branch returns the caller's `NEW` unchanged, including `NEW.updated_at`. The owning mechanic can send a direct PostgREST request (`PATCH service_entries?id=eq.X {"updated_at": null}`) that passes RLS and the immutability check. It creates no revision and clears the "Edited" marker, which hides a correction from the client. The same request can set `updated_at` to any timestamp. `id` is also not in the immutable list.
 - **Fix A ⭐ Recommended**: Edit the unmerged migration in place. Set `new.updated_at := old.updated_at;` before the no-op `return new;`, and add `id` to the immutable-column check. Then re-apply the function locally with `create or replace`.
   - Strength: The branch is not merged or deployed, so one clean migration keeps the history readable. It is a two-line change.
@@ -47,7 +47,7 @@ Success Criteria note: `npm test` (36/36), `npm run build` and `npm run lint` we
 - **Severity**: 💡 OBSERVATION
 - **Impact**: 🏃 LOW — quick decision; fix is obvious and narrowly scoped
 - **Dimension**: Safety & Quality
-- **Location**: supabase/migrations/20260928120000_service_entry_edits.sql:16-31
+- **Location**: supabase/migrations/20260929120000_service_entry_edits.sql:16-31
 - **Detail**: `service_entry_revisions` keeps Supabase's default grants to `anon` and `authenticated`. Only RLS with no policies blocks access, so adding any policy later would expose the table. `service_entry_id` also has no index, which cascade deletes and any future history lookups will need.
 - **Fix**: Add `revoke all on service_entry_revisions from anon, authenticated;` and `create index on service_entry_revisions (service_entry_id);`.
 - **Decision**: PENDING
@@ -57,7 +57,7 @@ Success Criteria note: `npm test` (36/36), `npm run build` and `npm run lint` we
 - **Severity**: 💡 OBSERVATION
 - **Impact**: 🏃 LOW — quick decision; fix is obvious and narrowly scoped
 - **Dimension**: Safety & Quality
-- **Location**: supabase/migrations/20260928120000_service_entry_edits.sql:18
+- **Location**: supabase/migrations/20260929120000_service_entry_edits.sql:18
 - **Detail**: `on delete cascade` removes an entry's revisions when the entry is deleted, and entries in turn cascade from vehicles and clients. No DELETE policy exists today, so only the service role can trigger this. The plan specified the cascade.
 - **Fix**: Keep the cascade (deletion is out of scope) and revisit it when a delete flow is planned.
 - **Decision**: PENDING

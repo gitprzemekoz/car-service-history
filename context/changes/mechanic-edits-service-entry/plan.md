@@ -52,7 +52,7 @@ Add `updated_at`, the revisions table and the trigger, and update the TypeScript
 
 #### 1. Migration
 
-**File**: `supabase/migrations/20260928120000_service_entry_edits.sql` (new)
+**File**: `supabase/migrations/20260929120000_service_entry_edits.sql` (new)
 
 **Intent**: Make edits safe at the database level. Every real change keeps the previous version, and the entry records when it was last edited.
 

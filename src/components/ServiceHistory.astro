@@ -43,7 +43,8 @@ const sorted = sortNewestFirst(entries);
           <dd class="text-foreground">{entry.next_due_date === null ? "—" : formatServiceDate(entry.next_due_date)}</dd>
         </dl>
         {entry.notes && <p class="mt-2 text-sm whitespace-pre-line text-foreground">{entry.notes}</p>}
-        {entry.updated_at !== null && (
+        {/* Truthy, not `!== null`: a missing column yields undefined, and formatting it throws mid-stream (blank page). */}
+        {entry.updated_at && (
           <p class="mt-2 text-xs text-muted-foreground">Edited {formatEditedDate(entry.updated_at)}</p>
         )}
       </li>
