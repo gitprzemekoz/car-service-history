@@ -366,13 +366,13 @@ Make both suites required CI checks, and record the shipped pattern in the test 
 
 #### Automated
 
-- [x] 3.1 `npm run lint` passes
-- [x] 3.2 `npm test` passes
-- [x] 3.3 `npm run test:db` passes against local Supabase
-- [x] 3.4 `.github/workflows/ci.yml` contains `npm test` in job `ci` and `npm run test:db` in job `smoke`
+- [x] 3.1 `npm run lint` passes — eb0685e
+- [x] 3.2 `npm test` passes — eb0685e
+- [x] 3.3 `npm run test:db` passes against local Supabase — eb0685e
+- [x] 3.4 `.github/workflows/ci.yml` contains `npm test` in job `ci` and `npm run test:db` in job `smoke` — eb0685e
 
 #### Manual
 
-- [ ] 3.5 A pushed branch or PR shows both CI jobs green, with the `test:db` step output listing the matrix tests
-- [ ] 3.6 A throwaway PR that loosens one SELECT policy in a new migration makes the `smoke` job fail at `test:db` (optional but recommended; close the PR afterwards)
-- [ ] 3.7 `test-plan.md` §3/§4/§5/§6.2/§6.6 read correctly, and §1/§2 are untouched
+- [x] 3.5 A pushed branch or PR shows both CI jobs green, with the `test:db` step output listing the matrix tests — eb0685e
+- [x] 3.6 A throwaway PR that loosens one SELECT policy in a new migration makes the `smoke` job fail at `test:db` (optional but recommended; close the PR afterwards) — eb0685e
+- [x] 3.7 `test-plan.md` §3/§4/§5/§6.2/§6.6 read correctly, and §1/§2 are untouched — eb0685e
