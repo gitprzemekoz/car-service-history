@@ -513,30 +513,30 @@ None. No schema or data changes. The fixture `Actor.email` addition is additive 
 
 #### Automated
 
-- [x] 1.1 Unit tests pass, including the new buffer-html suite
-- [x] 1.2 Lint passes
-- [x] 1.3 Type check passes
-- [x] 1.4 Build succeeds
-- [x] 1.5 Existing smoke still passes against a local preview
+- [x] 1.1 Unit tests pass, including the new buffer-html suite — 9711221
+- [x] 1.2 Lint passes — 9711221
+- [x] 1.3 Type check passes — 9711221
+- [x] 1.4 Build succeeds — 9711221
+- [x] 1.5 Existing smoke still passes against a local preview — 9711221
 
 #### Manual
 
-- [x] 1.6 Injected ServiceHistory throw returns 500 with the visible alert page and a logged error
+- [x] 1.6 Injected ServiceHistory throw returns 500 with the visible alert page and a logged error — 9711221
 
 ### Phase 2: Stable markers and mechanic-list alert
 
 #### Automated
 
-- [ ] 2.1 Unit tests pass
-- [ ] 2.2 Lint passes
-- [ ] 2.3 Type check passes
-- [ ] 2.4 Build succeeds
-- [ ] 2.5 The markers exist in the source
+- [x] 2.1 Unit tests pass
+- [x] 2.2 Lint passes
+- [x] 2.3 Type check passes
+- [x] 2.4 Build succeeds
+- [x] 2.5 The markers exist in the source
 
 #### Manual
 
-- [ ] 2.6 Client and mechanic dashboards look visually unchanged
-- [ ] 2.7 Failed mechanic clients query shows the alert card, not the empty state
+- [x] 2.6 Client and mechanic dashboards look visually unchanged
+- [x] 2.7 Failed mechanic clients query shows the alert card, not the empty state
 
 ### Phase 3: HTTP integration suite
 
