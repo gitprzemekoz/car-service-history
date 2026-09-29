@@ -339,28 +339,28 @@ Make both suites required CI checks, and record the shipped pattern in the test 
 
 #### Automated
 
-- [x] 1.1 `npm run test:db` passes against a running local Supabase (`npx supabase start`)
-- [x] 1.2 `npm run test:db` fails with the guidance message when the stack is stopped (`npx supabase stop`)
-- [x] 1.3 `npm test` still runs only the 4 existing unit files and passes without Supabase running
-- [x] 1.4 `npm run lint` passes
-- [x] 1.5 `npx astro check` passes
+- [x] 1.1 `npm run test:db` passes against a running local Supabase (`npx supabase start`) — 0403cf7
+- [x] 1.2 `npm run test:db` fails with the guidance message when the stack is stopped (`npx supabase stop`) — 0403cf7
+- [x] 1.3 `npm test` still runs only the 4 existing unit files and passes without Supabase running — 0403cf7
+- [x] 1.4 `npm run lint` passes — 0403cf7
+- [x] 1.5 `npx astro check` passes — 0403cf7
 
 #### Manual
 
-- [x] 1.6 Running `npm run test:db` twice in a row on the same local DB passes both times (fresh users per run, no collisions)
+- [x] 1.6 Running `npm run test:db` twice in a row on the same local DB passes both times (fresh users per run, no collisions) — 0403cf7
 
 ### Phase 2: RLS visibility matrix
 
 #### Automated
 
-- [ ] 2.1 `npm run test:db` passes with all 30 exact-set cells and all foreign-id checks green
-- [ ] 2.2 `npm run lint` passes
-- [ ] 2.3 `npx astro check` passes
+- [x] 2.1 `npm run test:db` passes with all 30 exact-set cells and all foreign-id checks green
+- [x] 2.2 `npm run lint` passes
+- [x] 2.3 `npx astro check` passes
 
 #### Manual
 
-- [ ] 2.4 Mutation check: an exposing policy turns the suite red
-- [ ] 2.5 Mutation check: a hiding policy turns the suite red
+- [x] 2.4 Mutation check: an exposing policy turns the suite red
+- [x] 2.5 Mutation check: a hiding policy turns the suite red
 
 ### Phase 3: CI gate and test-plan update
 
