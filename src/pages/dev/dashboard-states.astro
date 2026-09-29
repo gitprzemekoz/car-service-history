@@ -11,6 +11,7 @@ if (!import.meta.env.DEV) {
 }
 
 const email = "client@example.com";
+const origin = Astro.url.origin;
 const vehicle = { make: "Toyota", model: "Corolla", registration_number: "KR 12345" };
 
 const base = { vehicle_id: "v-1", mechanic_id: "m-1" };
@@ -57,6 +58,11 @@ const entries: ServiceEntry[] = [
   },
 ];
 
+const HOUR_MS = 60 * 60 * 1000;
+const token = "Xq3v9LmZ0aB7cD2eF5gH8iJ1kL4mN6oP9qR2sT5uV-_";
+const activeLink = { token, expires_at: new Date(Date.now() + 24 * HOUR_MS).toISOString() };
+const expiredLink = { token, expires_at: new Date(Date.now() - HOUR_MS).toISOString() };
+
 const states = [
   {
     label:
@@ -70,6 +76,13 @@ const states = [
   },
   { label: "(d) No vehicle", props: { vehicle: null, entries: [] } },
   { label: "(e) Focus: sign-out button focused", props: { vehicle, entries, autofocusSignOut: true } },
+  { label: "(f) Share: no link", props: { vehicle, entries } },
+  { label: "(g) Share: active link", props: { vehicle, entries, shareLink: activeLink } },
+  { label: "(h) Share: expired link (renders as no link)", props: { vehicle, entries, shareLink: expiredLink } },
+  {
+    label: "(i) Share: error",
+    props: { vehicle, entries, shareError: "No vehicle found for the current user" },
+  },
 ];
 ---
 
@@ -78,7 +91,7 @@ const states = [
     {states.map((state) => (
       <section class="state-frame border-b-4 border-dashed border-border">
         <p class="bg-muted px-4 py-1 font-mono text-xs text-muted-foreground">{state.label}</p>
-        <ClientDashboardView email={email} loadError={false} {...state.props} />
+        <ClientDashboardView email={email} loadError={false} shareLink={null} origin={origin} {...state.props} />
       </section>
     ))}
   </main>

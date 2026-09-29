@@ -36,6 +36,19 @@ export interface ServiceEntry {
   updated_at: string | null;
 }
 
+export interface ShareLink {
+  vehicle_id: string;
+  token: string;
+  created_at: string;
+  expires_at: string;
+}
+
+// Redacted payload returned by the public get_shared_vehicle_history() RPC.
+export interface SharedVehicleHistory {
+  vehicle: Pick<Vehicle, "make" | "model" | "registration_number">;
+  entries: Pick<ServiceEntry, "service_type" | "service_date" | "mileage">[];
+}
+
 export interface NewClientInput {
   name: string;
   email: string;

@@ -1,0 +1,32 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import SharedHistoryView from "@/components/SharedHistoryView.astro";
+import { isShareToken } from "@/lib/share-link";
+import { createClient } from "@/lib/supabase";
+import type { SharedVehicleHistory } from "@/lib/types";
+
+// Public, anonymous page. Every response (valid or not) must stay out of indexes, referrers and caches.
+Astro.response.headers.set("X-Robots-Tag", "noindex");
+Astro.response.headers.set("Referrer-Policy", "no-referrer");
+Astro.response.headers.set("Cache-Control", "no-store");
+
+const token = Astro.params.token ?? "";
+
+// Malformed tokens never reach the database.
+const supabase = isShareToken(token) ? createClient(Astro.request.headers, Astro.cookies) : null;
+
+// security definer RPC: returns null for unknown, expired or revoked tokens, and only redacted fields otherwise.
+const result = supabase ? await supabase.rpc("get_shared_vehicle_history", { p_token: token }) : null;
+
+// Fail closed: an RPC error renders exactly like an unknown token.
+// Untyped client (no generated Database types): the RPC returns the jsonb payload or null.
+const history = !result || result.error ? null : ((result.data as SharedVehicleHistory | null) ?? null);
+
+if (!history) {
+  Astro.response.status = 404;
+}
+---
+
+<Layout title="Service history">
+  <SharedHistoryView history={history} />
+</Layout>

@@ -1,0 +1,79 @@
+---
+import CopyButton from "@/components/CopyButton";
+import { buttonVariants } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { formatExpiry, isActive, shareUrl } from "@/lib/share-link";
+import type { ShareLink } from "@/lib/types";
+
+interface Props {
+  shareLink: Pick<ShareLink, "token" | "expires_at"> | null;
+  origin: string;
+  shareError?: string;
+}
+
+const { shareLink, origin, shareError } = Astro.props;
+
+// An expired row renders exactly like no link.
+const active = isActive(shareLink, new Date()) ? shareLink : null;
+const url = active ? shareUrl(origin, active.token) : null;
+---
+
+<Card>
+  <CardHeader>
+    <CardTitle>
+      <h2 class="text-xl">Share history</h2>
+    </CardTitle>
+    <p class="text-sm text-muted-foreground">
+      Anyone with the link can view your vehicle's service history (without costs or notes) for 24 hours.
+    </p>
+  </CardHeader>
+  <CardContent className="space-y-4">
+    {shareError && (
+      <p
+        role="alert"
+        class="rounded-lg border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive"
+      >
+        {shareError}
+      </p>
+    )}
+
+    {active && url ? (
+      <>
+        <div class="space-y-2">
+          <label for="share-link-url" class="text-sm font-medium text-foreground">
+            Share link
+          </label>
+          <div class="flex flex-wrap gap-2 sm:flex-nowrap">
+            <input
+              id="share-link-url"
+              type="text"
+              readonly
+              value={url}
+              class="h-9 min-w-0 flex-1 rounded-md border border-input bg-background px-3 font-mono text-sm text-foreground"
+            />
+            <CopyButton value={url} client:load />
+          </div>
+          <p class="text-sm text-muted-foreground">Expires {formatExpiry(active.expires_at)}</p>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <form method="POST" action="/api/share-link">
+            <button type="submit" class:list={[buttonVariants({ variant: "outline" })]}>
+              Create new link
+            </button>
+          </form>
+          <form method="POST" action="/api/share-link/revoke">
+            <button type="submit" class:list={[buttonVariants({ variant: "destructive" })]}>
+              Revoke
+            </button>
+          </form>
+        </div>
+      </>
+    ) : (
+      <form method="POST" action="/api/share-link">
+        <button type="submit" class:list={[buttonVariants()]}>
+          Create share link
+        </button>
+      </form>
+    )}
+  </CardContent>
+</Card>

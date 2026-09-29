@@ -1,0 +1,49 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import SharedHistoryView from "@/components/SharedHistoryView.astro";
+import type { SharedVehicleHistory } from "@/lib/types";
+
+// Dev-only kitchen sink: every public share page state from inline fixtures, for screenshot gating.
+// The rule crashes on a top-level frontmatter `return` ("Expected node to have a parent"), so it is off here.
+/* eslint @typescript-eslint/no-misused-promises: "off" */
+if (!import.meta.env.DEV) {
+  return new Response(null, { status: 404 });
+}
+
+const vehicle = { make: "Toyota", model: "Corolla", registration_number: "KR 12345" };
+
+// Already newest first, as get_shared_vehicle_history() returns them.
+const entries: SharedVehicleHistory["entries"] = [
+  { service_type: "Oil change", service_date: "2026-09-23", mileage: 85000 },
+  { service_type: "Brake inspection", service_date: "2026-09-23", mileage: 85000 },
+  { service_type: "Tyre rotation", service_date: "2026-03-14", mileage: 8500 },
+];
+
+const states: { label: string; history: SharedVehicleHistory | null }[] = [
+  { label: "(a) Vehicle with 3 entries", history: { vehicle, entries } },
+  { label: "(b) Vehicle with 0 entries", history: { vehicle, entries: [] } },
+  { label: "(c) Invalid or expired link", history: null },
+];
+---
+
+<Layout title="Share states (dev)">
+  <main class="bg-background">
+    {states.map((state) => (
+      <section class="state-frame border-b-4 border-dashed border-border">
+        <p class="bg-muted px-4 py-1 font-mono text-xs text-muted-foreground">{state.label}</p>
+        <SharedHistoryView history={state.history} />
+      </section>
+    ))}
+  </main>
+</Layout>
+
+<style is:global>
+  /* Each state is stacked; the view's full-viewport min height would make every frame one screen tall. */
+  .state-frame .min-h-screen {
+    min-height: 0;
+  }
+  /* The dev toolbar is not part of the view and would land in every screenshot. */
+  astro-dev-toolbar {
+    display: none !important;
+  }
+</style>

@@ -2,8 +2,8 @@
   "package": "@przeprogramowani/10x-cli",
   "version": "1.22.0",
   "manifestVersion": 3,
-  "lastApplied": "2026-09-25T20:21:24.686Z",
-  "lessonId": "m2l5",
+  "lastApplied": "2026-09-28T13:45:55.038Z",
+  "lessonId": "m3l1",
   "course": "10xdevs4",
   "tool": "claude-code",
   "files": {
@@ -284,6 +284,16 @@
         "contentHashes": {
           "SKILL.md": "062140460352e033dba13c5efcf30054b86e3f88b9e215df274b131f57451961",
           "references/ui-quality-checklist.md": "bbf28d7a4f8e26d1673c60520e6864fba0fff2316a1ab8599f5ead58c4057c45"
+        }
+      },
+      "10x-test-plan": {
+        "files": [
+          "SKILL.md",
+          "references/test-plan-schema.md"
+        ],
+        "contentHashes": {
+          "SKILL.md": "534d97b01dbf4dca68f300153a5059eb0faa919e3459689d37333f6adc59a27a",
+          "references/test-plan-schema.md": "4969dc97be7cb32abd9789e3ff1e3d0e4b95e1180d23dd0a656031591eb421a3"
         }
       }
     },
@@ -1279,6 +1289,19 @@
         "m1l5-3-extend-prerequisites.md",
         "m1l5-4-store-plan.md"
       ],
+      "configs": []
+    },
+    "m3l1": {
+      "appliedAt": "2026-09-28T13:45:55.038Z",
+      "skills": {
+        "10x-test-plan": {
+          "files": [
+            "SKILL.md",
+            "references/test-plan-schema.md"
+          ]
+        }
+      },
+      "prompts": [],
       "configs": []
     }
   },
