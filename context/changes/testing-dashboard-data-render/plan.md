@@ -559,9 +559,9 @@ None. No schema or data changes. The fixture `Actor.email` addition is additive 
 
 - [x] 4.1 Workflow YAML is valid and the step is present — 73514c7
 - [x] 4.2 Test-plan formatting is clean — 73514c7
-- [ ] 4.3 CI run on the PR is green for both jobs with test:http output visible
+- [x] 4.3 CI run on the PR is green for both jobs with test:http output visible — 73514c7
 
 #### Manual
 
-- [ ] 4.4 CI logs show test:http running after smoke with all cases listed
-- [ ] 4.5 Test-plan §6.3 recipe reads correctly to a newcomer
+- [x] 4.4 CI logs show test:http running after smoke with all cases listed — 73514c7
+- [x] 4.5 Test-plan §6.3 recipe reads correctly to a newcomer — 73514c7
