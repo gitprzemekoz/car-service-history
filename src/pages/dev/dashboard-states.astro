@@ -28,6 +28,7 @@ const entries: ServiceEntry[] = [
     next_due_mileage: 95000,
     next_due_date: "2027-09-23",
     created_at: "2026-09-23T10:00:00Z",
+    updated_at: null,
   },
   {
     ...base,
@@ -40,6 +41,7 @@ const entries: ServiceEntry[] = [
     next_due_mileage: null,
     next_due_date: null,
     created_at: "2026-03-14T09:00:00Z",
+    updated_at: "2026-09-27T22:30:00Z",
   },
   {
     ...base,
@@ -52,6 +54,7 @@ const entries: ServiceEntry[] = [
     next_due_mileage: 100000,
     next_due_date: null,
     created_at: "2026-09-23T08:00:00Z",
+    updated_at: null,
   },
 ];
 
@@ -62,7 +65,8 @@ const expiredLink = { token, expires_at: new Date(Date.now() - HOUR_MS).toISOStr
 
 const states = [
   {
-    label: "(a) Vehicle with 3 entries (same-day tie-break: Oil change above Brake inspection)",
+    label:
+      "(a) Vehicle with 3 entries (same-day tie-break: Oil change above Brake inspection; Tyre rotation shows the Edited marker)",
     props: { vehicle, entries },
   },
   { label: "(b) Vehicle with 0 entries", props: { vehicle, entries: [] } },

@@ -1,0 +1,84 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import ServiceEntryForm, { type Field } from "@/components/mechanic/ServiceEntryForm";
+import { createClient } from "@/lib/supabase";
+import type { ServiceEntry } from "@/lib/types";
+
+const id = Astro.params.id ?? "";
+const entryId = Astro.params.entryId ?? "";
+const error = Astro.url.searchParams.get("error");
+const clientPage = `/dashboard/mechanic/clients/${encodeURIComponent(id)}`;
+
+const supabase = createClient(Astro.request.headers, Astro.cookies);
+
+// RLS-scoped: another mechanic's entry, an entry of a different client, or a malformed id yields no row.
+// Annotated: the `!inner` embed makes supabase-js infer `any` for the row.
+const { data }: { data: unknown } = supabase
+  ? await supabase
+      .from("service_entries")
+      .select("*, vehicles!inner(client_id)")
+      .eq("id", entryId)
+      .eq("vehicles.client_id", id)
+      .maybeSingle()
+  : { data: null };
+
+// Set the status instead of returning a Response: a top-level `return` in frontmatter
+// crashes typescript-eslint's no-misused-promises rule on .astro files.
+if (!data) {
+  Astro.response.status = 404;
+}
+
+const entry = data as ServiceEntry | null;
+
+function toFormValue(value: string | number | null): string {
+  return value === null ? "" : String(value);
+}
+
+const initialValues: Record<Field, string> | null = entry
+  ? {
+      serviceType: entry.service_type,
+      serviceDate: entry.service_date,
+      mileage: toFormValue(entry.mileage),
+      cost: toFormValue(entry.cost),
+      notes: toFormValue(entry.notes),
+      nextDueMileage: toFormValue(entry.next_due_mileage),
+      nextDueDate: toFormValue(entry.next_due_date),
+    }
+  : null;
+---
+
+{!initialValues && (
+  <Layout title="Entry not found">
+    <div class="bg-background flex min-h-screen items-center justify-center p-4">
+      <div class="rounded-2xl border border-border bg-card p-8 text-center text-card-foreground shadow-sm">
+        <h1 class="mb-4 text-2xl font-bold">Entry not found</h1>
+        <a href="/dashboard/mechanic" class="text-sm text-primary underline-offset-4 hover:underline">
+          &larr; Back to clients
+        </a>
+      </div>
+    </div>
+  </Layout>
+)}
+{initialValues && (
+  <Layout title="Edit service entry — Mechanic Dashboard">
+    <div class="bg-background min-h-screen p-4">
+      <div class="mx-auto max-w-3xl space-y-6 py-8 text-foreground">
+        <a href={clientPage} class="text-sm text-primary underline-offset-4 hover:underline">
+          &larr; Back to client
+        </a>
+
+        <section class="rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-sm">
+          <h1 class="mb-4 text-xl font-semibold">Edit service entry</h1>
+          <ServiceEntryForm
+            action={`/api/clients/${encodeURIComponent(id)}/entries/${encodeURIComponent(entryId)}`}
+            initialValues={initialValues}
+            submitLabel="Save changes"
+            pendingText="Saving..."
+            serverError={error}
+            client:load
+          />
+        </section>
+      </div>
+    </div>
+  </Layout>
+)}

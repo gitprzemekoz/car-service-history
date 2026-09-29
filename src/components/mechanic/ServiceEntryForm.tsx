@@ -5,25 +5,20 @@ import { SubmitButton } from "@/components/auth/SubmitButton";
 import { ServerError } from "@/components/auth/ServerError";
 import { SERVICE_ENTRY_FIELDS } from "@/lib/validation";
 
-type Field = keyof typeof SERVICE_ENTRY_FIELDS;
+export type Field = keyof typeof SERVICE_ENTRY_FIELDS;
 
 interface Props {
-  clientId: string;
-  /** YYYY-MM-DD computed on the server, so it matches the date the API validates against. */
-  defaultServiceDate: string;
+  action: string;
+  /** Form strings per field. For add, `serviceDate` is today (YYYY-MM-DD) computed on the server,
+   * so it matches the date the API validates against. */
+  initialValues: Record<Field, string>;
+  submitLabel: string;
+  pendingText: string;
   serverError?: string | null;
 }
 
-export default function AddServiceEntryForm({ clientId, defaultServiceDate, serverError }: Props) {
-  const [values, setValues] = useState<Record<Field, string>>({
-    serviceType: "",
-    serviceDate: defaultServiceDate,
-    mileage: "",
-    cost: "",
-    notes: "",
-    nextDueMileage: "",
-    nextDueDate: "",
-  });
+export default function ServiceEntryForm({ action, initialValues, submitLabel, pendingText, serverError }: Props) {
+  const [values, setValues] = useState<Record<Field, string>>(initialValues);
   const [errors, setErrors] = useState<Partial<Record<Field, string>>>({});
 
   // Required-field checks only; the full rules live in parseNewServiceEntry on the server.
@@ -58,13 +53,7 @@ export default function AddServiceEntryForm({ clientId, defaultServiceDate, serv
   }
 
   return (
-    <form
-      method="POST"
-      action={`/api/clients/${encodeURIComponent(clientId)}/entries`}
-      className="space-y-4"
-      onSubmit={handleSubmit}
-      noValidate
-    >
+    <form method="POST" action={action} className="space-y-4" onSubmit={handleSubmit} noValidate>
       <FormField
         id={SERVICE_ENTRY_FIELDS.serviceType}
         label="Service type"
@@ -158,8 +147,8 @@ export default function AddServiceEntryForm({ clientId, defaultServiceDate, serv
 
       <ServerError message={serverError} />
 
-      <SubmitButton pendingText="Adding entry..." icon={<Plus className="size-4" />}>
-        Add service entry
+      <SubmitButton pendingText={pendingText} icon={<Plus className="size-4" />}>
+        {submitLabel}
       </SubmitButton>
     </form>
   );

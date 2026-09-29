@@ -33,6 +33,7 @@ export interface ServiceEntry {
   next_due_mileage: number | null;
   next_due_date: string | null;
   created_at: string;
+  updated_at: string | null;
 }
 
 export interface ShareLink {
