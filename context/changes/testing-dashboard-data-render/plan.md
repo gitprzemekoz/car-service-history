@@ -542,23 +542,23 @@ None. No schema or data changes. The fixture `Actor.email` addition is additive 
 
 #### Automated
 
-- [x] 3.1 Phase 1 DB suite still passes after the fixture changes
-- [x] 3.2 HTTP suite passes against a local preview
-- [x] 3.3 Unit tests still pass and do not pick up tests/http
-- [x] 3.4 Lint passes
-- [x] 3.5 Type check passes
+- [x] 3.1 Phase 1 DB suite still passes after the fixture changes — 177f8bb
+- [x] 3.2 HTTP suite passes against a local preview — 177f8bb
+- [x] 3.3 Unit tests still pass and do not pick up tests/http — 177f8bb
+- [x] 3.4 Lint passes — 177f8bb
+- [x] 3.5 Type check passes — 177f8bb
 
 #### Manual
 
-- [x] 3.6 Injected ServiceHistory throw makes dashboard-render fail with a 500 status
-- [x] 3.7 test:http with preview stopped fails fast with the health-check message
+- [x] 3.6 Injected ServiceHistory throw makes dashboard-render fail with a 500 status — 177f8bb
+- [x] 3.7 test:http with preview stopped fails fast with the health-check message — 177f8bb
 
 ### Phase 4: CI gate and test-plan update
 
 #### Automated
 
-- [ ] 4.1 Workflow YAML is valid and the step is present
-- [ ] 4.2 Test-plan formatting is clean
+- [x] 4.1 Workflow YAML is valid and the step is present
+- [x] 4.2 Test-plan formatting is clean
 - [ ] 4.3 CI run on the PR is green for both jobs with test:http output visible
 
 #### Manual
