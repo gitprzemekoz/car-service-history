@@ -1,4 +1,5 @@
 import { defineMiddleware } from "astro:middleware";
+import { bufferHtmlResponse } from "@/lib/buffer-html";
 import { createClient } from "@/lib/supabase";
 import type { Role } from "@/lib/types";
 
@@ -40,5 +41,6 @@ export const onRequest = defineMiddleware(async (context, next) => {
     return context.redirect("/dashboard");
   }
 
-  return next();
+  // Buffer HTML so a mid-render throw becomes a logged 500, not a blank 200 (see f763bdb).
+  return bufferHtmlResponse(await next());
 });

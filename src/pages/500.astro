@@ -1,0 +1,22 @@
+---
+import Layout from "@/layouts/Layout.astro";
+
+interface Props {
+  // Provided by Astro; intentionally not rendered so no stack reaches users.
+  error?: unknown;
+}
+---
+
+<Layout title="Something went wrong">
+  <div class="bg-background flex min-h-screen items-center justify-center p-4">
+    <div class="w-full max-w-sm rounded-2xl border border-border bg-card p-8 text-center text-card-foreground shadow-sm">
+      <h1 class="mb-3 text-2xl font-bold text-foreground">Something went wrong</h1>
+      <p role="alert" class="mb-6 text-muted-foreground">
+        Something went wrong while loading this page. Please try again in a moment.
+      </p>
+      <a href="/" class="text-sm text-primary underline-offset-4 hover:underline">
+        Go to home page
+      </a>
+    </div>
+  </div>
+</Layout>
