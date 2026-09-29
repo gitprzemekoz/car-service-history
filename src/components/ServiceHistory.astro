@@ -16,11 +16,13 @@ const sorted = sortNewestFirst(entries);
 {sorted.length === 0 ? (
   <p class="text-sm text-muted-foreground">No service entries yet — entries appear here after each service visit.</p>
 ) : (
-  <ul class="space-y-3">
+  <ul data-testid="service-history" class="space-y-3">
     {sorted.map((entry) => (
-      <li class="rounded-lg border border-border bg-muted/50 p-4">
+      <li data-testid="service-entry" data-entry-id={entry.id} class="rounded-lg border border-border bg-muted/50 p-4">
         <div class="flex flex-wrap items-baseline justify-between gap-2">
-          <span class="font-semibold text-foreground">{entry.service_type}</span>
+          <span data-testid="service-type" class="font-semibold text-foreground">
+            {entry.service_type}
+          </span>
           <span class="flex items-baseline gap-3">
             <span class="text-sm text-muted-foreground">{formatServiceDate(entry.service_date)}</span>
             {editHref && (

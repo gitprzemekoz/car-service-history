@@ -1,6 +1,7 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import AddClientForm from "@/components/mechanic/AddClientForm";
+import { buttonVariants } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase";
 import type { Client, Vehicle } from "@/lib/types";
 
@@ -17,12 +18,15 @@ const error = Astro.url.searchParams.get("error");
 const supabase = createClient(Astro.request.headers, Astro.cookies);
 
 // RLS scopes this to the signed-in mechanic's clients.
-const { data } = supabase
+const { data, error: clientsError } = supabase
   ? await supabase
       .from("clients")
       .select("id, name, email, user_id, vehicles(make, model, registration_number)")
       .order("name")
-  : { data: null };
+  : { data: null, error: null };
+
+// A failed query must not render as the empty state.
+const loadError = Boolean(clientsError);
 
 const clients = ((data ?? []) as ClientRow[]).map((row) => ({
   ...row,
@@ -52,7 +56,16 @@ const clients = ((data ?? []) as ClientRow[]).map((row) => ({
 
       <section class="rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-sm">
         <h2 class="mb-4 text-xl font-semibold">Clients</h2>
-        {clients.length === 0 ? (
+        {loadError ? (
+          <div class="space-y-4">
+            <p role="alert" class="text-sm text-foreground">
+              Your clients couldn't be loaded. Please try again in a moment.
+            </p>
+            <a href="/dashboard/mechanic" class:list={[buttonVariants({ variant: "outline" })]}>
+              Try again
+            </a>
+          </div>
+        ) : clients.length === 0 ? (
           <p class="text-sm text-muted-foreground">No clients yet. Add your first client below.</p>
         ) : (
           <ul class="space-y-3">
@@ -60,6 +73,8 @@ const clients = ((data ?? []) as ClientRow[]).map((row) => ({
               <li>
                 <a
                   href={`/dashboard/mechanic/clients/${client.id}`}
+                  data-testid="client-row"
+                  data-client-id={client.id}
                   class="block rounded-lg border border-border bg-muted/50 p-4 transition-colors hover:bg-accent"
                 >
                   <div class="flex flex-wrap items-baseline justify-between gap-2">
