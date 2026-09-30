@@ -108,6 +108,10 @@ describe("nextService", () => {
     expect(nextService([entry({ next_due_mileage: 100000 })])).toEqual({ date: null, mileage: 100000 });
   });
 
+  it("returns a date-only next service when mileage is not set", () => {
+    expect(nextService([entry({ next_due_date: "2027-09-23" })])).toEqual({ date: "2027-09-23", mileage: null });
+  });
+
   it("returns null when the newest entry has neither field, even if an older entry has one", () => {
     const entries = [
       entry({ id: "old", service_date: "2025-09-23", next_due_date: "2026-09-23", next_due_mileage: 70000 }),

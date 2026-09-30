@@ -15,7 +15,8 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:db": "vitest run --config vitest.db.config.ts",
-    "test:http": "vitest run --config vitest.http.config.ts"
+    "test:http": "vitest run --config vitest.http.config.ts",
+    "test:mutation": "stryker run"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",
@@ -43,6 +44,7 @@
   "devDependencies": {
     "@eslint/compat": "^2.1.1",
     "@eslint/js": "^10.0.1",
+    "@stryker-mutator/core": "^10.0.0",
     "@vitest/coverage-v8": "^5.0.1",
     "eslint": "^10.10.0",
     "eslint-config-prettier": "^10.1.8",
