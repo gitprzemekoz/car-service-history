@@ -6,7 +6,7 @@
 >
 > Refresh: re-run `/10x-test-plan --refresh` when stale (see §8).
 >
-> Last updated: 2026-09-29
+> Last updated: 2026-10-02
 
 ## 1. Strategy
 
@@ -64,41 +64,72 @@ Each row is a discrete rollout phase that will open its own change folder
 via `/10x-new`. Status moves left-to-right through the values below; the
 orchestrator updates Status as artifacts appear on disk.
 
-| #   | Phase name                        | Goal (one line)                                                                                               | Risks covered | Test types                                        | Status      | Change folder                                  |
-| --- | --------------------------------- | ------------------------------------------------------------------------------------------------------------- | ------------- | ------------------------------------------------- | ----------- | ---------------------------------------------- |
-| 1   | RLS visibility matrix + test gate | Run `npm test` in CI and prove each role sees exactly its own rows on a real database                         | #2            | DB integration (Vitest + local Supabase), CI gate | done        | context/changes/testing-rls-visibility-matrix/ |
-| 2   | Dashboard data-render protection  | Prove existing data actually renders for each role and failures are loud, not a blank 200; role routing holds | #1, #6        | HTTP integration against built app                | done        | context/changes/testing-dashboard-data-render/ |
-| 3   | Write-path and share-link abuse   | Prove edits cannot cross workshops or lose history, and share links never leak cost or outlive 24h            | #4, #5        | API + RLS integration, unit                       | not started | —                                              |
-| 4   | Migration parity gate             | Stop out-of-order or skipped migrations in CI before they reach the deployed database                         | #3            | CI gate, optional post-edit hook                  | not started | —                                              |
+| #   | Phase name                        | Goal (one line)                                                                                                          | Risks covered | Test types                                        | Status      | Change folder                                  |
+| --- | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ------------- | ------------------------------------------------- | ----------- | ---------------------------------------------- |
+| 1   | RLS visibility matrix + test gate | Run `npm test` in CI and prove each role sees exactly its own rows on a real database                                    | #2            | DB integration (Vitest + local Supabase), CI gate | done        | context/changes/testing-rls-visibility-matrix/ |
+| 2   | Dashboard data-render protection  | Prove existing data actually renders for each role and failures are loud, not a blank 200; role routing holds            | #1, #6        | HTTP integration against built app                | done        | context/changes/testing-dashboard-data-render/ |
+| 3   | Write-path and share-link abuse   | Prove edits cannot cross workshops or lose history, and share links never leak cost or outlive 24h                       | #4, #5        | API + RLS integration, unit                       | not started | —                                              |
+| 4   | Migration parity gate             | Stop out-of-order or skipped migrations in CI before they reach the deployed database                                    | #3            | CI gate, optional post-edit hook                  | not started | —                                              |
+| 5   | Dashboard browser render (E2E)    | Prove dashboards render seeded data in a real browser and islands hydrate without errors — blank-in-browser fails loudly | #1            | E2E (Playwright, Chromium)                        | not started | —                                              |
+
+### Phase 5 scope — browser-only scenarios for risk #1
+
+Phase 2 proves the server sends a complete page with the seeded ids. Phase 5 adds
+only what an HTTP test cannot see: what the user actually gets after the browser
+runs JS, hydrates islands and navigates. Do not re-assert what
+`tests/http/dashboard-render.test.ts` already covers.
+
+| #   | Scenario (user view)                                                                                                                                          | Why it needs a browser                                                                          | Status                                                 |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
+| E1  | Signed-in mechanic opening `/dashboard` lands on `/dashboard/mechanic` and sees the heading, "Signed in as …" and "Clients"                                   | Real sign-in form + cookie + redirect chain, as a user goes through it                          | done (`tests/e2e/seed.spec.ts`)                        |
+| E2  | Signed-in client with a seeded entry sees that entry's service type and date on `/dashboard` (`service-entry` visible)                                        | Data visible on screen, not just present in HTML (CSS/JS can hide it)                           | not started                                            |
+| E3  | Mechanic clicks a client row on the dashboard and the client detail page shows the seeded entry in `service-history`                                          | Click-through navigation — a broken link or route yields a blank/404 the user hits              | done (`tests/e2e/dashboard-client-navigation.spec.ts`) |
+| E4  | On the mechanic dashboard, client detail and entry edit pages, the `client:load` islands render their inputs and the page logs no `pageerror` / console error | Hydration failures and client-side exceptions never show up in an HTTP response                 | not started                                            |
+| E5  | Opening a client detail page for a non-existent or foreign client id shows a visible error or redirect, never an empty dashboard frame                        | The user-facing result of a failed load (error page vs empty shell) after client-side rendering | not started                                            |
+
+- **Seeding**: E2–E5 need known data. Seed with `createWorkshopPair` from
+  `tests/db/fixtures.ts` (anon key, per-file run label) and sign in through
+  the UI with the fixture `PASSWORD`, instead of relying on the shared
+  `E2E_USERNAME` account having data. `/10x-research` must ground how a
+  Playwright fixture reuses these helpers and whether the `setup` project
+  stays for E1 only.
+- **Auth budget**: every E2E sign-in and fixture sign-up counts toward the
+  local limit of 30 sign-ups/sign-ins per 5 min (see §6.6 Phase 2 note);
+  sign in once per actor per file and reuse `storageState`.
+- **Must challenge**: "the URL is right, so the page works"; "HTTP integration
+  already proves it renders".
+- **Anti-pattern**: asserting only `toHaveURL` or the status; screenshot /
+  visual snapshots (excluded in §7); duplicating Phase 2 HTTP assertions.
 
 ## 4. Stack
 
-| Layer                | Tool                               | Version          | Notes                                                                                                                                                                                              |
-| -------------------- | ---------------------------------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| unit                 | Vitest                             | ^5.0.1           | Configured (`environment: node`, `src/**/*.test.ts(x)`); 4 test files, all in `src/lib/` — profile `sparse`                                                                                        |
-| DB / RLS integration | Vitest + local Supabase (CLI)      | supabase ^2.23.4 | `tests/db/**/*.test.ts` run by `vitest.db.config.ts` via `npm run test:db` (separate from `npm test`); anon key only, needs `npx supabase start`                                                   |
-| HTTP integration     | Node fetch against `astro preview` | n/a              | `tests/http/**/*.test.ts` run by `vitest.http.config.ts` via `npm run test:http` (separate from `npm test`); needs a running `astro preview` plus local Supabase, localhost `BASE_URL` only        |
-| e2e                  | none                               | —                | Not planned; HTTP integration covers the risks at lower cost                                                                                                                                       |
-| CI gates             | GitHub Actions                     | n/a              | Job `ci`: lint, `astro check`, `npm test`, build. Job `smoke`: local Supabase, `npm run test:db`, build, smoke (since §3 Phase 1), `npm run test:http` against the same preview (since §3 Phase 2) |
+| Layer                | Tool                               | Version          | Notes                                                                                                                                                                                                                |
+| -------------------- | ---------------------------------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| unit                 | Vitest                             | ^5.0.1           | Configured (`environment: node`, `src/**/*.test.ts(x)`); 4 test files, all in `src/lib/` — profile `sparse`                                                                                                          |
+| DB / RLS integration | Vitest + local Supabase (CLI)      | supabase ^2.23.4 | `tests/db/**/*.test.ts` run by `vitest.db.config.ts` via `npm run test:db` (separate from `npm test`); anon key only, needs `npx supabase start`                                                                     |
+| HTTP integration     | Node fetch against `astro preview` | n/a              | `tests/http/**/*.test.ts` run by `vitest.http.config.ts` via `npm run test:http` (separate from `npm test`); needs a running `astro preview` plus local Supabase, localhost `BASE_URL` only                          |
+| e2e                  | Playwright Test (Chromium)         | ^1.63.0          | `tests/e2e/**/*.spec.ts` via `npx playwright test`; `playwright.config.ts` builds + previews the app. Scope limited to browser-only scenarios of risk #1 (§3 Phase 5); details in `context/foundation/test-stack.md` |
+| CI gates             | GitHub Actions                     | n/a              | Job `ci`: lint, `astro check`, `npm test`, build. Job `smoke`: local Supabase, `npm run test:db`, build, smoke (since §3 Phase 1), `npm run test:http` against the same preview (since §3 Phase 2)                   |
 
 **Stack grounding tools (current session):**
 
 - Docs: none (Context7 not available in current session) — stack confirmed from local manifests/configs only; checked: 2026-09-29
 - Search: none (Exa.ai not available in current session) — not used; checked: 2026-09-29
-- Runtime/browser: `claude-in-chrome` browser skill — not used; HTTP integration is the cheaper layer for these risks; checked: 2026-09-29
+- Runtime/browser: `playwright-cli` (`.claude/skills/playwright-cli/SKILL.md`) — used for §3 Phase 5 browser scenarios; `claude-in-chrome` not used; checked: 2026-10-02
 - Provider/platform: GitHub via `gh` CLI (no MCP); no Supabase or Cloudflare MCP — relevant only for inspecting CI runs; checked: 2026-09-29
 
 ## 5. Quality Gates
 
-| Gate                                                 | Where                    | Required?                   | Catches                                     |
-| ---------------------------------------------------- | ------------------------ | --------------------------- | ------------------------------------------- |
-| lint + typecheck (`eslint`, `astro check`)           | local (lint-staged) + CI | required                    | syntactic / type drift                      |
-| build + smoke against preview                        | CI                       | required                    | broken build, auth flow, Cloudflare adapter |
-| unit tests (`npm test`)                              | CI job `ci`              | required (since §3 Phase 1) | logic regressions                           |
-| DB integration (`npm run test:db`)                   | CI job `smoke`           | required (since §3 Phase 1) | RLS visibility regressions                  |
-| HTTP integration on dashboards (`npm run test:http`) | CI job `smoke`           | required (since §3 Phase 2) | blank-render and role-routing regressions   |
-| migration parity check                               | CI on PR                 | required after §3 Phase 4   | skipped / out-of-order migrations           |
-| post-edit hook (Vitest related tests)                | local (agent loop)       | optional after §3 Phase 4   | regressions at edit time                    |
+| Gate                                                 | Where                      | Required?                   | Catches                                                |
+| ---------------------------------------------------- | -------------------------- | --------------------------- | ------------------------------------------------------ |
+| lint + typecheck (`eslint`, `astro check`)           | local (lint-staged) + CI   | required                    | syntactic / type drift                                 |
+| build + smoke against preview                        | CI                         | required                    | broken build, auth flow, Cloudflare adapter            |
+| unit tests (`npm test`)                              | CI job `ci`                | required (since §3 Phase 1) | logic regressions                                      |
+| DB integration (`npm run test:db`)                   | CI job `smoke`             | required (since §3 Phase 1) | RLS visibility regressions                             |
+| HTTP integration on dashboards (`npm run test:http`) | CI job `smoke`             | required (since §3 Phase 2) | blank-render and role-routing regressions              |
+| migration parity check                               | CI on PR                   | required after §3 Phase 4   | skipped / out-of-order migrations                      |
+| E2E dashboard render (`npx playwright test`)         | local; CI after §3 Phase 5 | required after §3 Phase 5   | blank-in-browser, hydration and navigation regressions |
+| post-edit hook (Vitest related tests)                | local (agent loop)         | optional after §3 Phase 4   | regressions at edit time                               |
 
 ## 6. Cookbook Patterns
 
@@ -128,6 +159,14 @@ the relevant rollout phase ships; before that, the sub-section reads
 - **Rule**: every page assertion calls `assertCompletePage` and asserts the seeded ids through `data-testid` / `data-*-id` markers — never the status alone.
 - **Run locally**: `npx supabase start`, `npm run build`, `npm run preview`, then `npm run test:http` in another shell. `BASE_URL` defaults to `http://localhost:4321` and must be localhost or 127.0.0.1; a stopped preview fails the file at import with a health-check error.
 
+### 6.3a Adding an E2E (browser) test
+
+- **When**: only for a scenario an HTTP test cannot see (hydration, client-side errors, click navigation, visibility). Otherwise use §6.3.
+- **Location**: `tests/e2e/`, named `<topic>.spec.ts`.
+- **Reference test**: `tests/e2e/seed.spec.ts` (auth via `tests/e2e/auth.setup.ts` + `storageState`).
+- **Rule**: assert user-visible content through roles / `data-testid` markers (`service-entry`, `client-row`, `page-end`), never the URL or status alone; no screenshot assertions.
+- **Run locally**: `npx supabase start`, set `E2E_USERNAME` / `E2E_PASSWORD` in `.env`, then `npx playwright test` (the config builds and previews the app).
+
 ### 6.4 Adding a test for a new API endpoint
 
 - TBD — see §3 Phase 3 for the cross-workshop write denial and share-link redaction pattern.
@@ -150,7 +189,7 @@ the relevant rollout phase ships; before that, the sub-section reads
 ## 8. Freshness Ledger
 
 - Strategy (§1–§5) last reviewed: 2026-09-29
-- Stack versions last verified: 2026-09-29
+- Stack versions last verified: 2026-10-02
 - AI-native tool references last verified: 2026-09-29
 
 Refresh (`/10x-test-plan --refresh`) when:
