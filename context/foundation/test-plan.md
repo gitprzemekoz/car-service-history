@@ -103,13 +103,13 @@ runs JS, hydrates islands and navigates. Do not re-assert what
 
 ## 4. Stack
 
-| Layer                | Tool                               | Version          | Notes                                                                                                                                                                                                                |
-| -------------------- | ---------------------------------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| unit                 | Vitest                             | ^5.0.1           | Configured (`environment: node`, `src/**/*.test.ts(x)`); 4 test files, all in `src/lib/` — profile `sparse`                                                                                                          |
-| DB / RLS integration | Vitest + local Supabase (CLI)      | supabase ^2.23.4 | `tests/db/**/*.test.ts` run by `vitest.db.config.ts` via `npm run test:db` (separate from `npm test`); anon key only, needs `npx supabase start`                                                                     |
-| HTTP integration     | Node fetch against `astro preview` | n/a              | `tests/http/**/*.test.ts` run by `vitest.http.config.ts` via `npm run test:http` (separate from `npm test`); needs a running `astro preview` plus local Supabase, localhost `BASE_URL` only                          |
-| e2e                  | Playwright Test (Chromium)         | ^1.63.0          | `tests/e2e/**/*.spec.ts` via `npx playwright test`; `playwright.config.ts` builds + previews the app. Scope limited to browser-only scenarios of risk #1 (§3 Phase 5); details in `context/foundation/test-stack.md` |
-| CI gates             | GitHub Actions                     | n/a              | Job `ci`: lint, `astro check`, `npm test`, build. Job `smoke`: local Supabase, `npm run test:db`, build, smoke (since §3 Phase 1), `npm run test:http` against the same preview (since §3 Phase 2)                   |
+| Layer                | Tool                               | Version          | Notes                                                                                                                                                                                                                                                                                                                                                   |
+| -------------------- | ---------------------------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| unit                 | Vitest                             | ^5.0.1           | Configured (`environment: node`, `src/**/*.test.ts(x)`); 4 test files, all in `src/lib/` — profile `sparse`                                                                                                                                                                                                                                             |
+| DB / RLS integration | Vitest + local Supabase (CLI)      | supabase ^2.23.4 | `tests/db/**/*.test.ts` run by `vitest.db.config.ts` via `npm run test:db` (separate from `npm test`); anon key only, needs `npx supabase start`                                                                                                                                                                                                        |
+| HTTP integration     | Node fetch against `astro preview` | n/a              | `tests/http/**/*.test.ts` run by `vitest.http.config.ts` via `npm run test:http` (separate from `npm test`); needs a running `astro preview` plus local Supabase, localhost `BASE_URL` only                                                                                                                                                             |
+| e2e                  | Playwright Test (Chromium)         | ^1.63.0          | `tests/e2e/**/*.spec.ts` via `npx playwright test`; `playwright.config.ts` builds + previews the app. Scope limited to browser-only scenarios of risk #1 (§3 Phase 5); details in `context/foundation/test-stack.md`                                                                                                                                    |
+| CI gates             | GitHub Actions                     | n/a              | Job `ci`: lint, `astro check`, `npm test`, build. Job `smoke`: local Supabase, `npm run test:db`, build, smoke (since §3 Phase 1), `npm run test:http` against the same preview (since §3 Phase 2). Job `e2e`: own local Supabase, `npm run test:e2e` (Playwright build + preview, seeded account from `supabase/seed.sql`), report uploaded on failure |
 
 **Stack grounding tools (current session):**
 
@@ -120,16 +120,16 @@ runs JS, hydrates islands and navigates. Do not re-assert what
 
 ## 5. Quality Gates
 
-| Gate                                                 | Where                      | Required?                   | Catches                                                |
-| ---------------------------------------------------- | -------------------------- | --------------------------- | ------------------------------------------------------ |
-| lint + typecheck (`eslint`, `astro check`)           | local (lint-staged) + CI   | required                    | syntactic / type drift                                 |
-| build + smoke against preview                        | CI                         | required                    | broken build, auth flow, Cloudflare adapter            |
-| unit tests (`npm test`)                              | CI job `ci`                | required (since §3 Phase 1) | logic regressions                                      |
-| DB integration (`npm run test:db`)                   | CI job `smoke`             | required (since §3 Phase 1) | RLS visibility regressions                             |
-| HTTP integration on dashboards (`npm run test:http`) | CI job `smoke`             | required (since §3 Phase 2) | blank-render and role-routing regressions              |
-| migration parity check                               | CI on PR                   | required after §3 Phase 4   | skipped / out-of-order migrations                      |
-| E2E dashboard render (`npx playwright test`)         | local; CI after §3 Phase 5 | required after §3 Phase 5   | blank-in-browser, hydration and navigation regressions |
-| post-edit hook (Vitest related tests)                | local (agent loop)         | optional after §3 Phase 4   | regressions at edit time                               |
+| Gate                                                 | Where                    | Required?                   | Catches                                                |
+| ---------------------------------------------------- | ------------------------ | --------------------------- | ------------------------------------------------------ |
+| lint + typecheck (`eslint`, `astro check`)           | local (lint-staged) + CI | required                    | syntactic / type drift                                 |
+| build + smoke against preview                        | CI                       | required                    | broken build, auth flow, Cloudflare adapter            |
+| unit tests (`npm test`)                              | CI job `ci`              | required (since §3 Phase 1) | logic regressions                                      |
+| DB integration (`npm run test:db`)                   | CI job `smoke`           | required (since §3 Phase 1) | RLS visibility regressions                             |
+| HTTP integration on dashboards (`npm run test:http`) | CI job `smoke`           | required (since §3 Phase 2) | blank-render and role-routing regressions              |
+| migration parity check                               | CI on PR                 | required after §3 Phase 4   | skipped / out-of-order migrations                      |
+| E2E dashboard render (`npm run test:e2e`)            | local + CI job `e2e`     | required (since 2026-10-02) | blank-in-browser, hydration and navigation regressions |
+| post-edit hook (Vitest related tests)                | local (agent loop)       | optional after §3 Phase 4   | regressions at edit time                               |
 
 ## 6. Cookbook Patterns
 
