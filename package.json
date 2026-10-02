@@ -16,6 +16,7 @@
     "test:coverage": "vitest run --coverage",
     "test:db": "vitest run --config vitest.db.config.ts",
     "test:http": "vitest run --config vitest.http.config.ts",
+    "test:e2e": "playwright test",
     "test:mutation": "stryker run"
   },
   "dependencies": {
