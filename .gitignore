@@ -27,6 +27,12 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 
+# vscode: ignore personal files, keep shared project config
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/launch.json
+
 # jetbrains setting folder
 .idea/
 
