@@ -1,7 +1,7 @@
 ---
 change_id: middleware-error-logging
 title: Structured error logging helper and middleware that fails loudly
-status: implemented
+status: impl_reviewed
 created: 2026-10-03
 updated: 2026-10-03
 archived_at: null
