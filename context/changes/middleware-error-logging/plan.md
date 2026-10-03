@@ -190,26 +190,26 @@ None. No schema or config changes; deploy is a normal code release.
 
 #### Automated
 
-- [x] 1.1 Unit tests for log-error pass
-- [x] 1.2 Unit tests for session-state pass
-- [x] 1.3 Full unit suite passes
-- [x] 1.4 Lint passes with no new warnings
-- [x] 1.5 Type check passes
+- [x] 1.1 Unit tests for log-error pass — 5dc1bc6
+- [x] 1.2 Unit tests for session-state pass — 5dc1bc6
+- [x] 1.3 Full unit suite passes — 5dc1bc6
+- [x] 1.4 Lint passes with no new warnings — 5dc1bc6
+- [x] 1.5 Type check passes — 5dc1bc6
 
 ### Phase 2: Middleware returns 503, logs failures and render exceptions
 
 #### Automated
 
-- [ ] 2.1 Full unit suite passes
-- [ ] 2.2 Lint passes with no new warnings
-- [ ] 2.3 Type check passes
-- [ ] 2.4 Build succeeds
-- [ ] 2.5 HTTP role-routing and dashboard suites stay green
+- [x] 2.1 Full unit suite passes
+- [x] 2.2 Lint passes with no new warnings
+- [x] 2.3 Type check passes
+- [x] 2.4 Build succeeds
+- [x] 2.5 HTTP role-routing and dashboard suites stay green
 
 #### Manual
 
-- [ ] 2.6 Dashboards unchanged with Supabase running, no new logs
-- [ ] 2.7 Protected route returns 503 and logs auth.getUser outage
-- [ ] 2.8 Public home page renders anonymously and logs outage
-- [ ] 2.9 Share path is masked in the log
-- [ ] 2.10 Render exception logs render.failed and shows 500 page
+- [x] 2.6 Dashboards unchanged with Supabase running, no new logs
+- [x] 2.7 Protected route returns 503 and logs auth.getUser outage
+- [x] 2.8 Public home page renders anonymously and logs outage
+- [x] 2.9 Share path is masked in the log
+- [x] 2.10 Render exception logs render.failed and shows 500 page
