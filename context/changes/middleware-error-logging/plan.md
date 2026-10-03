@@ -200,16 +200,16 @@ None. No schema or config changes; deploy is a normal code release.
 
 #### Automated
 
-- [x] 2.1 Full unit suite passes
-- [x] 2.2 Lint passes with no new warnings
-- [x] 2.3 Type check passes
-- [x] 2.4 Build succeeds
-- [x] 2.5 HTTP role-routing and dashboard suites stay green
+- [x] 2.1 Full unit suite passes — c026be9
+- [x] 2.2 Lint passes with no new warnings — c026be9
+- [x] 2.3 Type check passes — c026be9
+- [x] 2.4 Build succeeds — c026be9
+- [x] 2.5 HTTP role-routing and dashboard suites stay green — c026be9
 
 #### Manual
 
-- [x] 2.6 Dashboards unchanged with Supabase running, no new logs
-- [x] 2.7 Protected route returns 503 and logs auth.getUser outage
-- [x] 2.8 Public home page renders anonymously and logs outage
-- [x] 2.9 Share path is masked in the log
-- [x] 2.10 Render exception logs render.failed and shows 500 page
+- [x] 2.6 Dashboards unchanged with Supabase running, no new logs — c026be9
+- [x] 2.7 Protected route returns 503 and logs auth.getUser outage — c026be9
+- [x] 2.8 Public home page renders anonymously and logs outage — c026be9
+- [x] 2.9 Share path is masked in the log — c026be9
+- [x] 2.10 Render exception logs render.failed and shows 500 page — c026be9
