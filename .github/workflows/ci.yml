@@ -8,17 +8,16 @@ on:
 
 permissions:
   contents: read
-  packages: read
 
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
 env:
-  # The Supabase CLI defaults to public.ecr.aws, which answers anonymous CI pulls with
-  # "toomanyrequests: Data limit exceeded" and only then falls back to GHCR. Anonymous
-  # GHCR pulls share a per-IP limit across hosted runners, so each job logs in first.
-  SUPABASE_INTERNAL_IMAGE_REGISTRY: ghcr.io
+  # The Supabase CLI defaults to public.ecr.aws, which answers CI pulls with
+  # "toomanyrequests: Data limit exceeded"; ghcr.io throttles them too ("allowed:
+  # 44000/minute"), even with docker login. Docker Hub is the CLI's remaining source.
+  SUPABASE_INTERNAL_IMAGE_REGISTRY: docker.io
 
 jobs:
   ci:
@@ -52,11 +51,6 @@ jobs:
         with:
           version: latest
       - run: npm ci
-      - uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Start local Supabase
         run: |
           # The CLI's own pull retries fire microseconds apart; back off between whole attempts.
@@ -111,11 +105,6 @@ jobs:
           path: ~/.cache/ms-playwright
           key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
       - run: npx playwright install chromium
-      - uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Start local Supabase
         run: |
           # The CLI's own pull retries fire microseconds apart; back off between whole attempts.
