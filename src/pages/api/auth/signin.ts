@@ -16,5 +16,6 @@ export const POST: APIRoute = async (context) => {
     return context.redirect(`/auth/signin?error=${encodeURIComponent(error.message)}`);
   }
 
-  return context.redirect("/");
+  // Middleware picks the role's dashboard (mechanics are forwarded to /dashboard/mechanic).
+  return context.redirect("/dashboard");
 };

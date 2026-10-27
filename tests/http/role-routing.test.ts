@@ -1,5 +1,5 @@
 import { beforeAll, describe, expect, it } from "vitest";
-import { createWorkshopPair, RUN_ID, type WorkshopPair } from "../db/fixtures";
+import { createWorkshopPair, RUN_ID, type Actor, type WorkshopPair } from "../db/fixtures";
 import { anonymous, locationOf, signInAs, type Session } from "./app";
 import { assertCompletePage, clientIds, entryIds } from "./page";
 
@@ -121,6 +121,23 @@ async function follow(session: Session, start: string): Promise<{ path: string; 
   }
   throw new Error(`Redirect chain from ${start} exceeded ${MAX_HOPS} hops (last: ${path})`);
 }
+
+describe("sign-in landing", () => {
+  const actors: [string, () => Actor, string][] = [
+    ["client A", () => a.client, "/dashboard"],
+    ["mechanic A", () => a.mechanic, "/dashboard/mechanic"],
+  ];
+  for (const [name, actor, end] of actors) {
+    it(`${name} signing in lands on a complete ${end}`, async () => {
+      // signInAs already asserts the sign-in itself answers 302 to /dashboard.
+      const session = await signInAs(actor());
+      const result = await follow(session, "/dashboard");
+      expect(result.status).toBe(200);
+      expect(result.path).toBe(end);
+      assertCompletePage(result.html);
+    });
+  }
+});
 
 describe("no redirect loops", () => {
   const actors: [string, () => Session, string][] = [
