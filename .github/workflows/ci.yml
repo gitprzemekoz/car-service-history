@@ -13,6 +13,11 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  # The Supabase CLI defaults to public.ecr.aws, which answers anonymous CI pulls with
+  # "toomanyrequests: Data limit exceeded" and only then falls back to GHCR.
+  SUPABASE_INTERNAL_IMAGE_REGISTRY: ghcr.io
+
 jobs:
   ci:
     runs-on: ubuntu-latest
@@ -87,7 +92,13 @@ jobs:
         with:
           version: latest
       - run: npm ci
-      - run: npx playwright install --with-deps chromium
+      # No --with-deps: ubuntu-latest already ships Chrome's system libraries, and the apt
+      # mirror it would download from can stall for minutes (context/changes/e2e-ci-timeouts).
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+      - run: npx playwright install chromium
       - name: Start local Supabase
         run: |
           supabase start -x studio,imgproxy,mailpit,edge-runtime,logflare,vector,realtime,storage-api,postgres-meta,supavisor
