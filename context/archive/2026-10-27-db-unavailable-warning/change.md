@@ -1,10 +1,10 @@
 ---
 change_id: db-unavailable-warning
 title: Show a warning on the main page when the database is unavailable
-status: implemented
+status: archived
 created: 2026-10-27
 updated: 2026-10-27
-archived_at: null
+archived_at: 2026-10-27T16:02:43Z
 ---
 
 ## Notes

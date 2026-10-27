@@ -182,24 +182,24 @@ One extra lightweight request per main-page load, made after render; the probe i
 
 #### Automated
 
-- [x] 1.1 Unit tests pass: `npm test` — f98e6b9
-- [x] 1.2 Lint passes: `npm run lint` — f98e6b9
-- [x] 1.3 Build passes: `npm run build` — f98e6b9
-- [x] 1.4 HTTP test passes against preview + local Supabase: `npm run test:http -- tests/http/health.test.ts` — f98e6b9
+- [x] 1.1 Unit tests pass: `npm test` — 460249c
+- [x] 1.2 Lint passes: `npm run lint` — 460249c
+- [x] 1.3 Build passes: `npm run build` — 460249c
+- [x] 1.4 HTTP test passes against preview + local Supabase: `npm run test:http -- tests/http/health.test.ts` — 460249c
 
 #### Manual
 
-- [x] 1.5 With local Supabase stopped, `curl -i http://localhost:4321/api/health` returns `503` and `{"database":"unavailable"}` — f98e6b9
+- [x] 1.5 With local Supabase stopped, `curl -i http://localhost:4321/api/health` returns `503` and `{"database":"unavailable"}` — 460249c
 
 ### Phase 2: Main-page warning
 
 #### Automated
 
-- [x] 2.1 Unit tests pass: `npm test` — 1f25bea
-- [x] 2.2 Lint passes: `npm run lint` — 1f25bea
-- [x] 2.3 Build passes: `npm run build` — 1f25bea
-- [x] 2.4 E2E spec passes: `npx playwright test tests/e2e/db-unavailable-warning.spec.ts` — 1f25bea
+- [x] 2.1 Unit tests pass: `npm test` — 460249c
+- [x] 2.2 Lint passes: `npm run lint` — 460249c
+- [x] 2.3 Build passes: `npm run build` — 460249c
+- [x] 2.4 E2E spec passes: `npx playwright test tests/e2e/db-unavailable-warning.spec.ts` — 460249c
 
 #### Manual
 
-- [x] 2.5 With local Supabase stopped, opening `/` shows the small warning at the bottom-right; with it running, no warning — 1f25bea
+- [x] 2.5 With local Supabase stopped, opening `/` shows the small warning at the bottom-right; with it running, no warning — 460249c
