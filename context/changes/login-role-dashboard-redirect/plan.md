@@ -127,13 +127,13 @@ None.
 
 #### Automated
 
-- [x] 1.1 Lint passes: `npm run lint`
-- [x] 1.2 Unit tests pass: `npm test`
-- [x] 1.3 Type/astro check passes: `npx astro check`
-- [x] 1.4 HTTP tests pass against a local build: `npm run test:http`
+- [x] 1.1 Lint passes: `npm run lint` — 055798e
+- [x] 1.2 Unit tests pass: `npm test` — 055798e
+- [x] 1.3 Type/astro check passes: `npx astro check` — 055798e
+- [x] 1.4 HTTP tests pass against a local build: `npm run test:http` — 055798e
 
 #### Manual
 
-- [x] 1.5 Signing in via the UI as a client lands on the client dashboard
-- [x] 1.6 Signing in via the UI as a mechanic lands on the mechanic dashboard
-- [x] 1.7 Signing in with a wrong password still shows the error on the sign-in page
+- [x] 1.5 Signing in via the UI as a client lands on the client dashboard — 055798e
+- [x] 1.6 Signing in via the UI as a mechanic lands on the mechanic dashboard — 055798e
+- [x] 1.7 Signing in with a wrong password still shows the error on the sign-in page — 055798e
