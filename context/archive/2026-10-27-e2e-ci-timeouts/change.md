@@ -1,10 +1,10 @@
 ---
 change_id: e2e-ci-timeouts
 title: Stop the e2e CI job timing out on slow apt and Docker image downloads
-status: implemented
+status: archived
 created: 2026-10-27
 updated: 2026-10-27
-archived_at: null
+archived_at: 2026-10-27T14:16:06Z
 ---
 
 ## Notes

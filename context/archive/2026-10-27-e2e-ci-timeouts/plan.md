@@ -108,10 +108,10 @@ Healthy e2e runs total 151–234 s today. Expected after the change: about the s
 
 #### Automated
 
-- [x] 1.1 Workflow file parses as YAML and contains no --with-deps — 971826f
-- [x] 1.2 Lint passes — 971826f
+- [x] 1.1 Workflow file parses as YAML and contains no --with-deps — 8defe12
+- [x] 1.2 Lint passes — 8defe12
 
 #### Manual
 
-- [x] 1.3 PR CI run: e2e passes and its Playwright install step takes under 60 s with no apt output — 971826f
-- [x] 1.4 PR CI run: neither the smoke nor the e2e log contains public.ecr.aws — 971826f
+- [x] 1.3 PR CI run: e2e passes and its Playwright install step takes under 60 s with no apt output — 8defe12
+- [x] 1.4 PR CI run: neither the smoke nor the e2e log contains public.ecr.aws — 8defe12
