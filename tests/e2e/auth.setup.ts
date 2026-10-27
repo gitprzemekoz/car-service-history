@@ -21,7 +21,7 @@ setup("sign in once and save the session", async ({ page }) => {
     await page.getByRole("button", { name: "Sign in" }).click();
     await page.waitForURL((url) => !url.pathname.startsWith("/auth/signin"), { timeout: 5_000 });
   }).toPass();
-  // Sign-in lands on "/"; only a signed-in Topbar offers "Sign out".
+  // Sign-in lands on the user's dashboard; only a signed-in page offers "Sign out".
   await expect(page.getByRole("button", { name: "Sign out" })).toBeVisible();
 
   await page.context().storageState({ path: authFile });

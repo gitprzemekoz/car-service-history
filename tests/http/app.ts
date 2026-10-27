@@ -98,8 +98,8 @@ export async function signInAs(actor: Actor): Promise<Session> {
   });
   await response.body?.cancel();
   const location = locationOf(response);
-  if (response.status !== 302 || location !== "/") {
-    throw new Error(`Sign-in as ${actor.email} expected 302 to "/", got ${response.status} to "${location}".`);
+  if (response.status !== 302 || location !== "/dashboard") {
+    throw new Error(`Sign-in as ${actor.email} expected 302 to "/dashboard", got ${response.status} to "${location}".`);
   }
   return session;
 }

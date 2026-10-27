@@ -53,7 +53,7 @@ const steps = [
   [
     "signin accepts correct password",
     () => request("/api/auth/signin", { method: "POST", form: { email, password } }),
-    { status: 302, location: "/" },
+    { status: 302, location: "/dashboard" },
   ],
   // A fresh signup with no pending clients row becomes a mechanic (handle_new_user), so /dashboard forwards it.
   [
