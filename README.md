@@ -157,6 +157,11 @@ This project deploys to [Cloudflare Workers](https://workers.cloudflare.com/).
 
 The Cloudflare Workers Builds Git integration is connected to this repository: every push to `main` triggers an automatic build (`npm run build`) and deploy — no GitHub Actions involved. Connect it once in **Cloudflare Dashboard → Workers & Pages → Create → Import a repository**, selecting the `main` branch; Workers Builds detects `wrangler.jsonc` and runs `wrangler deploy` for you.
 
+The production deploy command is `npm run deploy` (`scripts/deploy.mjs`): it applies pending `supabase/migrations/` to the hosted project with `supabase db push`, then runs `wrangler deploy`. A failed migration stops the deploy, so code never goes live against a missing schema. One-time setup in **Cloudflare Dashboard → Worker → Settings → Build**:
+
+- set **Deploy command** to `npm run deploy` (leave the non-production branch command as `npx wrangler versions upload`, so previews never touch the production database);
+- add the build secret `SUPABASE_DB_URL`: the **session pooler** connection string from Supabase → Connect (port 5432, user `postgres.<project-ref>`). The direct `db.<ref>.supabase.co` host is IPv6-only and unreachable from the build.
+
 Set `SUPABASE_URL` and `SUPABASE_KEY` as Worker Secrets before the first deploy — either in **Cloudflare Dashboard → Worker → Settings → Variables and Secrets**, or via `npx wrangler secret put SUPABASE_URL` / `npx wrangler secret put SUPABASE_KEY`.
 
 See `context/changes/deployment/deployment-plan.md` for the full first-deployment plan and prerequisites.
@@ -169,10 +174,10 @@ See `context/changes/deployment/deployment-plan.md` for the full first-deploymen
 npm run build
 ```
 
-2. Deploy with Wrangler:
+2. Apply migrations and deploy:
 
 ```bash
-npx wrangler deploy
+SUPABASE_DB_URL="<session pooler connection string>" npm run deploy
 ```
 
 ## Smoke test
