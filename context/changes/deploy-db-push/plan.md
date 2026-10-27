@@ -95,5 +95,5 @@ Automatic deploys: say that Workers Builds' deploy command is `npm run deploy` (
 
 #### Manual
 
-- [ ] 2.1 Workers Builds deploy command and SUPABASE_DB_URL build secret configured
-- [ ] 2.2 Next main deploy log shows db push before wrangler deploy
+- [x] 2.1 Workers Builds deploy command and SUPABASE_DB_URL build secret configured
+- [x] 2.2 Next main deploy log shows db push before wrangler deploy
