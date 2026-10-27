@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: read
+  packages: read
 
 concurrency:
   group: ci-${{ github.ref }}
@@ -15,7 +16,8 @@ concurrency:
 
 env:
   # The Supabase CLI defaults to public.ecr.aws, which answers anonymous CI pulls with
-  # "toomanyrequests: Data limit exceeded" and only then falls back to GHCR.
+  # "toomanyrequests: Data limit exceeded" and only then falls back to GHCR. Anonymous
+  # GHCR pulls share a per-IP limit across hosted runners, so each job logs in first.
   SUPABASE_INTERNAL_IMAGE_REGISTRY: ghcr.io
 
 jobs:
@@ -50,9 +52,19 @@ jobs:
         with:
           version: latest
       - run: npm ci
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Start local Supabase
         run: |
-          supabase start -x studio,imgproxy,mailpit,edge-runtime,logflare,vector,realtime,storage-api,postgres-meta,supavisor
+          # The CLI's own pull retries fire microseconds apart; back off between whole attempts.
+          for i in 1 2 3; do
+            supabase start -x studio,imgproxy,mailpit,edge-runtime,logflare,vector,realtime,storage-api,postgres-meta,supavisor && break
+            [ "$i" = 3 ] && exit 1
+            sleep $((i * 30))
+          done
           supabase status -o env | grep -E '^(API_URL|ANON_KEY)=' > supabase.env
       - name: Configure secrets for build and preview
         run: |
@@ -99,9 +111,19 @@ jobs:
           path: ~/.cache/ms-playwright
           key: playwright-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
       - run: npx playwright install chromium
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Start local Supabase
         run: |
-          supabase start -x studio,imgproxy,mailpit,edge-runtime,logflare,vector,realtime,storage-api,postgres-meta,supavisor
+          # The CLI's own pull retries fire microseconds apart; back off between whole attempts.
+          for i in 1 2 3; do
+            supabase start -x studio,imgproxy,mailpit,edge-runtime,logflare,vector,realtime,storage-api,postgres-meta,supavisor && break
+            [ "$i" = 3 ] && exit 1
+            sleep $((i * 30))
+          done
           supabase status -o env | grep -E '^(API_URL|ANON_KEY)=' > supabase.env
       - name: Configure secrets for build and preview
         run: |
