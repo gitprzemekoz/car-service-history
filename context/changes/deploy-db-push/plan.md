@@ -88,8 +88,8 @@ Automatic deploys: say that Workers Builds' deploy command is `npm run deploy` (
 
 #### Automated
 
-- [x] 1.1 Deploy script exits 1 without SUPABASE_DB_URL
-- [x] 1.2 Lint passes
+- [x] 1.1 Deploy script exits 1 without SUPABASE_DB_URL — 19740c4
+- [x] 1.2 Lint passes — 19740c4
 
 ### Phase 2: Document the deploy pipeline and one-time Cloudflare setup
 
