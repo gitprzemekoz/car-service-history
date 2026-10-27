@@ -88,12 +88,12 @@ Automatic deploys: say that Workers Builds' deploy command is `npm run deploy` (
 
 #### Automated
 
-- [x] 1.1 Deploy script exits 1 without SUPABASE_DB_URL — 19740c4
-- [x] 1.2 Lint passes — 19740c4
+- [x] 1.1 Deploy script exits 1 without SUPABASE_DB_URL — f4bc86c
+- [x] 1.2 Lint passes — f4bc86c
 
 ### Phase 2: Document the deploy pipeline and one-time Cloudflare setup
 
 #### Manual
 
-- [ ] 2.1 Workers Builds deploy command and SUPABASE_DB_URL build secret configured
-- [ ] 2.2 Next main deploy log shows db push before wrangler deploy
+- [x] 2.1 Workers Builds deploy command and SUPABASE_DB_URL build secret configured
+- [x] 2.2 Next main deploy log shows db push before wrangler deploy
