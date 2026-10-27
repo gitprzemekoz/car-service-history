@@ -1,0 +1,28 @@
+---
+// Hidden until /api/health explicitly reports the database as unavailable; checked once per page load.
+---
+
+<div
+  data-testid="db-unavailable-warning"
+  role="status"
+  hidden
+  class="fixed right-4 bottom-4 z-50 max-w-xs rounded-lg border border-amber-500 bg-amber-100 px-4 py-3 text-sm text-amber-900 shadow-md"
+>
+  <strong>Database is unavailable</strong> — some features may not work right now.
+</div>
+
+<script>
+  const warning = document.querySelector<HTMLElement>('[data-testid="db-unavailable-warning"]');
+
+  async function checkDatabase() {
+    try {
+      const response = await fetch("/api/health", { cache: "no-store" });
+      const body = (await response.json()) as { database?: string };
+      if (warning && body.database === "unavailable") warning.hidden = false;
+    } catch {
+      // The app itself is unreachable — that is not a database outage, so stay hidden.
+    }
+  }
+
+  void checkDatabase();
+</script>
