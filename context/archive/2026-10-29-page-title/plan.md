@@ -97,11 +97,11 @@ Set the layout's default title to "Car Service History" and cover it with an e2e
 
 #### Automated
 
-- [x] 1.1 Lint passes: `npm run lint` — c8c7be8
-- [x] 1.2 Build passes: `npm run build` — c8c7be8
-- [x] 1.3 Unit tests pass: `npm test` — c8c7be8
-- [x] 1.4 E2E spec passes: `npm run test:e2e -- tests/e2e/page-title.spec.ts` — c8c7be8
+- [x] 1.1 Lint passes: `npm run lint` — dd97fdf
+- [x] 1.2 Build passes: `npm run build` — dd97fdf
+- [x] 1.3 Unit tests pass: `npm test` — dd97fdf
+- [x] 1.4 E2E spec passes: `npm run test:e2e -- tests/e2e/page-title.spec.ts` — dd97fdf
 
 #### Manual
 
-- [x] 1.5 Opening `/` in a browser shows "Car Service History" in the tab; `/auth/signin` still shows "Sign in" — c8c7be8
+- [x] 1.5 Opening `/` in a browser shows "Car Service History" in the tab; `/auth/signin` still shows "Sign in" — dd97fdf
