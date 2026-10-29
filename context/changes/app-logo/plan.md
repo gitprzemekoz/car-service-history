@@ -116,11 +116,11 @@ Create the logo component, mount it in the layout, resolve the home-page collisi
 
 #### Automated
 
-- [x] 1.1 Lint passes: `npm run lint`
-- [x] 1.2 Build passes: `npm run build`
-- [x] 1.3 Unit tests pass: `npm test`
-- [x] 1.4 E2E spec passes: `npm run test:e2e -- tests/e2e/app-logo.spec.ts`
+- [x] 1.1 Lint passes: `npm run lint` — ec36a6e
+- [x] 1.2 Build passes: `npm run build` — ec36a6e
+- [x] 1.3 Unit tests pass: `npm test` — ec36a6e
+- [x] 1.4 E2E spec passes: `npm run test:e2e -- tests/e2e/app-logo.spec.ts` — ec36a6e
 
 #### Manual
 
-- [x] 1.5 Logo is visible top-left on `/`, `/auth/signin`, `/dashboard` and does not overlap page content at mobile (375px) and desktop widths; clicking it opens `/`
+- [x] 1.5 Logo is visible top-left on `/`, `/auth/signin`, `/dashboard` and does not overlap page content at mobile (375px) and desktop widths; clicking it opens `/` — ec36a6e
