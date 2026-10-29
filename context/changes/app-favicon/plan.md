@@ -120,10 +120,10 @@ Add the SVG favicon, regenerate the PNG fallback, link both from the layout, and
 
 #### Automated
 
-- [x] 1.1 Lint passes: `npm run lint`
-- [x] 1.2 Unit tests pass: `npm test`
-- [x] 1.3 Build succeeds: `npm run build`
-- [x] 1.4 E2E spec passes: `npm run test:e2e -- tests/e2e/app-favicon.spec.ts`
+- [x] 1.1 Lint passes: `npm run lint` — a3fb724
+- [x] 1.2 Unit tests pass: `npm test` — a3fb724
+- [x] 1.3 Build succeeds: `npm run build` — a3fb724
+- [x] 1.4 E2E spec passes: `npm run test:e2e -- tests/e2e/app-favicon.spec.ts` — a3fb724
 
 #### Manual
 
