@@ -127,5 +127,5 @@ Add the SVG favicon, regenerate the PNG fallback, link both from the layout, and
 
 #### Manual
 
-- [x] 1.5 Browser tab shows the car mark, matching the in-page logo, in light mode
-- [x] 1.6 Browser tab shows a visible light car mark in dark mode
+- [x] 1.5 Browser tab shows the car mark, matching the in-page logo, in light mode — a3fb724
+- [x] 1.6 Browser tab shows a visible light car mark in dark mode — a3fb724
