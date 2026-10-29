@@ -1,10 +1,10 @@
 ---
 change_id: page-title
 title: Change the default page title from the Astro starter to Car Service History
-status: implemented
+status: archived
 created: 2026-10-29
 updated: 2026-10-29
-archived_at: null
+archived_at: 2026-10-29T20:17:47Z
 ---
 
 ## Notes
