@@ -4,6 +4,25 @@
 
 A modern, opinionated starter template for building fast, accessible web applications.
 
+## About the app
+
+A digital vehicle service history: mechanics log service entries for their clients' vehicles, and clients see that history from any device and can share it with a prospective buyer. Full requirements: [`context/foundation/prd.md`](context/foundation/prd.md).
+
+### Account types
+
+| Role       | Dashboard             | Can                                                                                                                            |
+| ---------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `mechanic` | `/dashboard/mechanic` | Add a client together with their vehicle (one per client), add and edit service entries. Sees only their own clients.          |
+| `client`   | `/dashboard`          | Read-only view of their own vehicle's service history; generate or revoke a 24h share link (`/share/<token>`, no costs shown). |
+
+### How accounts are created
+
+1. **Mechanic** signs up at `/auth/signup`. Every sign-up whose email does not match a pending client gets the `mechanic` role.
+2. The mechanic adds a client (name, email, vehicle) on `/dashboard/mechanic`. This creates a client **record**, not a login — the client page shows "Waiting for signup" until step 3.
+3. **Client** signs up at `/auth/signup` with that same email (case-insensitive). The signup trigger links the account to the client record and assigns the `client` role.
+
+The role is assigned once, at sign-up, by the `handle_new_user()` trigger (`supabase/migrations/`); users cannot change it. A client who signs up **before** the mechanic adds them becomes a mechanic.
+
 ## Tech Stack
 
 - [Astro](https://astro.build/) v7 - Modern web framework with server-first rendering
