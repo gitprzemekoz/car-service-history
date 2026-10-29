@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import AppLogo from "@/components/AppLogo.astro";
 import Banner from "@/components/Banner.astro";
 import { missingConfigs } from "@/lib/config-status";
 
@@ -33,6 +34,7 @@ const { title = "Car Service History" } = Astro.props;
         )}
       </Banner>
     ))}
+    <AppLogo />
     <slot />
     <div data-testid="page-end" hidden></div>
   </body>
@@ -44,5 +46,10 @@ const { title = "Car Service History" } = Astro.props;
     margin: 0;
     width: 100%;
     height: 100%;
+  }
+
+  /* Anchors the absolutely positioned AppLogo to the top of the page. */
+  body {
+    position: relative;
   }
 </style>
